@@ -5,10 +5,12 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.route.ecommerce.navigation.Destinations
+import androidx.navigation.navOptions
+import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.navigation.navigateToAccount
 import com.route.ecommerce.navigation.navigateToCart
 import com.route.ecommerce.navigation.navigateToCategories
@@ -16,6 +18,7 @@ import com.route.ecommerce.navigation.navigateToHome
 import com.route.ecommerce.navigation.navigateToLogin
 import com.route.ecommerce.navigation.navigateToProductDetails
 import com.route.ecommerce.navigation.navigateToProducts
+import com.route.ecommerce.navigation.navigateToSearch
 import com.route.ecommerce.navigation.navigateToSignup
 import com.route.ecommerce.navigation.navigateToWishlist
 
@@ -44,15 +47,19 @@ class EcomAppState(
         @Composable
         get() = navController.currentBackStackEntryAsState().value?.destination
 
-    val currentTopLevelDestination: Destinations?
+    private val currentTopLevelDestination: TopLevelDestination?
         @Composable
         get() = when (currentDestination?.route) {
-            Destinations.HOME.name -> Destinations.HOME
-            Destinations.CATEGORIES.name -> Destinations.CATEGORIES
-            Destinations.WISHLIST.name -> Destinations.WISHLIST
+            TopLevelDestination.HOME.name -> TopLevelDestination.HOME
+            TopLevelDestination.CATEGORIES.name -> TopLevelDestination.CATEGORIES
+            TopLevelDestination.CART.name -> TopLevelDestination.CART
+            TopLevelDestination.ACCOUNT.name -> TopLevelDestination.CART
             else -> null
         }
-    val shouldShowAppBar: Boolean
+
+    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
+
+    val shouldShowTopBar: Boolean
         @Composable get() = currentTopLevelDestination != null
     val shouldShowBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
@@ -62,14 +69,27 @@ class EcomAppState(
         @Composable get() = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
                 && currentTopLevelDestination != null
 
-    fun navigateToHome() = navController.navigateToHome()
+    fun navigateToTopLevelDestinations(topLevelDestination: TopLevelDestination) {
+        val topLevelNavOptions = navOptions {
+            popUpTo(navController.graph.findStartDestination().id) {
+                saveState = true
+            }
+            launchSingleTop = true
+            restoreState = true
+        }
+        when (topLevelDestination) {
+            TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
+            TopLevelDestination.CATEGORIES -> navController.navigateToCategories(topLevelNavOptions)
+            TopLevelDestination.CART -> navController.navigateToCart(topLevelNavOptions)
+            TopLevelDestination.ACCOUNT -> navController.navigateToAccount(topLevelNavOptions)
+        }
+    }
+
     fun navigateToLogin() = navController.navigateToLogin()
     fun navigateToSignup() = navController.navigateToSignup()
-    fun navigateToCategories() = navController.navigateToCategories()
-    fun navigateToCart() = navController.navigateToCart()
     fun navigateToProducts() = navController.navigateToProducts()
     fun navigateToProductDetails() = navController.navigateToProductDetails()
-    fun navigateToAccount() = navController.navigateToAccount()
     fun navigateToWishlist() = navController.navigateToWishlist()
+    fun navigateToSearch() = navController.navigateToSearch()
 
 }

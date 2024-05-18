@@ -27,20 +27,11 @@ fun HomeScreen(
         Button(onClick = appState::navigateToSignup) {
             Text(text = "sign up")
         }
-        Button(onClick = appState::navigateToCategories) {
-            Text(text = "categories")
-        }
-        Button(onClick = appState::navigateToCart) {
-            Text(text = "cart")
-        }
         Button(onClick = appState::navigateToProducts) {
             Text(text = "products")
         }
         Button(onClick = appState::navigateToProductDetails) {
             Text(text = "product details")
-        }
-        Button(onClick = appState::navigateToAccount) {
-            Text(text = "account")
         }
         Button(onClick = appState::navigateToWishlist) {
             Text(text = "wishlist")

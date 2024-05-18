@@ -1,5 +1,6 @@
 package com.route.ecommerce.ui
 
+import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -9,18 +10,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.route.ecommerce.navigation.EcomNavHost
+import com.route.ecommerce.ui.utils.EcomBottomBar
+import com.route.ecommerce.ui.utils.EcomNavRail
+import com.route.ecommerce.ui.utils.EcomTopBar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EcomApp(
     appState: EcomAppState,
@@ -30,9 +29,12 @@ fun EcomApp(
         modifier = modifier,
         bottomBar = {
             if (appState.shouldShowBottomBar) {
-                BottomAppBar {
-                    Text(text = "Bottom Bar")
-                }
+                EcomBottomBar(
+                    destinations = appState.topLevelDestinations,
+                    onNavigateToDestination = appState::navigateToTopLevelDestinations,
+                    currentDestination = appState.currentDestination,
+                    modifier = Modifier.animateContentSize()
+                )
             }
         }
     ) { paddingValues ->
@@ -48,19 +50,33 @@ fun EcomApp(
                 )
         ) {
             if (appState.shouldShowNavRail) {
-                NavigationRail {
-                    Text(text = "Nav Rail")
-                }
+                EcomNavRail(
+                    destinations = appState.topLevelDestinations,
+                    onNavigateToDestination = appState::navigateToTopLevelDestinations,
+                    currentDestination = appState.currentDestination,
+                    modifier = Modifier
+                        .safeDrawingPadding()
+                        .animateContentSize()
+                )
             }
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                if (appState.shouldShowAppBar) {
-                    TopAppBar(
-                        title = { Text(text = "top app bar") }
+                if (appState.shouldShowTopBar) {
+                    EcomTopBar(
+                        onNavigateToSearch = appState::navigateToSearch,
+                        modifier = Modifier.animateContentSize()
                     )
                 }
-                EcomNavHost(appState)
+                EcomNavHost(
+                    appState = appState,
+                    modifier = if (appState.shouldShowTopBar)
+                        Modifier.consumeWindowInsets(
+                            WindowInsets.safeDrawing.only(
+                                WindowInsetsSides.Top
+                            )
+                        ) else Modifier
+                )
             }
         }
     }

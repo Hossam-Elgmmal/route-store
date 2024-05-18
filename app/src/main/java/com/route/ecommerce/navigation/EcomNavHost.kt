@@ -3,8 +3,6 @@ package com.route.ecommerce.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
@@ -17,19 +15,13 @@ fun EcomNavHost(
 ) {
     NavHost(
         navController = appState.navController,
-        startDestination = Destinations.HOME.name,
+        startDestination = TopLevelDestination.HOME.name,
         modifier = modifier,
         enterTransition = {
-            slideInVertically(
-                initialOffsetY = { -it },
-                animationSpec = tween(400)
-            ) + fadeIn(animationSpec = tween(400))
+            fadeIn(animationSpec = tween(400))
         },
         exitTransition = {
-            slideOutHorizontally(
-                targetOffsetX = { -it },
-                animationSpec = tween(300)
-            ) + fadeOut(tween(300))
+            fadeOut(tween(300))
         }
     ) {
         homeScreen(
@@ -43,5 +35,6 @@ fun EcomNavHost(
         productsScreen()
         productDetailsScreen()
         wishlistScreen()
+        searchScreen()
     }
 }
