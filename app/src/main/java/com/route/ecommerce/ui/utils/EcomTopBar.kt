@@ -20,7 +20,7 @@ fun EcomTopBar(
     TopAppBar(
         title = {
             Image(
-                painter = painterResource(id = R.drawable.img_logo),
+                painter = painterResource(id = R.drawable.ic_app_bar_logo),
                 contentDescription = null,
             )
         },
