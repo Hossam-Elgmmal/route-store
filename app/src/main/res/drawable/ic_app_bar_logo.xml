@@ -9,42 +9,42 @@
         <path
             android:fillColor="#00000000"
             android:pathData="M1,20.247V16.547H8.477V1.5C8.477,1.5 12.702,0.374 15.086,1.5C16.595,2.213 17.594,2.84 18.445,4.337C20.549,8.037 19.632,11.506 17.037,13.834C14.644,15.981 9.235,13.834 9.235,13.834"
-            android:strokeWidth="2"
+            android:strokeWidth="1.5"
             android:strokeColor="@color/ic_launcher_foreground_tint"
             android:strokeLineCap="round" />
         <path
             android:fillColor="#00000000"
             android:pathData="M11.619,14.574L16.52,22.961L20.179,18.767"
-            android:strokeWidth="2"
+            android:strokeWidth="1.5"
             android:strokeColor="@color/ic_launcher_foreground_tint"
             android:strokeLineCap="round" />
         <path
             android:fillColor="#00000000"
             android:pathData="M31.023,15.191C31.023,17.205 30.464,18.996 29.599,20.262C28.731,21.531 27.61,22.211 26.464,22.211C25.318,22.211 24.196,21.531 23.329,20.262C22.463,18.996 21.904,17.205 21.904,15.191C21.904,13.176 22.463,11.385 23.329,10.119C24.196,8.85 25.318,8.17 26.464,8.17C27.61,8.17 28.731,8.85 29.599,10.119C30.464,11.385 31.023,13.176 31.023,15.191Z"
-            android:strokeWidth="2"
+            android:strokeWidth="1.5"
             android:strokeColor="@color/ic_launcher_foreground_tint" />
         <path
             android:fillColor="#00000000"
             android:pathData="M33.482,7.914C33.482,7.914 33.049,14.574 33.482,17.781C33.916,20.987 35.433,22.097 36.083,22.467C36.733,22.837 39.55,23.454 40.959,22.467C42.368,21.48 43.126,20.247 43.56,17.781C43.993,15.314 43.56,7.914 43.56,7.914"
-            android:strokeWidth="2"
+            android:strokeWidth="1.5"
             android:strokeColor="@color/ic_launcher_foreground_tint"
             android:strokeLineCap="round" />
         <path
             android:fillColor="#00000000"
             android:pathData="M46.26,1.007C46.26,1.007 46.151,18.644 46.26,19.384C46.368,20.124 47.668,21.48 48.102,21.851C48.535,22.221 49.495,22.854 50.486,22.837C51.436,22.821 51.993,22.488 52.761,21.851C53.616,21.141 54.008,20.508 54.386,19.384C54.618,18.696 54.693,18.27 54.711,17.534"
-            android:strokeWidth="2"
+            android:strokeWidth="1.5"
             android:strokeColor="@color/ic_launcher_foreground_tint"
             android:strokeLineCap="round" />
         <path
             android:fillColor="#00000000"
             android:pathData="M46.537,8.16H54.88"
-            android:strokeWidth="2"
+            android:strokeWidth="1.5"
             android:strokeColor="@color/ic_launcher_foreground_tint"
             android:strokeLineCap="round" />
         <path
             android:fillColor="#00000000"
             android:pathData="M66.999,17.979C66.999,17.979 66.371,20.186 65.482,21.186C64.687,22.08 64.09,22.561 62.99,22.789C61.984,22.998 61.336,22.863 60.39,22.419C59.684,22.089 59.311,21.792 58.764,21.186C57.869,20.194 57.589,19.347 57.248,17.979C56.98,16.907 56.98,15.142 56.98,15.142M56.98,15.142C56.98,15.142 56.948,14.395 56.98,14.156C57.248,12.182 58.548,10.086 58.548,10.086C58.548,10.086 59.306,8.832 60.39,8.482C61.163,8.233 62.203,8.052 62.99,8.236C64.066,8.487 64.673,8.872 65.482,9.716C66.024,10.281 66.501,11.092 66.783,12.306C67.021,13.33 66.999,15.142 66.999,15.142H56.98Z"
-            android:strokeWidth="2"
+            android:strokeWidth="1.5"
             android:strokeColor="@color/ic_launcher_foreground_tint"
             android:strokeLineCap="round" />
     </group>
