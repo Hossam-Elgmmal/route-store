@@ -12,12 +12,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.route.ecommerce.navigation.EcomNavHost
-import com.route.ecommerce.ui.utils.EcomBottomBar
 import com.route.ecommerce.ui.utils.EcomNavRail
+import com.route.ecommerce.ui.utils.EcomNavigationBar
 import com.route.ecommerce.ui.utils.EcomTopBar
 
 @Composable
@@ -27,14 +28,16 @@ fun EcomApp(
 ) {
     Scaffold(
         modifier = modifier,
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         bottomBar = {
             if (appState.shouldShowBottomBar) {
-                EcomBottomBar(
+                EcomNavigationBar(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigateToTopLevelDestinations,
                     currentDestination = appState.currentDestination,
                     modifier = Modifier.animateContentSize()
                 )
+                HorizontalDivider()
             }
         }
     ) { paddingValues ->
@@ -62,20 +65,20 @@ fun EcomApp(
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                if (appState.shouldShowTopBar) {
-                    EcomTopBar(
-                        onNavigateToSearch = appState::navigateToSearch,
-                        modifier = Modifier.animateContentSize()
-                    )
-                }
+                EcomTopBar(
+                    canGoToSearch = appState.canGoToSearch,
+                    onNavigateToSearch = appState::navigateToSearch,
+                    canNavigateUp = appState.canNavigateUp,
+                    navigateUp = appState::navigateUp
+                )
+                HorizontalDivider()
                 EcomNavHost(
                     appState = appState,
-                    modifier = if (appState.shouldShowTopBar)
-                        Modifier.consumeWindowInsets(
-                            WindowInsets.safeDrawing.only(
-                                WindowInsetsSides.Top
-                            )
-                        ) else Modifier
+                    modifier = Modifier.consumeWindowInsets(
+                        WindowInsets.safeDrawing.only(
+                            WindowInsetsSides.Top
+                        )
+                    )
                 )
             }
         }

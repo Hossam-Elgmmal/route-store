@@ -1,31 +1,33 @@
 package com.route.ecommerce.ui.utils
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.route.ecommerce.navigation.TopLevelDestination
 
 @Composable
-fun EcomBottomBar(
+fun EcomNavigationBar(
     destinations: List<TopLevelDestination>,
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
-    BottomAppBar(
-        modifier = modifier
+    NavigationBar(
+        modifier = modifier,
+        tonalElevation = 0.dp
     ) {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
-            EcomBottomBarItem(
+            EcomNavigationBarItem(
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 icon = {
@@ -52,7 +54,7 @@ fun EcomBottomBar(
 }
 
 @Composable
-fun RowScope.EcomBottomBarItem(
+fun RowScope.EcomNavigationBarItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
