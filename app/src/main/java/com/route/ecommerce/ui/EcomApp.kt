@@ -65,20 +65,26 @@ fun EcomApp(
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                EcomTopBar(
-                    canGoToSearch = appState.canGoToSearch,
-                    onNavigateToSearch = appState::navigateToSearch,
-                    canNavigateUp = appState.canNavigateUp,
-                    navigateUp = appState::navigateUp
-                )
+                if (appState.shouldShowTopBar) {
+                    EcomTopBar(
+                        canGoToSearch = appState.canGoToSearch,
+                        onNavigateToSearch = appState::navigateToSearch,
+                        canNavigateUp = appState.canNavigateUp,
+                        navigateUp = appState::navigateUp
+                    )
+                }
                 HorizontalDivider()
                 EcomNavHost(
                     appState = appState,
-                    modifier = Modifier.consumeWindowInsets(
-                        WindowInsets.safeDrawing.only(
-                            WindowInsetsSides.Top
+                    modifier = if (appState.shouldShowTopBar) {
+                        Modifier.consumeWindowInsets(
+                            WindowInsets.safeDrawing.only(
+                                WindowInsetsSides.Top
+                            )
                         )
-                    )
+                    } else {
+                        Modifier
+                    },
                 )
             }
         }

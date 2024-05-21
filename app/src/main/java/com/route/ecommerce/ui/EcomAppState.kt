@@ -72,6 +72,8 @@ class EcomAppState(
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
+    val shouldShowTopBar: Boolean
+        @Composable get() = currentTopLevelDestination != null
     val shouldShowBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
                 && currentTopLevelDestination != null
