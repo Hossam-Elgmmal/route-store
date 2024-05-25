@@ -2,7 +2,7 @@ package com.route.ecommerce
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.route.data.UserDataRepository
+import com.route.datastore.UserPreferencesRepository
 import com.route.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,9 +13,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainActivityViewModel @Inject constructor(
-    userDataRepository: UserDataRepository
+    userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
-    val uiState: StateFlow<MainActivityUiState> = userDataRepository.userData.map {
+    val uiState: StateFlow<MainActivityUiState> = userPreferencesRepository.userData.map {
         MainActivityUiState.Ready(it)
     }.stateIn(
         scope = viewModelScope,

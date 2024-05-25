@@ -2,7 +2,8 @@ package com.route.ecommerce.ui.screens.account
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.route.data.UserDataRepository
+import com.route.datastore.UserPreferencesRepository
+import com.route.model.DarkTheme
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -13,10 +14,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AccountViewModel @Inject constructor(
-    private val userDataRepository: UserDataRepository
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
     val accountUiState: StateFlow<AccountUiState> =
-        userDataRepository.userData
+        userPreferencesRepository.userData
             .map {
                 AccountUiState.Ready(
                     darkTheme = it.darkTheme
@@ -27,15 +28,15 @@ class AccountViewModel @Inject constructor(
                 initialValue = AccountUiState.Loading
             )
 
-    fun toggleDarkTheme(isChecked: Boolean) {
+    fun setDarkTheme(darkTheme: DarkTheme) {
         if (accountUiState.value is AccountUiState.Ready)
             viewModelScope.launch {
-                userDataRepository.saveThemePreferences(isChecked)
+                userPreferencesRepository.setDarkTheme(darkTheme)
             }
     }
 }
 
 sealed interface AccountUiState {
     data object Loading : AccountUiState
-    data class Ready(val darkTheme: Boolean) : AccountUiState
+    data class Ready(val darkTheme: DarkTheme) : AccountUiState
 }

@@ -21,6 +21,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.route.ecommerce.ui.EcomApp
 import com.route.ecommerce.ui.rememberEcomAppState
 import com.route.ecommerce.ui.theme.EcomTheme
+import com.route.model.DarkTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
@@ -30,7 +31,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    val viewModel: MainActivityViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,7 +86,12 @@ fun shouldShowDarkTheme(
     uiState: MainActivityUiState
 ): Boolean = when (uiState) {
     MainActivityUiState.Loading -> isSystemInDarkTheme()
-    is MainActivityUiState.Ready -> uiState.userData.darkTheme
+    is MainActivityUiState.Ready ->
+        when (uiState.userData.darkTheme) {
+            DarkTheme.LIGHT -> false
+            DarkTheme.DARK -> true
+            else -> isSystemInDarkTheme()
+        }
 }
 
 private val lightScrim = android.graphics.Color.argb(0xe6, 0xFF, 0xFF, 0xFF)

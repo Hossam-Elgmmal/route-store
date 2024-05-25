@@ -1,18 +1,24 @@
 package com.route.ecommerce.ui.screens.account
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentWidth
-import androidx.compose.material3.Switch
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.route.ecommerce.R
 
 @Composable
 fun AccountScreen(
@@ -20,40 +26,29 @@ fun AccountScreen(
     viewModel: AccountViewModel = hiltViewModel()
 ) {
     val accountUiState by viewModel.accountUiState.collectAsState()
-    Column(
-        modifier = modifier.fillMaxSize()
-    ) {
-        Text(text = "Account Screen")
-        when (accountUiState) {
-            AccountUiState.Loading -> Text(text = "Loading homeUiState")
-            is AccountUiState.Ready -> {
-                DarkThemeSwitch(
-                    isChecked = (accountUiState as AccountUiState.Ready).darkTheme,
-                    toggleDarkTheme = viewModel::toggleDarkTheme,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
-        }
-    }
-}
+    var showDarkThemeDialog by rememberSaveable { mutableStateOf(false) }
 
-@Composable
-fun DarkThemeSwitch(
-    isChecked: Boolean,
-    toggleDarkTheme: (Boolean) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(16.dp)
     ) {
-        Text(text = "Dark Theme")
-        Switch(
-            checked = isChecked,
-            onCheckedChange = { toggleDarkTheme(it) },
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentWidth(Alignment.End)
-        )
+        TextButton(onClick = { showDarkThemeDialog = true }) {
+            Text(text = stringResource(R.string.theme))
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                painter = painterResource(id = R.drawable.ic_brightness),
+                contentDescription = null
+            )
+        }
+
+        if (accountUiState is AccountUiState.Ready && showDarkThemeDialog) {
+            DarkThemeDialog(
+                onDismissDialog = { showDarkThemeDialog = false },
+                selectedDarkTheme = (accountUiState as AccountUiState.Ready).darkTheme,
+                setDarkTheme = viewModel::setDarkTheme,
+            )
+        }
+
     }
 }

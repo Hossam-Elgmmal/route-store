@@ -6,4 +6,7 @@
     <string name="account">Account</string>
     <string name="search">search</string>
     <string name="back">back</string>
+    <string name="theme">Theme</string>
+    <string name="ok">OK</string>
+    <string name="set_dark_theme">set dark theme</string>
 </resources>
