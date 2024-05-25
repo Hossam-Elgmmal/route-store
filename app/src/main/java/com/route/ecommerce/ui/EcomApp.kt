@@ -14,8 +14,17 @@ import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.route.ecommerce.R
 import com.route.ecommerce.navigation.EcomNavHost
 import com.route.ecommerce.ui.utils.EcomNavRail
 import com.route.ecommerce.ui.utils.EcomNavigationBar
@@ -26,9 +35,23 @@ fun EcomApp(
     appState: EcomAppState,
     modifier: Modifier = Modifier
 ) {
+    val snackbarHostState = remember { SnackbarHostState() }
+    val isOffline by appState.isOffline.collectAsState()
+    val notConnectedMessage = stringResource(id = R.string.not_connected)
+
+    LaunchedEffect(key1 = isOffline) {
+        if (isOffline) {
+            snackbarHostState.showSnackbar(
+                message = notConnectedMessage,
+                duration = SnackbarDuration.Indefinite
+            )
+        }
+    }
+
     Scaffold(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 EcomNavigationBar(

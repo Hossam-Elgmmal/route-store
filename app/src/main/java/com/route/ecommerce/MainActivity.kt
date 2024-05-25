@@ -18,6 +18,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.route.data.ConnectivityNetworkMonitor
 import com.route.ecommerce.ui.EcomApp
 import com.route.ecommerce.ui.rememberEcomAppState
 import com.route.ecommerce.ui.theme.EcomTheme
@@ -26,10 +27,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var networkMonitor: ConnectivityNetworkMonitor
 
     private val viewModel: MainActivityViewModel by viewModels()
 
@@ -70,7 +75,8 @@ class MainActivity : ComponentActivity() {
                 onDispose {}
             }
             val appState = rememberEcomAppState(
-                windowSizeClass = calculateWindowSizeClass(activity = this)
+                windowSizeClass = calculateWindowSizeClass(activity = this),
+                networkMonitor = networkMonitor,
             )
             EcomTheme(
                 darkTheme = darkTheme

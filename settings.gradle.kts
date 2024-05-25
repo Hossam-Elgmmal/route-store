@@ -23,3 +23,4 @@ rootProject.name = "E Commerce Route"
 include(":app")
 include(":core:datastore-proto")
 include(":core:model")
+include(":core:data")

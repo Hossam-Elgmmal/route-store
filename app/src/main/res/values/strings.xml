@@ -9,4 +9,5 @@
     <string name="theme">Theme</string>
     <string name="ok">OK</string>
     <string name="set_dark_theme">set dark theme</string>
+    <string name="not_connected">⚠️ No internet connection</string>
 </resources>
