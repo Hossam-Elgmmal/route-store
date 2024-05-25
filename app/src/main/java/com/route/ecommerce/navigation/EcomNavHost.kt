@@ -27,14 +27,32 @@ fun EcomNavHost(
         homeScreen(
             appState = appState
         )
-        loginScreen()
-        signupScreen()
-        categoriesScreen()
-        cartScreen()
-        accountScreen()
-        productsScreen()
-        productDetailsScreen()
-        wishlistScreen()
-        searchScreen()
+        loginScreen(
+            appState = appState
+        )
+        signupScreen(
+            appState = appState
+        )
+        categoriesScreen(
+            appState = appState
+        )
+        cartScreen(
+            appState = appState
+        )
+        accountScreen(
+            appState = appState
+        )
+        productsScreen(
+            appState = appState
+        )
+        productDetailsScreen(
+            appState = appState
+        )
+        wishlistScreen(
+            appState = appState
+        )
+        searchScreen(
+            appState = appState
+        )
     }
 }

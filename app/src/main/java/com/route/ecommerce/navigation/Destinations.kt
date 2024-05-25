@@ -8,16 +8,16 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
-import com.route.ecommerce.ui.screens.CartScreen
-import com.route.ecommerce.ui.screens.CategoriesScreen
-import com.route.ecommerce.ui.screens.LoginScreen
-import com.route.ecommerce.ui.screens.ProductDetailsScreen
-import com.route.ecommerce.ui.screens.ProductsScreen
-import com.route.ecommerce.ui.screens.SearchScreen
-import com.route.ecommerce.ui.screens.SignupScreen
-import com.route.ecommerce.ui.screens.WishlistScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
+import com.route.ecommerce.ui.screens.cart.CartScreen
+import com.route.ecommerce.ui.screens.categories.CategoriesScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
+import com.route.ecommerce.ui.screens.login.LoginScreen
+import com.route.ecommerce.ui.screens.productdetails.ProductDetailsScreen
+import com.route.ecommerce.ui.screens.products.ProductsScreen
+import com.route.ecommerce.ui.screens.search.SearchScreen
+import com.route.ecommerce.ui.screens.signup.SignupScreen
+import com.route.ecommerce.ui.screens.wishlist.WishlistScreen
 
 enum class TopLevelDestination(
     @DrawableRes val iconId: Int,
@@ -93,61 +93,104 @@ fun NavGraphBuilder.homeScreen(
 ) {
     composable(route = TopLevelDestination.HOME.name) {
         HomeScreen(
-            appState = appState
+            navigateToProducts = appState::navigateToProducts,
+            navigateToProductDetails = appState::navigateToProductDetails
         )
     }
 }
-fun NavGraphBuilder.categoriesScreen() {
+
+fun NavGraphBuilder.categoriesScreen(
+    appState: EcomAppState
+) {
     composable(TopLevelDestination.CATEGORIES.name) {
-        CategoriesScreen()
+        CategoriesScreen(
+            navigateToProducts = appState::navigateToProducts
+        )
     }
 }
 
-fun NavGraphBuilder.accountScreen() {
+fun NavGraphBuilder.accountScreen(
+    appState: EcomAppState
+) {
     composable(TopLevelDestination.ACCOUNT.name) {
-        AccountScreen()
+        AccountScreen(
+            navigateToLogin = appState::navigateToLogin,
+            navigateToSignup = appState::navigateToSignup,
+            navigateToWishlist = appState::navigateToWishlist,
+        )
     }
 }
 
-fun NavGraphBuilder.cartScreen() {
+fun NavGraphBuilder.cartScreen(
+    appState: EcomAppState
+) {
     composable(TopLevelDestination.CART.name) {
-        CartScreen()
+        CartScreen(
+            navigateToLogin = appState::navigateToLogin,
+            navigateToProductDetails = appState::navigateToProductDetails
+        )
     }
 }
 
-fun NavGraphBuilder.loginScreen() {
+fun NavGraphBuilder.loginScreen(
+    appState: EcomAppState
+) {
     composable(route = LowLevelDestination.LOGIN.name) {
-        LoginScreen()
+        LoginScreen(
+            navigateToSignup = appState::navigateToSignup,
+            navigateToAccount = appState::navigateToAccount
+        )
     }
 }
 
-fun NavGraphBuilder.signupScreen() {
+fun NavGraphBuilder.signupScreen(
+    appState: EcomAppState
+) {
     composable(route = LowLevelDestination.SIGNUP.name) {
-        SignupScreen()
+        SignupScreen(
+            navigateToAccount = appState::navigateToAccount
+        )
     }
 }
 
-fun NavGraphBuilder.wishlistScreen() {
+fun NavGraphBuilder.wishlistScreen(
+    appState: EcomAppState
+) {
     composable(LowLevelDestination.WISHLIST.name) {
-        WishlistScreen()
+        WishlistScreen(
+            navigateToLogin = appState::navigateToLogin,
+            navigateToProductDetails = appState::navigateToProductDetails
+        )
     }
 }
 
-
-fun NavGraphBuilder.productDetailsScreen() {
+fun NavGraphBuilder.productDetailsScreen(
+    appState: EcomAppState
+) {
     composable(LowLevelDestination.PRODUCT_DETAILS.name) {
-        ProductDetailsScreen()
+        ProductDetailsScreen(
+            navigateToCart = appState::navigateToCart
+        )
     }
 }
 
-fun NavGraphBuilder.productsScreen() {
+fun NavGraphBuilder.productsScreen(
+    appState: EcomAppState
+) {
     composable(LowLevelDestination.PRODUCTS.name) {
-        ProductsScreen()
+        ProductsScreen(
+            navigateToProductDetails = appState::navigateToProductDetails
+        )
     }
 }
 
-fun NavGraphBuilder.searchScreen() {
+fun NavGraphBuilder.searchScreen(
+    appState: EcomAppState
+) {
     composable(route = LowLevelDestination.SEARCH.name) {
-        SearchScreen()
+        SearchScreen(
+            canNavigateUp = appState.canNavigateUp,
+            navigateUp = appState::navigateUp
+        )
     }
 }
