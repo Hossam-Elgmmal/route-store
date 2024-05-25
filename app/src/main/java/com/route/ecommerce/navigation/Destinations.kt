@@ -8,16 +8,16 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
-import com.route.ecommerce.ui.screens.AccountScreen
 import com.route.ecommerce.ui.screens.CartScreen
 import com.route.ecommerce.ui.screens.CategoriesScreen
-import com.route.ecommerce.ui.screens.HomeScreen
 import com.route.ecommerce.ui.screens.LoginScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.ProductsScreen
 import com.route.ecommerce.ui.screens.SearchScreen
 import com.route.ecommerce.ui.screens.SignupScreen
 import com.route.ecommerce.ui.screens.WishlistScreen
+import com.route.ecommerce.ui.screens.account.AccountScreen
+import com.route.ecommerce.ui.screens.home.HomeScreen
 
 enum class TopLevelDestination(
     @DrawableRes val iconId: Int,

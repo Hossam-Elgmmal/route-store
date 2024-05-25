@@ -1,10 +1,10 @@
 package com.route.ecommerce.ui.utils
 
-import androidx.compose.foundation.Image
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -32,9 +32,10 @@ fun EcomTopBar(
             }
         },
         title = {
-            Image(
+            Icon(
                 painter = painterResource(id = R.drawable.ic_app_bar_logo),
                 contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary
             )
         },
         actions = {

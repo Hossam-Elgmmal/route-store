@@ -1,10 +1,13 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("com.google.protobuf") version "0.9.4"
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.hilt.plugin)
 }
 
 android {
-    namespace = "com.route.domain"
+    namespace = "com.route.datastore"
     compileSdk = 34
 
     defaultConfig {
@@ -31,13 +34,27 @@ android {
         jvmTarget = "1.8"
     }
 }
-
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.material)
+    implementation(project(":core:model"))
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    //
+    implementation(libs.androidx.datastore)
+    implementation("com.google.protobuf:protobuf-javalite:3.25.2")
+    //
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+}
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.2"
+    }
+    generateProtoTasks {
+        all().forEach { task ->
+            task.plugins.create("java") {
+                option("lite")
+            }
+        }
+    }
 }

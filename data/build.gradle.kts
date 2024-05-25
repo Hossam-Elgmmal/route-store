@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kapt)
+    alias(libs.plugins.hilt.plugin)
 }
 
 android {
@@ -37,8 +39,17 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(project(":domain"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    //
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
+    //
+    implementation(libs.androidx.datastore.preferences)
+    //
+    implementation(libs.kotlinx.coroutines.android)
+}
+kapt {
+    correctErrorTypes = true
 }

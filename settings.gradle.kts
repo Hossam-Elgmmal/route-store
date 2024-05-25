@@ -21,5 +21,5 @@ dependencyResolutionManagement {
 
 rootProject.name = "E Commerce Route"
 include(":app")
-include(":data")
-include(":domain")
+include(":core:datastore-proto")
+include(":core:model")
