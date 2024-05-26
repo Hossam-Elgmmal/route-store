@@ -12,7 +12,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.route.data.ConnectivityNetworkMonitor
-import com.route.ecommerce.navigation.LowLevelDestination
 import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.navigation.navigateToAccount
 import com.route.ecommerce.navigation.navigateToCart
@@ -77,16 +76,16 @@ class EcomAppState(
 
     val canGoToSearch: Boolean
         @Composable get() = when (currentDestination?.route) {
-            LowLevelDestination.LOGIN.name -> false
-            LowLevelDestination.SIGNUP.name -> false
-            else -> true
+            TopLevelDestination.HOME.name -> true
+            TopLevelDestination.CATEGORIES.name -> true
+            TopLevelDestination.CART.name -> true
+            else -> false
         }
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
     val shouldShowTopBar: Boolean
-        @Composable get() = currentDestination?.route != LowLevelDestination.SEARCH.name
-
+        @Composable get() = currentTopLevelDestination != null
     val shouldShowBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
                 && currentTopLevelDestination != null
@@ -119,8 +118,6 @@ class EcomAppState(
         }
     }
 
-    fun navigateToCart() = navController.navigateToCart()
-    fun navigateToAccount() = navController.navigateToAccount()
     fun navigateToLogin() = navController.navigateToLogin()
     fun navigateToSignup() = navController.navigateToSignup()
     fun navigateToProducts() = navController.navigateToProducts()

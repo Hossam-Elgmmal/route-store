@@ -9,11 +9,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.route.ecommerce.ui.EcomAppState
 
 @Composable
 fun HomeScreen(
-    navigateToProducts: () -> Unit,
-    navigateToProductDetails: () -> Unit,
+    appState: EcomAppState,
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -23,13 +23,20 @@ fun HomeScreen(
             .fillMaxSize()
     ) {
         Text(text = "welcome home")
-
-        Button(onClick = navigateToProducts) {
+        Button(onClick = appState::navigateToLogin) {
+            Text(text = "login")
+        }
+        Button(onClick = appState::navigateToSignup) {
+            Text(text = "sign up")
+        }
+        Button(onClick = appState::navigateToProducts) {
             Text(text = "products")
         }
-        Button(onClick = navigateToProductDetails) {
+        Button(onClick = appState::navigateToProductDetails) {
             Text(text = "product details")
         }
-
+        Button(onClick = appState::navigateToWishlist) {
+            Text(text = "wishlist")
+        }
     }
 }
