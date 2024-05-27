@@ -1,18 +1,20 @@
-package com.route.ecommerce.ui.screens
+package com.route.ecommerce.ui.auth
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.route.ecommerce.ui.EcomAppState
 
 @Composable
-fun SignupScreen(
+fun ForgotPasswordScreen(
+    appState: EcomAppState,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "sign up")
+        Text(text = "ForgotPasswordScreen")
     }
 }

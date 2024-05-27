@@ -7,6 +7,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.route.ecommerce.ui.EcomAppState
+import com.route.ecommerce.ui.auth.forgotPasswordScreen
+import com.route.ecommerce.ui.auth.loginScreen
+import com.route.ecommerce.ui.auth.signupScreen
 
 @Composable
 fun EcomNavHost(
@@ -18,7 +21,7 @@ fun EcomNavHost(
         startDestination = TopLevelDestination.HOME.name,
         modifier = modifier,
         enterTransition = {
-            fadeIn(animationSpec = tween(400))
+            fadeIn(animationSpec = tween(300))
         },
         exitTransition = {
             fadeOut(tween(300))
@@ -27,11 +30,21 @@ fun EcomNavHost(
         homeScreen(
             appState = appState
         )
-        loginScreen()
-        signupScreen()
+        loginScreen(
+            appState = appState
+        )
+        signupScreen(
+            appState = appState
+        )
+        forgotPasswordScreen(
+            appState = appState
+        )
+
         categoriesScreen()
         cartScreen()
-        accountScreen()
+        accountScreen(
+            appState = appState
+        )
         productsScreen()
         productDetailsScreen()
         wishlistScreen()

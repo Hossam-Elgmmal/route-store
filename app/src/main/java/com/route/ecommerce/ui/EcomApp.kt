@@ -52,6 +52,17 @@ fun EcomApp(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+        topBar = {
+            if (appState.shouldShowTopBar) {
+                EcomTopBar(
+                    canGoToSearch = appState.canGoToSearch,
+                    onNavigateToSearch = appState::navigateToSearch,
+                    canNavigateUp = appState.canNavigateUp,
+                    navigateUp = appState::navigateUp,
+                    modifier = Modifier.animateContentSize()
+                )
+            }
+        },
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 EcomNavigationBar(
@@ -88,15 +99,6 @@ fun EcomApp(
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
-                if (appState.shouldShowTopBar) {
-                    EcomTopBar(
-                        canGoToSearch = appState.canGoToSearch,
-                        onNavigateToSearch = appState::navigateToSearch,
-                        canNavigateUp = appState.canNavigateUp,
-                        navigateUp = appState::navigateUp
-                    )
-                }
-                HorizontalDivider()
                 EcomNavHost(
                     appState = appState,
                     modifier = if (appState.shouldShowTopBar) {

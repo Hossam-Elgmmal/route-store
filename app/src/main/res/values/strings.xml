@@ -10,4 +10,13 @@
     <string name="ok">OK</string>
     <string name="set_dark_theme">set dark theme</string>
     <string name="not_connected">⚠️ No internet connection</string>
+    <string name="login">login</string>
+    <string name="enter_name">name</string>
+    <string name="enter_email">email</string>
+    <string name="enter_email_support">enter your email</string>
+    <string name="enter_password">password</string>
+    <string name="enter_password_support">enter your password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or_create_a_new_account">or create a new account</string>
+    <string name="welcome_back">welcome back.</string>
 </resources>

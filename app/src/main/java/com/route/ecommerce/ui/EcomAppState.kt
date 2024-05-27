@@ -12,17 +12,22 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.route.data.ConnectivityNetworkMonitor
+import com.route.ecommerce.navigation.LowLevelDestination
 import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.navigation.navigateToAccount
 import com.route.ecommerce.navigation.navigateToCart
 import com.route.ecommerce.navigation.navigateToCategories
 import com.route.ecommerce.navigation.navigateToHome
-import com.route.ecommerce.navigation.navigateToLogin
 import com.route.ecommerce.navigation.navigateToProductDetails
 import com.route.ecommerce.navigation.navigateToProducts
 import com.route.ecommerce.navigation.navigateToSearch
-import com.route.ecommerce.navigation.navigateToSignup
 import com.route.ecommerce.navigation.navigateToWishlist
+import com.route.ecommerce.ui.auth.FORGOT_PASSWORD_ROUTE
+import com.route.ecommerce.ui.auth.LOGIN_ROUTE
+import com.route.ecommerce.ui.auth.SIGNUP_ROUTE
+import com.route.ecommerce.ui.auth.navigateToForgotPassword
+import com.route.ecommerce.ui.auth.navigateToLogin
+import com.route.ecommerce.ui.auth.navigateToSignup
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -85,14 +90,20 @@ class EcomAppState(
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
     val shouldShowTopBar: Boolean
-        @Composable get() = currentTopLevelDestination != null
+        @Composable get() = currentDestination?.route != LowLevelDestination.SEARCH.name
     val shouldShowBottomBar: Boolean
         @Composable get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
-                && currentTopLevelDestination != null
+                && currentDestination?.route != LowLevelDestination.SEARCH.name
+                && currentDestination?.route != LOGIN_ROUTE
+                && currentDestination?.route != SIGNUP_ROUTE
+                && currentDestination?.route != FORGOT_PASSWORD_ROUTE
 
     val shouldShowNavRail: Boolean
         @Composable get() = windowSizeClass.widthSizeClass != WindowWidthSizeClass.Compact
-                && currentTopLevelDestination != null
+                && currentDestination?.route != LowLevelDestination.SEARCH.name
+                && currentDestination?.route != LOGIN_ROUTE
+                && currentDestination?.route != SIGNUP_ROUTE
+                && currentDestination?.route != FORGOT_PASSWORD_ROUTE
 
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
@@ -120,6 +131,7 @@ class EcomAppState(
 
     fun navigateToLogin() = navController.navigateToLogin()
     fun navigateToSignup() = navController.navigateToSignup()
+    fun navigateToForgotPassword() = navController.navigateToForgotPassword()
     fun navigateToProducts() = navController.navigateToProducts()
     fun navigateToProductDetails() = navController.navigateToProductDetails()
     fun navigateToWishlist() = navController.navigateToWishlist()

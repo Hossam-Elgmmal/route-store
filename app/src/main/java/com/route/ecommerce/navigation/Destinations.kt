@@ -10,11 +10,9 @@ import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.screens.CartScreen
 import com.route.ecommerce.ui.screens.CategoriesScreen
-import com.route.ecommerce.ui.screens.LoginScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.ProductsScreen
 import com.route.ecommerce.ui.screens.SearchScreen
-import com.route.ecommerce.ui.screens.SignupScreen
 import com.route.ecommerce.ui.screens.WishlistScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
@@ -67,12 +65,6 @@ fun NavController.navigateToAccount(navOptions: NavOptions? = null) =
 fun NavController.navigateToWishlist(navOptions: NavOptions? = null) =
     navigate(LowLevelDestination.WISHLIST.name, navOptions)
 
-fun NavController.navigateToLogin(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.LOGIN.name, navOptions)
-
-fun NavController.navigateToSignup(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.SIGNUP.name, navOptions)
-
 
 fun NavController.navigateToCart(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.CART.name, navOptions)
@@ -103,27 +95,19 @@ fun NavGraphBuilder.categoriesScreen() {
     }
 }
 
-fun NavGraphBuilder.accountScreen() {
+fun NavGraphBuilder.accountScreen(
+    appState: EcomAppState
+) {
     composable(TopLevelDestination.ACCOUNT.name) {
-        AccountScreen()
+        AccountScreen(
+            appState = appState
+        )
     }
 }
 
 fun NavGraphBuilder.cartScreen() {
     composable(TopLevelDestination.CART.name) {
         CartScreen()
-    }
-}
-
-fun NavGraphBuilder.loginScreen() {
-    composable(route = LowLevelDestination.LOGIN.name) {
-        LoginScreen()
-    }
-}
-
-fun NavGraphBuilder.signupScreen() {
-    composable(route = LowLevelDestination.SIGNUP.name) {
-        SignupScreen()
     }
 }
 

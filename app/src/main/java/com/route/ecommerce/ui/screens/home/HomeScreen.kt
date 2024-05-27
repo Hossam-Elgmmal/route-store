@@ -23,12 +23,6 @@ fun HomeScreen(
             .fillMaxSize()
     ) {
         Text(text = "welcome home")
-        Button(onClick = appState::navigateToLogin) {
-            Text(text = "login")
-        }
-        Button(onClick = appState::navigateToSignup) {
-            Text(text = "sign up")
-        }
         Button(onClick = appState::navigateToProducts) {
             Text(text = "products")
         }
