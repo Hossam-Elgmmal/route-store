@@ -6,8 +6,12 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
+import com.route.ecommerce.ui.auth.forgotPasswordScreen
+import com.route.ecommerce.ui.auth.loginScreen
+import com.route.ecommerce.ui.auth.signupScreen
 import com.route.ecommerce.ui.screens.CartScreen
 import com.route.ecommerce.ui.screens.CategoriesScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
@@ -44,9 +48,9 @@ enum class TopLevelDestination(
     ),
 }
 
+const val ACCOUNT_ROUTE = "account_route"
+
 enum class LowLevelDestination {
-    LOGIN,
-    SIGNUP,
     WISHLIST,
     PRODUCTS,
     PRODUCT_DETAILS,
@@ -98,8 +102,22 @@ fun NavGraphBuilder.categoriesScreen() {
 fun NavGraphBuilder.accountScreen(
     appState: EcomAppState
 ) {
-    composable(TopLevelDestination.ACCOUNT.name) {
-        AccountScreen(
+    navigation(
+        startDestination = ACCOUNT_ROUTE,
+        route = TopLevelDestination.ACCOUNT.name
+    ) {
+        composable(ACCOUNT_ROUTE) {
+            AccountScreen(
+                appState = appState
+            )
+        }
+        loginScreen(
+            appState = appState
+        )
+        signupScreen(
+            appState = appState
+        )
+        forgotPasswordScreen(
             appState = appState
         )
     }

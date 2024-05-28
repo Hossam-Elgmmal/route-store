@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
@@ -52,17 +51,6 @@ fun EcomApp(
         modifier = modifier,
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
         snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        topBar = {
-            if (appState.shouldShowTopBar) {
-                EcomTopBar(
-                    canGoToSearch = appState.canGoToSearch,
-                    onNavigateToSearch = appState::navigateToSearch,
-                    canNavigateUp = appState.canNavigateUp,
-                    navigateUp = appState::navigateUp,
-                    modifier = Modifier.animateContentSize()
-                )
-            }
-        },
         bottomBar = {
             if (appState.shouldShowBottomBar) {
                 EcomNavigationBar(
@@ -71,7 +59,6 @@ fun EcomApp(
                     currentDestination = appState.currentDestination,
                     modifier = Modifier.animateContentSize()
                 )
-                HorizontalDivider()
             }
         }
     ) { paddingValues ->
@@ -93,12 +80,19 @@ fun EcomApp(
                     currentDestination = appState.currentDestination,
                     modifier = Modifier
                         .safeDrawingPadding()
-                        .animateContentSize()
                 )
             }
             Column(
                 modifier = Modifier.fillMaxSize()
             ) {
+                if (appState.shouldShowTopBar) {
+                    EcomTopBar(
+                        canGoToSearch = appState.canGoToSearch,
+                        onNavigateToSearch = appState::navigateToSearch,
+                        canNavigateUp = appState.canNavigateUp,
+                        navigateUp = appState::navigateUp,
+                    )
+                }
                 EcomNavHost(
                     appState = appState,
                     modifier = if (appState.shouldShowTopBar) {

@@ -1,6 +1,5 @@
 package com.route.ecommerce.ui.utils
 
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationRail
 import androidx.compose.material3.NavigationRailItem
@@ -15,19 +14,18 @@ import com.route.ecommerce.navigation.TopLevelDestination
 @Composable
 fun EcomNavRail(
     destinations: List<TopLevelDestination>,
-    onNavigateToDestination: (TopLevelDestination) -> Unit,
+    onNavigateToDestination: (TopLevelDestination, Boolean) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
     NavigationRail(
         modifier = modifier
     ) {
-        Spacer(modifier = Modifier.weight(1f))
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             EcomNavRailItem(
                 selected = selected,
-                onClick = { onNavigateToDestination(destination) },
+                onClick = { onNavigateToDestination(destination, selected) },
                 icon = {
                     Icon(
                         painter = painterResource(id = destination.iconId),
@@ -43,7 +41,6 @@ fun EcomNavRail(
                 label = { Text(text = stringResource(id = destination.iconTextId)) },
             )
         }
-        Spacer(modifier = Modifier.weight(1f))
     }
 }
 
