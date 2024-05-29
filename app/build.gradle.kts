@@ -64,6 +64,7 @@ dependencies {
     implementation(project(":core:datastore-proto"))
     implementation(project(":core:model"))
     implementation(project(":core:data"))
+    implementation(project(":core:network"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

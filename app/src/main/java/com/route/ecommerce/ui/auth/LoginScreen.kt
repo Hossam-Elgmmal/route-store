@@ -104,5 +104,9 @@ fun LoginScreen(
         ) {
             Text(text = stringResource(R.string.or_create_a_new_account))
         }
+
+        if (viewModel.uiState is LoginUiState.Success) {
+            Text(text = (viewModel.uiState as LoginUiState.Success).response.message)
+        }
     }
 }
