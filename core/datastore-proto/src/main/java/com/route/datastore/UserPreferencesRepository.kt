@@ -1,6 +1,7 @@
 package com.route.datastore
 
 import androidx.datastore.core.DataStore
+import com.route.model.UserInfo
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -14,7 +15,11 @@ class UserPreferencesRepository @Inject constructor(
                 UserPreferences.DarkTheme.LIGHT -> com.route.model.DarkTheme.LIGHT
                 UserPreferences.DarkTheme.DARK -> com.route.model.DarkTheme.DARK
                 else -> com.route.model.DarkTheme.FOLLOW_SYSTEM
-            }
+            },
+            userName = preferences.userName,
+            userEmail = preferences.userEmail,
+            userPassword = preferences.userPassword,
+            userToken = preferences.userToken,
         )
     }
 
@@ -27,6 +32,19 @@ class UserPreferencesRepository @Inject constructor(
         userPreferences.updateData {
             it.toBuilder()
                 .setDarkTheme(newDarkTheme)
+                .build()
+        }
+    }
+
+    suspend fun setUserInfo(
+        userInfo: UserInfo
+    ) {
+        userPreferences.updateData {
+            it.toBuilder()
+                .setUserName(userInfo.name)
+                .setUserEmail(userInfo.email)
+                .setUserPassword(userInfo.password)
+                .setUserToken(userInfo.token)
                 .build()
         }
     }
