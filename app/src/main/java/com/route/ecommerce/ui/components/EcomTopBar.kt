@@ -1,4 +1,4 @@
-package com.route.ecommerce.ui.utils
+package com.route.ecommerce.ui.components
 
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api

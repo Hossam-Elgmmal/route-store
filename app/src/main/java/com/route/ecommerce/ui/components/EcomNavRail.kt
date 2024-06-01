@@ -1,33 +1,29 @@
-package com.route.ecommerce.ui.utils
+package com.route.ecommerce.ui.components
 
-import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import com.route.ecommerce.navigation.TopLevelDestination
 
 @Composable
-fun EcomNavigationBar(
+fun EcomNavRail(
     destinations: List<TopLevelDestination>,
     onNavigateToDestination: (TopLevelDestination, Boolean) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
-    NavigationBar(
-        modifier = modifier,
-        tonalElevation = 0.dp
+    NavigationRail(
+        modifier = modifier
     ) {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
-            EcomNavigationBarItem(
+            EcomNavRailItem(
                 selected = selected,
                 onClick = { onNavigateToDestination(destination, selected) },
                 icon = {
@@ -47,14 +43,13 @@ fun EcomNavigationBar(
                         text = stringResource(id = destination.iconTextId)
                     )
                 },
-                modifier = Modifier
             )
         }
     }
 }
 
 @Composable
-fun RowScope.EcomNavigationBarItem(
+fun EcomNavRailItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
@@ -63,17 +58,12 @@ fun RowScope.EcomNavigationBarItem(
     selectedIcon: @Composable () -> Unit = icon,
     label: @Composable () -> Unit
 ) {
-    NavigationBarItem(
+    NavigationRailItem(
         selected = selected,
         onClick = onClick,
         icon = if (selected) selectedIcon else icon,
-        alwaysShowLabel = alwaysShowLabel,
+        modifier = modifier,
         label = label,
-        modifier = modifier
+        alwaysShowLabel = alwaysShowLabel
     )
 }
-
-fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
-    this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
-    } ?: false

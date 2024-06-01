@@ -1,40 +1,37 @@
 package com.route.ecommerce.ui.auth.login
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.route.ecommerce.R
 import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.ui.EcomAppState
-import com.route.ecommerce.ui.utils.EcomTextField
+import com.route.ecommerce.ui.components.EcomErrorDialog
+import com.route.ecommerce.ui.components.EcomTextField
+import com.route.ecommerce.ui.components.LoadingDialog
 
 @Composable
 fun LoginScreen(
@@ -64,7 +61,9 @@ fun LoginScreen(
             if (viewModel.isEmailError) R.string.login_email_support_error
             else R.string.login_email_support,
             leadingIconId = R.drawable.ic_email,
-            trailingIconId = R.drawable.ic_clear,
+            trailingIconId =
+            if (viewModel.emailValue.isEmpty()) null
+            else R.drawable.ic_clear,
             trailingIconAction = viewModel::clearEmail,
             keyboardOptions = KeyboardOptions.Default.copy(
                 imeAction = ImeAction.Next,
@@ -96,29 +95,43 @@ fun LoginScreen(
             isError = viewModel.isPasswordError,
             modifier = Modifier.fillMaxWidth()
         )
-        TextButton(
-            onClick = appState::navigateToForgotPassword,
-            modifier = Modifier.align(Alignment.End)
-        ) {
-            Text(text = stringResource(R.string.forgot_password))
-        }
+
+        Text(
+            text = stringResource(R.string.forgot_password),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .clickable(onClick = appState::navigateToForgotPassword)
+                .align(Alignment.End),
+            color = MaterialTheme.colorScheme.onSurface
+        )
 
         Button(
             onClick = viewModel::login,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            shape = MaterialTheme.shapes.medium
         ) {
             Text(
                 text = stringResource(R.string.login),
-                style = MaterialTheme.typography.titleLarge,
             )
         }
-        TextButton(
-            onClick = appState::navigateToSignup,
-            modifier = Modifier.align(Alignment.End)
-
+        Row(
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = stringResource(R.string.or_create_a_new_account))
+            Text(
+                text = stringResource(R.string.do_not_have_an_account),
+                style = MaterialTheme.typography.bodyMedium
+            )
+            Spacer(modifier = Modifier.width(4.dp))
+            Text(
+                text = stringResource(R.string.sign_up),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.clickable(
+                    onClick = appState::navigateToSignup
+                ),
+                color = MaterialTheme.colorScheme.onSurface
+            )
         }
+
         LoginUiEvents(
             loginUiState = loginUiState,
             onSuccess = appState::navigateToTopLevelDestinations,
@@ -139,7 +152,7 @@ fun LoginUiEvents(
     when (loginUiState) {
         LoginUiState.Idle -> {}
         is LoginUiState.Error -> {
-            ErrorDialog(
+            EcomErrorDialog(
                 iconId = R.drawable.ic_error,
                 textId = loginUiState.uiError.errorMessageId,
                 onDismissRequest = onDismissRequest
@@ -157,38 +170,4 @@ fun LoginUiEvents(
             )
         }
     }
-}
-
-@Composable
-fun LoadingDialog() {
-    Dialog(onDismissRequest = {}) {
-        Card {
-            CircularProgressIndicator()
-        }
-    }
-}
-
-@Composable
-fun ErrorDialog(
-    @DrawableRes iconId: Int,
-    @StringRes textId: Int,
-    onDismissRequest: () -> Unit
-) {
-    AlertDialog(
-        onDismissRequest = onDismissRequest,
-        icon = {
-            Icon(
-                painter = painterResource(id = iconId),
-                contentDescription = null,
-            )
-        },
-        text = {
-            Text(text = stringResource(id = textId))
-        },
-        confirmButton = {
-            TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(id = R.string.ok))
-            }
-        }
-    )
 }

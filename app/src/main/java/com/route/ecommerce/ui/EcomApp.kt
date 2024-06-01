@@ -25,9 +25,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.route.ecommerce.R
 import com.route.ecommerce.navigation.EcomNavHost
-import com.route.ecommerce.ui.utils.EcomNavRail
-import com.route.ecommerce.ui.utils.EcomNavigationBar
-import com.route.ecommerce.ui.utils.EcomTopBar
+import com.route.ecommerce.ui.components.EcomNavRail
+import com.route.ecommerce.ui.components.EcomNavigationBar
+import com.route.ecommerce.ui.components.EcomTopBar
 
 @Composable
 fun EcomApp(
@@ -42,6 +42,7 @@ fun EcomApp(
         if (isOffline) {
             snackbarHostState.showSnackbar(
                 message = notConnectedMessage,
+                withDismissAction = true,
                 duration = SnackbarDuration.Indefinite
             )
         }

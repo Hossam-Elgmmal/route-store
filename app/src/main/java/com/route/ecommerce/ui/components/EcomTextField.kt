@@ -1,4 +1,4 @@
-package com.route.ecommerce.ui.utils
+package com.route.ecommerce.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
@@ -20,7 +20,7 @@ fun EcomTextField(
     @StringRes labelId: Int,
     @StringRes supportTextId: Int,
     @DrawableRes leadingIconId: Int,
-    @DrawableRes trailingIconId: Int,
+    @DrawableRes trailingIconId: Int?,
     trailingIconAction: () -> Unit,
     keyboardOptions: KeyboardOptions,
     modifier: Modifier = Modifier,
@@ -41,11 +41,13 @@ fun EcomTextField(
             )
         },
         trailingIcon = {
-            IconButton(onClick = trailingIconAction) {
-                Icon(
-                    painter = painterResource(id = trailingIconId),
-                    contentDescription = null
-                )
+            if (trailingIconId != null) {
+                IconButton(onClick = trailingIconAction) {
+                    Icon(
+                        painter = painterResource(id = trailingIconId),
+                        contentDescription = null
+                    )
+                }
             }
         },
         keyboardOptions = keyboardOptions,

@@ -37,14 +37,19 @@ fun DarkThemeDialog(
         },
         text = {
             Column {
-                DarkTheme.entries.forEach {
+                DarkTheme.entries.forEach { theme ->
+                    val themeText = when (theme) {
+                        DarkTheme.FOLLOW_SYSTEM -> stringResource(R.string.follow_system)
+                        DarkTheme.LIGHT -> stringResource(R.string.light_theme)
+                        DarkTheme.DARK -> stringResource(R.string.dark_theme)
+                    }
                     TextButton(
-                        onClick = { setDarkTheme(it) },
+                        onClick = { setDarkTheme(theme) },
                     ) {
-                        Text(text = it.name)
+                        Text(text = themeText)
                         RadioButton(
-                            selected = it == selectedDarkTheme,
-                            onClick = { setDarkTheme(it) },
+                            selected = theme == selectedDarkTheme,
+                            onClick = { setDarkTheme(theme) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .wrapContentWidth(Alignment.End)

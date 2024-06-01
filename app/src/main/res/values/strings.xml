@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">E Commerce Route</string>
     <string name="home">Home</string>
-    <string name="categories">Categories</string>
+    <string name="menu">Menu</string>
     <string name="cart">Cart</string>
     <string name="account">Account</string>
     <string name="search">search</string>
@@ -26,4 +26,10 @@
     <string name="forgot_password">Forgot password?</string>
     <string name="or_create_a_new_account">or create a new account</string>
     <string name="welcome_back">welcome back.</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="do_not_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="follow_system">Follow system</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
 </resources>

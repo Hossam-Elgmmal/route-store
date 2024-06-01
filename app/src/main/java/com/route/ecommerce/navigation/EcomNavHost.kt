@@ -30,7 +30,7 @@ fun EcomNavHost(
         accountScreen(
             appState = appState
         )
-        categoriesScreen()
+        menuScreen()
         cartScreen()
         productsScreen()
         productDetailsScreen()

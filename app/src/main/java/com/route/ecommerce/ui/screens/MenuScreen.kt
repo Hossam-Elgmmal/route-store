@@ -7,12 +7,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun CategoriesScreen(
+fun MenuScreen(
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "Categories Screen")
+        Text(text = "Menu Screen")
     }
 }
