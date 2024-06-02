@@ -1,8 +1,9 @@
 package com.route.ecommerce.ui.components
 
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Card
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -12,15 +13,22 @@ import com.route.ecommerce.ui.theme.EcomTheme
 
 
 @Composable
-fun LoadingDialog() {
+fun LoadingDialog(
+    modifier: Modifier = Modifier
+) {
+
     Dialog(onDismissRequest = {}) {
-        Card(
-            Modifier.padding(8.dp)
+        Surface(
+            modifier = modifier,
+            shape = CircleShape,
         ) {
-            CircularProgressIndicator()
+            CircularProgressIndicator(
+                modifier = Modifier.padding(8.dp)
+            )
         }
     }
 }
+
 
 @Preview
 @Composable

@@ -2,11 +2,22 @@ package com.route.ecommerce.ui.auth
 
 import android.util.Patterns
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
 import com.route.ecommerce.R
+import com.route.ecommerce.navigation.TopLevelDestination
+import com.route.ecommerce.ui.components.EcomErrorDialog
+import com.route.ecommerce.ui.components.LoadingDialog
 
 
 enum class EmailError {
     NONE, INVALID
+}
+
+sealed interface AuthUiState {
+    data object Idle : AuthUiState
+    data object Loading : AuthUiState
+    data object Success : AuthUiState
+    data class Error(val uiError: UiError) : AuthUiState
 }
 
 enum class UiError(
@@ -14,6 +25,9 @@ enum class UiError(
 ) {
     WRONG_EMAIL_OR_PASSWORD(
         errorMessageId = R.string.wrong_email_or_password
+    ),
+    ACCOUNT_ALREADY_EXISTS(
+        errorMessageId = R.string.account_already_exists
     ),
     CANCELED(
         errorMessageId = R.string.request_canceled
@@ -46,19 +60,51 @@ fun validateEmail(emailValue: String): EmailError {
 
 fun validatePassword(passwordValue: String): Set<PasswordError> {
 
-    val passwordError = mutableSetOf<PasswordError>()
+    val passwordErrorSet = mutableSetOf<PasswordError>()
 
     if (passwordValue.length < 8) {
-        passwordError.add(PasswordError.TOO_SHORT)
+        passwordErrorSet.add(PasswordError.TOO_SHORT)
     }
     if (!passwordValue.any { it.isDigit() }) {
-        passwordError.add(PasswordError.NO_DIGITS)
+        passwordErrorSet.add(PasswordError.NO_DIGITS)
     }
     if (!passwordValue.any { it.isUpperCase() }) {
-        passwordError.add(PasswordError.NO_UPPERCASE)
+        passwordErrorSet.add(PasswordError.NO_UPPERCASE)
     }
     if (!passwordValue.any { it.isLowerCase() }) {
-        passwordError.add(PasswordError.NO_LOWERCASE)
+        passwordErrorSet.add(PasswordError.NO_LOWERCASE)
     }
-    return passwordError
+    return passwordErrorSet
+}
+
+@Composable
+fun AuthUiEvents(
+    authUiState: AuthUiState,
+    onSuccess: (
+        topLevelDestination: TopLevelDestination,
+        sameTopLevelDestination: Boolean
+    ) -> Unit,
+    onDismissRequest: () -> Unit,
+) {
+    when (authUiState) {
+        AuthUiState.Idle -> {}
+        is AuthUiState.Error -> {
+            EcomErrorDialog(
+                iconId = R.drawable.ic_error,
+                textId = authUiState.uiError.errorMessageId,
+                onDismissRequest = onDismissRequest
+            )
+        }
+
+        AuthUiState.Loading -> {
+            LoadingDialog()
+        }
+
+        AuthUiState.Success -> {
+            onSuccess(
+                TopLevelDestination.ACCOUNT,
+                true
+            )
+        }
+    }
 }

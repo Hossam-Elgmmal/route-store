@@ -6,6 +6,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.auth.login.LoginScreen
+import com.route.ecommerce.ui.auth.signup.SignupScreen
 
 const val LOGIN_ROUTE = "LOGIN"
 const val SIGNUP_ROUTE = "SIGNUP"

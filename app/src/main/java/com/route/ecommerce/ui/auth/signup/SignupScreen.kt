@@ -1,4 +1,4 @@
-package com.route.ecommerce.ui.auth.login
+package com.route.ecommerce.ui.auth.signup
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
@@ -32,32 +33,53 @@ import com.route.ecommerce.ui.auth.AuthUiEvents
 import com.route.ecommerce.ui.components.EcomTextField
 
 @Composable
-fun LoginScreen(
+fun SignupScreen(
     appState: EcomAppState,
     modifier: Modifier = Modifier,
-    viewModel: LoginViewModel = hiltViewModel()
+    viewModel: SignupViewModel = hiltViewModel()
 ) {
 
-    val loginUiState by viewModel.loginUiState.collectAsState()
+    val signUpUiState by viewModel.signUpUiState.collectAsState()
+
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
         modifier = modifier
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
         Text(
-            text = stringResource(R.string.welcome_back),
+            text = stringResource(R.string.create_account),
             style = MaterialTheme.typography.displaySmall
+        )
+        EcomTextField(
+            value = viewModel.nameValue,
+            onValueChange = viewModel::updateName,
+            labelId = R.string.username,
+            supportTextId =
+            if (viewModel.isNameError) R.string.sign_up_username_support_error
+            else R.string.sign_up_username_support,
+            leadingIconId = R.drawable.ic_name,
+            trailingIconId =
+            if (viewModel.nameValue.isEmpty()) null
+            else R.drawable.ic_clear,
+            trailingIconAction = viewModel::clearName,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Next,
+                keyboardType = KeyboardType.Text
+            ),
+            visualTransformation = VisualTransformation.None,
+            isError = viewModel.isNameError,
+            modifier = Modifier.fillMaxWidth()
         )
         EcomTextField(
             value = viewModel.emailValue,
             onValueChange = viewModel::updateEmail,
             labelId = R.string.enter_email,
             supportTextId =
-            if (viewModel.isEmailError) R.string.login_email_support_error
-            else R.string.login_email_support,
+            if (viewModel.isEmailError) R.string.sign_up_email_support_error
+            else R.string.sign_up_email_support,
             leadingIconId = R.drawable.ic_email,
             trailingIconId =
             if (viewModel.emailValue.isEmpty()) null
@@ -75,16 +97,14 @@ fun LoginScreen(
             value = viewModel.passwordValue,
             onValueChange = viewModel::updatePassword,
             labelId = R.string.enter_password,
-            supportTextId =
-            if (viewModel.isPasswordError) R.string.login_password_support_error
-            else R.string.login_password_support,
+            supportTextId = R.string.sign_up_password_support,
             leadingIconId = R.drawable.ic_password,
             trailingIconId =
             if (viewModel.isPasswordVisible) R.drawable.ic_visible
             else R.drawable.ic_not_visible,
             trailingIconAction = viewModel::togglePasswordVisibility,
             keyboardOptions = KeyboardOptions.Default.copy(
-                imeAction = ImeAction.Done,
+                imeAction = ImeAction.Next,
                 keyboardType = KeyboardType.Password
             ),
             visualTransformation =
@@ -93,46 +113,59 @@ fun LoginScreen(
             isError = viewModel.isPasswordError,
             modifier = Modifier.fillMaxWidth()
         )
-
-        Text(
-            text = stringResource(R.string.forgot_password),
-            style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier
-                .clickable(onClick = appState::navigateToForgotPassword)
-                .align(Alignment.End),
-            color = MaterialTheme.colorScheme.onSurface
+        EcomTextField(
+            value = viewModel.rePasswordValue,
+            onValueChange = viewModel::updateRePassword,
+            labelId = R.string.confirm_password,
+            supportTextId =
+            if (viewModel.isRePasswordError) R.string.passwords_must_match
+            else R.string.login_password_support,
+            leadingIconId = R.drawable.ic_password,
+            trailingIconId =
+            if (viewModel.isRePasswordVisible) R.drawable.ic_visible
+            else R.drawable.ic_not_visible,
+            trailingIconAction = viewModel::toggleRePasswordVisibility,
+            keyboardOptions = KeyboardOptions.Default.copy(
+                imeAction = ImeAction.Done,
+                keyboardType = KeyboardType.Password
+            ),
+            visualTransformation =
+            if (viewModel.isRePasswordVisible) VisualTransformation.None
+            else PasswordVisualTransformation(),
+            isError = viewModel.isRePasswordError,
+            modifier = Modifier.fillMaxWidth()
         )
-
         Button(
-            onClick = viewModel::login,
+            onClick = viewModel::signup,
             modifier = Modifier.fillMaxWidth(),
             shape = MaterialTheme.shapes.medium
         ) {
             Text(
-                text = stringResource(R.string.login),
+                text = stringResource(R.string.sign_up),
             )
         }
+        Spacer(modifier = Modifier.height(8.dp))
         Row(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                text = stringResource(R.string.do_not_have_an_account),
+                text = stringResource(R.string.already_have_an_account),
                 style = MaterialTheme.typography.bodyMedium
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = stringResource(R.string.sign_up),
+                text = stringResource(R.string.login),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.clickable(
-                    onClick = appState::navigateToSignup
+                    onClick = appState::navigateToLogin
                 ),
                 color = MaterialTheme.colorScheme.onSurface
             )
         }
         AuthUiEvents(
-            authUiState = loginUiState,
+            authUiState = signUpUiState,
             onSuccess = appState::navigateToTopLevelDestinations,
-            onDismissRequest = viewModel::resetUiState,
+            onDismissRequest = viewModel::resetUiState
         )
     }
 }

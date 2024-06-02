@@ -1,4 +1,4 @@
-package com.route.ecommerce.ui.auth.login
+package com.route.ecommerce.ui.auth.signup
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +14,7 @@ import com.route.ecommerce.ui.auth.validateEmail
 import com.route.ecommerce.ui.auth.validatePassword
 import com.route.model.UserInfo
 import com.route.network.AuthRepository
-import com.route.network.model.LoginRequest
+import com.route.network.model.SignUpRequest
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
@@ -26,32 +26,46 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-
 @HiltViewModel
-class LoginViewModel @Inject constructor(
+class SignupViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val userPreferencesRepository: UserPreferencesRepository
 ) : ViewModel() {
 
+    var nameValue by mutableStateOf("")
+    var isNameError by mutableStateOf(false)
+
     var emailValue by mutableStateOf("")
-    private var emailError = EmailError.NONE
     var isEmailError by mutableStateOf(false)
+    private var emailError = EmailError.NONE
 
     var passwordValue by mutableStateOf("")
+    var isPasswordError by mutableStateOf(false)
     var isPasswordVisible by mutableStateOf(false)
     private var passwordErrorSet = emptySet<PasswordError>()
-    var isPasswordError by mutableStateOf(false)
 
-    private val _loginUiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
-    val loginUiState: StateFlow<AuthUiState>
-        get() = _loginUiState.asStateFlow()
+    var rePasswordValue by mutableStateOf("")
+    var isRePasswordError by mutableStateOf(false)
+    var isRePasswordVisible by mutableStateOf(false)
+
+    private val _signUpUiState = MutableStateFlow<AuthUiState>(AuthUiState.Idle)
+    val signUpUiState: StateFlow<AuthUiState>
+        get() = _signUpUiState.asStateFlow()
 
     fun resetUiState() {
-        _loginUiState.value = AuthUiState.Idle
+        _signUpUiState.value = AuthUiState.Idle
+    }
+
+    fun updateName(newValue: String) {
+        nameValue = newValue
     }
 
     fun updateEmail(newValue: String) {
         emailValue = newValue
+    }
+
+    fun clearName() {
+        nameValue = ""
     }
 
     fun clearEmail() {
@@ -66,24 +80,39 @@ class LoginViewModel @Inject constructor(
         isPasswordVisible = !isPasswordVisible
     }
 
-    fun login() {
+    fun updateRePassword(newValue: String) {
+        rePasswordValue = newValue
+    }
+
+    fun toggleRePasswordVisibility() {
+        isRePasswordVisible = !isRePasswordVisible
+    }
+
+    fun signup() {
+        isNameError = nameValue.trim().isEmpty()
+
         emailError = validateEmail(emailValue)
         isEmailError = emailError != EmailError.NONE
 
         passwordErrorSet = validatePassword(passwordValue)
         isPasswordError = passwordErrorSet.isNotEmpty()
 
-        if (isEmailError || isPasswordError) return
+        isRePasswordError = passwordValue != rePasswordValue
+
+        if (isNameError || isEmailError || isPasswordError || isRePasswordError)
+            return
 
         viewModelScope.launch(Dispatchers.IO) {
-            _loginUiState.value = AuthUiState.Loading
-            _loginUiState.value =
+            _signUpUiState.value = AuthUiState.Loading
+            _signUpUiState.value =
                 try {
                     val response = authRepository
-                        .login(
-                            LoginRequest(
+                        .signUp(
+                            SignUpRequest(
+                                name = nameValue,
                                 email = emailValue,
-                                password = passwordValue
+                                password = passwordValue,
+                                rePassword = rePasswordValue
                             )
                         )
                     if (response.isSuccessful) {
@@ -97,7 +126,7 @@ class LoginViewModel @Inject constructor(
                         AuthUiState.Success
 
                     } else when (response.code()) {
-                        401 -> AuthUiState.Error(UiError.WRONG_EMAIL_OR_PASSWORD)
+                        409 -> AuthUiState.Error(UiError.ACCOUNT_ALREADY_EXISTS)
                         else -> AuthUiState.Error(UiError.SERVER_ERROR)
                     }
 
