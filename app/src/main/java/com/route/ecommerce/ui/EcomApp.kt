@@ -22,9 +22,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.route.ecommerce.R
 import com.route.ecommerce.navigation.EcomNavHost
+import com.route.ecommerce.ui.components.EcomBackground
 import com.route.ecommerce.ui.components.EcomNavRail
 import com.route.ecommerce.ui.components.EcomNavigationBar
 import com.route.ecommerce.ui.components.EcomTopBar
@@ -47,65 +49,67 @@ fun EcomApp(
             )
         }
     }
-
-    Scaffold(
-        modifier = modifier,
-        contentWindowInsets = WindowInsets(0, 0, 0, 0),
-        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-        bottomBar = {
-            if (appState.shouldShowBottomBar) {
-                EcomNavigationBar(
-                    destinations = appState.topLevelDestinations,
-                    onNavigateToDestination = appState::navigateToTopLevelDestinations,
-                    currentDestination = appState.currentDestination,
-                    modifier = Modifier.animateContentSize()
-                )
-            }
-        }
-    ) { paddingValues ->
-        Row(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .consumeWindowInsets(paddingValues)
-                .windowInsetsPadding(
-                    WindowInsets.safeDrawing.only(
-                        WindowInsetsSides.Horizontal
-                    )
-                )
-        ) {
-            if (appState.shouldShowNavRail) {
-                EcomNavRail(
-                    destinations = appState.topLevelDestinations,
-                    onNavigateToDestination = appState::navigateToTopLevelDestinations,
-                    currentDestination = appState.currentDestination,
-                    modifier = Modifier
-                        .safeDrawingPadding()
-                )
-            }
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                if (appState.shouldShowTopBar) {
-                    EcomTopBar(
-                        canGoToSearch = appState.canGoToSearch,
-                        onNavigateToSearch = appState::navigateToSearch,
-                        canNavigateUp = appState.canNavigateUp,
-                        navigateUp = appState::navigateUp,
+    EcomBackground {
+        Scaffold(
+            modifier = modifier,
+            contentWindowInsets = WindowInsets(0, 0, 0, 0),
+            containerColor = Color.Transparent,
+            snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
+            bottomBar = {
+                if (appState.shouldShowBottomBar) {
+                    EcomNavigationBar(
+                        destinations = appState.topLevelDestinations,
+                        onNavigateToDestination = appState::navigateToTopLevelDestinations,
+                        currentDestination = appState.currentDestination,
+                        modifier = Modifier.animateContentSize()
                     )
                 }
-                EcomNavHost(
-                    appState = appState,
-                    modifier = if (appState.shouldShowTopBar) {
-                        Modifier.consumeWindowInsets(
-                            WindowInsets.safeDrawing.only(
-                                WindowInsetsSides.Top
-                            )
+            }
+        ) { paddingValues ->
+            Row(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .consumeWindowInsets(paddingValues)
+                    .windowInsetsPadding(
+                        WindowInsets.safeDrawing.only(
+                            WindowInsetsSides.Horizontal
                         )
-                    } else {
-                        Modifier
-                    },
-                )
+                    )
+            ) {
+                if (appState.shouldShowNavRail) {
+                    EcomNavRail(
+                        destinations = appState.topLevelDestinations,
+                        onNavigateToDestination = appState::navigateToTopLevelDestinations,
+                        currentDestination = appState.currentDestination,
+                        modifier = Modifier
+                            .safeDrawingPadding()
+                    )
+                }
+                Column(
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    if (appState.shouldShowTopBar) {
+                        EcomTopBar(
+                            canGoToSearch = appState.canGoToSearch,
+                            onNavigateToSearch = appState::navigateToSearch,
+                            canNavigateUp = appState.canNavigateUp,
+                            navigateUp = appState::navigateUp,
+                        )
+                    }
+                    EcomNavHost(
+                        appState = appState,
+                        modifier = if (appState.shouldShowTopBar) {
+                            Modifier.consumeWindowInsets(
+                                WindowInsets.safeDrawing.only(
+                                    WindowInsetsSides.Top
+                                )
+                            )
+                        } else {
+                            Modifier
+                        },
+                    )
+                }
             }
         }
     }

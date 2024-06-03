@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.route.ecommerce.ui.EcomAppState
+import com.route.ecommerce.ui.auth.forgotpassword.ForgotPasswordScreen
 import com.route.ecommerce.ui.auth.login.LoginScreen
 import com.route.ecommerce.ui.auth.signup.SignupScreen
 
