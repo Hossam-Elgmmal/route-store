@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.route.ecommerce.R
+import com.route.ecommerce.ui.theme.logoColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -37,7 +38,7 @@ fun EcomTopBar(
             Icon(
                 painter = painterResource(id = R.drawable.ic_app_bar_logo),
                 contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.logoColor
             )
         },
         actions = {
