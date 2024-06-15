@@ -86,6 +86,8 @@ dependencies {
     //
     implementation(libs.squareup.retrofit)
     implementation(libs.okhttp)
+    //
+    implementation(libs.glide.compose)
 
 }
 kapt {

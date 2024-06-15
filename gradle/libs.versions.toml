@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.0"
+compose = "1.0.0-beta01"
 coreSplashscreen = "1.0.1"
 datastore = "1.1.1"
 hiltAndroid = "2.51.1"
@@ -20,7 +21,9 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 kotlinx-serialization-converter = "1.0.0"
 kotlinx-serialization-json = "1.6.3"
+roomRuntime = "2.6.1"
 work = "2.9.0"
+ksp = "1.9.0-1.0.13"
 
 
 [libraries]
@@ -32,6 +35,10 @@ androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-com
 androidx-hilt-worker = { module = "androidx.hilt:hilt-work", version.ref = "hilt" }
 androidx-material3-windowsizeclass = { module = "androidx.compose.material3:material3-window-size-class", version.ref = "material3WindowSizeClass" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
+androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
+glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "compose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -62,4 +69,5 @@ kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroid" }
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 

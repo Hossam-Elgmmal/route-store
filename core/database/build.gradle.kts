@@ -1,12 +1,13 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.kapt)
     alias(libs.plugins.hilt.plugin)
 }
 
 android {
-    namespace = "com.route.data"
+    namespace = "com.route.database"
     compileSdk = 34
 
     defaultConfig {
@@ -37,14 +38,15 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(project(":core:datastore-proto"))
-    implementation(project(":core:network"))
-    implementation(project(":core:database"))
+    implementation(project(":core:model"))
     testImplementation(libs.junit)
+    //
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
     //
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-}
-kapt {
-    correctErrorTypes = true
+    kapt(libs.androidx.hilt.compiler)
+
 }

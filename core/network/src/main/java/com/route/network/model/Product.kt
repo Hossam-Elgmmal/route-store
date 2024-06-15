@@ -43,6 +43,6 @@ data class Product(
     val brand: Brand,
 
     @SerialName("ratingsAverage")
-    val ratingsAverage: Int,
+    val ratingsAverage: Double,
 
     )
