@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavDestination
 import com.route.ecommerce.navigation.TopLevelDestination
 
@@ -42,7 +43,8 @@ fun EcomNavRail(
                 },
                 label = {
                     Text(
-                        text = stringResource(id = destination.iconTextId)
+                        text = stringResource(id = destination.iconTextId),
+                        fontWeight = if (selected) FontWeight.Normal else FontWeight.Light
                     )
                 },
             )

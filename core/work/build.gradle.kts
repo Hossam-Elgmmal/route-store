@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.route.data"
+    namespace = "com.route.work"
     compileSdk = 34
 
     defaultConfig {
@@ -35,14 +35,17 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
+    implementation(project(":core:data"))
     implementation(project(":core:datastore-proto"))
-    implementation(project(":core:network"))
     testImplementation(libs.junit)
     //
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.worker)
+    //
+    implementation(libs.androidx.work)
+    kapt(libs.androidx.hilt.compiler)
 }
 kapt {
     correctErrorTypes = true

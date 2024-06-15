@@ -11,6 +11,11 @@ message UserPreferences {
   string userPassword = 4;
   string userToken = 5;
 
+  int32 categoryVersion = 6;
+  int32 subCategoryVersion = 7;
+  int32 brandVersion = 8;
+  int32 productVersion = 9;
+
   enum DarkTheme {
     FOLLOW_SYSTEM = 0;
     LIGHT = 1;

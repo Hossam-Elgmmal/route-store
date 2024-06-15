@@ -46,6 +46,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 }
+kapt {
+    correctErrorTypes = true
+}
 protobuf {
     protoc {
         artifact = "com.google.protobuf:protoc:3.25.2"

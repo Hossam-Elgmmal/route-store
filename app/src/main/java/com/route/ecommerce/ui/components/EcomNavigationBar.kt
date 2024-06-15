@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -44,7 +45,8 @@ fun EcomNavigationBar(
                 },
                 label = {
                     Text(
-                        text = stringResource(id = destination.iconTextId)
+                        text = stringResource(id = destination.iconTextId),
+                        fontWeight = if (selected) FontWeight.Normal else FontWeight.Light
                     )
                 }
             )
