@@ -8,7 +8,6 @@
     <style name="Theme.EcomRoute.Splash" parent="Theme.SplashScreen">
 
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
-        <item name="windowSplashScreenBackground">@color/ic_launcher_background_tint</item>
         <item name="postSplashScreenTheme">@style/Theme.EcomRoute</item>
     </style>
 </resources>

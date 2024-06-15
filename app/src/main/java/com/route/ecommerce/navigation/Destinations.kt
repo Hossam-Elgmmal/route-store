@@ -6,15 +6,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
+import com.route.ecommerce.ui.auth.forgotPasswordScreen
+import com.route.ecommerce.ui.auth.loginScreen
+import com.route.ecommerce.ui.auth.signupScreen
 import com.route.ecommerce.ui.screens.CartScreen
-import com.route.ecommerce.ui.screens.CategoriesScreen
-import com.route.ecommerce.ui.screens.LoginScreen
+import com.route.ecommerce.ui.screens.MenuScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.ProductsScreen
 import com.route.ecommerce.ui.screens.SearchScreen
-import com.route.ecommerce.ui.screens.SignupScreen
 import com.route.ecommerce.ui.screens.WishlistScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
@@ -29,10 +31,10 @@ enum class TopLevelDestination(
         selectedIconId = R.drawable.ic_selected_home,
         iconTextId = R.string.home,
     ),
-    CATEGORIES(
-        iconId = R.drawable.ic_categories,
-        selectedIconId = R.drawable.ic_selected_categories,
-        iconTextId = R.string.categories,
+    MENU(
+        iconId = R.drawable.ic_menu,
+        selectedIconId = R.drawable.ic_selected_menu,
+        iconTextId = R.string.menu,
     ),
     CART(
         iconId = R.drawable.ic_cart,
@@ -46,9 +48,9 @@ enum class TopLevelDestination(
     ),
 }
 
+const val ACCOUNT_ROUTE = "account_route"
+
 enum class LowLevelDestination {
-    LOGIN,
-    SIGNUP,
     WISHLIST,
     PRODUCTS,
     PRODUCT_DETAILS,
@@ -58,20 +60,14 @@ enum class LowLevelDestination {
 fun NavController.navigateToHome(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.HOME.name, navOptions)
 
-fun NavController.navigateToCategories(navOptions: NavOptions? = null) =
-    navigate(TopLevelDestination.CATEGORIES.name, navOptions)
+fun NavController.navigateToMenu(navOptions: NavOptions? = null) =
+    navigate(TopLevelDestination.MENU.name, navOptions)
 
 fun NavController.navigateToAccount(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.ACCOUNT.name, navOptions)
 
 fun NavController.navigateToWishlist(navOptions: NavOptions? = null) =
     navigate(LowLevelDestination.WISHLIST.name, navOptions)
-
-fun NavController.navigateToLogin(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.LOGIN.name, navOptions)
-
-fun NavController.navigateToSignup(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.SIGNUP.name, navOptions)
 
 
 fun NavController.navigateToCart(navOptions: NavOptions? = null) =
@@ -97,33 +93,40 @@ fun NavGraphBuilder.homeScreen(
         )
     }
 }
-fun NavGraphBuilder.categoriesScreen() {
-    composable(TopLevelDestination.CATEGORIES.name) {
-        CategoriesScreen()
+
+fun NavGraphBuilder.menuScreen() {
+    composable(TopLevelDestination.MENU.name) {
+        MenuScreen()
     }
 }
 
-fun NavGraphBuilder.accountScreen() {
-    composable(TopLevelDestination.ACCOUNT.name) {
-        AccountScreen()
+fun NavGraphBuilder.accountScreen(
+    appState: EcomAppState
+) {
+    navigation(
+        startDestination = ACCOUNT_ROUTE,
+        route = TopLevelDestination.ACCOUNT.name
+    ) {
+        composable(ACCOUNT_ROUTE) {
+            AccountScreen(
+                appState = appState
+            )
+        }
+        loginScreen(
+            appState = appState
+        )
+        signupScreen(
+            appState = appState
+        )
+        forgotPasswordScreen(
+            appState = appState
+        )
     }
 }
 
 fun NavGraphBuilder.cartScreen() {
     composable(TopLevelDestination.CART.name) {
         CartScreen()
-    }
-}
-
-fun NavGraphBuilder.loginScreen() {
-    composable(route = LowLevelDestination.LOGIN.name) {
-        LoginScreen()
-    }
-}
-
-fun NavGraphBuilder.signupScreen() {
-    composable(route = LowLevelDestination.SIGNUP.name) {
-        SignupScreen()
     }
 }
 

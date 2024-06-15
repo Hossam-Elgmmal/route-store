@@ -6,6 +6,15 @@ option java_multiple_files = true;
 message UserPreferences {
 
   DarkTheme darkTheme = 1;
+  string userName = 2;
+  string userEmail = 3;
+  string userPassword = 4;
+  string userToken = 5;
+
+  int32 categoryVersion = 6;
+  int32 subCategoryVersion = 7;
+  int32 brandVersion = 8;
+  int32 productVersion = 9;
 
   enum DarkTheme {
     FOLLOW_SYSTEM = 0;

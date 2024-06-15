@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">E Commerce Route</string>
     <string name="home">Home</string>
-    <string name="categories">Categories</string>
+    <string name="menu">Menu</string>
     <string name="cart">Cart</string>
     <string name="account">Account</string>
     <string name="search">search</string>
@@ -9,4 +9,38 @@
     <string name="theme">Theme</string>
     <string name="ok">OK</string>
     <string name="set_dark_theme">set dark theme</string>
+    <string name="not_connected">⚠️ No internet connection</string>
+    <string name="login">login</string>
+    <string name="enter_name">name</string>
+    <string name="enter_email">email</string>
+    <string name="login_email_support" />
+    <string name="sign_up_email_support" />
+    <string name="login_email_support_error">please, enter a valid email</string>
+    <string name="sign_up_email_support_error">please, enter a valid email</string>
+    <string name="enter_password">password</string>
+    <string name="request_canceled">canceled</string>
+    <string name="wrong_email_or_password">wrong email or password</string>
+    <string name="account_already_exists">account already exists</string>
+    <string name="server_error">server error. please, please try again later.</string>
+    <string name="connection_error">network error, please check your connection.</string>
+    <string name="unexpected_error">Unexpected error, please try again</string>
+    <string name="login_password_support" />
+    <string name="sign_up_password_support">Use at least 8 Characters, one uppercase letter one lowercase letter and one number</string>
+    <string name="login_password_support_error">wrong password</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or_create_a_new_account">or create a new account</string>
+    <string name="welcome_back">welcome back.</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="do_not_have_an_account">Don\'t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="follow_system">Follow system</string>
+    <string name="light_theme">Light theme</string>
+    <string name="dark_theme">Dark theme</string>
+    <string name="create_account">Create Account</string>
+    <string name="username">name</string>
+    <string name="sign_up_username_support" />
+    <string name="sign_up_username_support_error">please, enter a valid name</string>
+    <string name="passwords_must_match">passwords must match</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="already_have_an_account">Already have an account?</string>
 </resources>

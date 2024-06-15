@@ -63,6 +63,9 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(project(":core:datastore-proto"))
     implementation(project(":core:model"))
+    implementation(project(":core:data"))
+    implementation(project(":core:network"))
+    implementation(project(":core:work"))
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -80,6 +83,9 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.navigation.compose)
+    //
+    implementation(libs.squareup.retrofit)
+    implementation(libs.okhttp)
 
 }
 kapt {

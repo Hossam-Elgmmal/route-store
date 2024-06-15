@@ -18,7 +18,7 @@ fun EcomNavHost(
         startDestination = TopLevelDestination.HOME.name,
         modifier = modifier,
         enterTransition = {
-            fadeIn(animationSpec = tween(400))
+            fadeIn(animationSpec = tween(300))
         },
         exitTransition = {
             fadeOut(tween(300))
@@ -27,11 +27,11 @@ fun EcomNavHost(
         homeScreen(
             appState = appState
         )
-        loginScreen()
-        signupScreen()
-        categoriesScreen()
+        accountScreen(
+            appState = appState
+        )
+        menuScreen()
         cartScreen()
-        accountScreen()
         productsScreen()
         productDetailsScreen()
         wishlistScreen()
