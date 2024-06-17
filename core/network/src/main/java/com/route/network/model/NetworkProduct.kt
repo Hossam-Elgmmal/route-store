@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Product(
+data class NetworkProduct(
 
     @SerialName("sold")
     val sold: Int,
@@ -13,7 +13,7 @@ data class Product(
     val images: List<String>,
 
     @SerialName("subcategory")
-    val subcategoryList: List<SubCategory>,
+    val subcategoryList: List<NetworkSubCategory>,
 
     @SerialName("ratingsQuantity")
     val ratingsQuantity: Int,
@@ -37,10 +37,10 @@ data class Product(
     val imageCover: String,
 
     @SerialName("category")
-    val category: Category,
+    val networkCategory: NetworkCategory,
 
     @SerialName("brand")
-    val brand: Brand,
+    val networkBrand: NetworkBrand,
 
     @SerialName("ratingsAverage")
     val ratingsAverage: Double,

@@ -1,13 +1,13 @@
 package com.route.network
 
 import com.route.network.model.AuthResponse
-import com.route.network.model.Brand
-import com.route.network.model.Category
 import com.route.network.model.DataResponse
 import com.route.network.model.LoginRequest
-import com.route.network.model.Product
+import com.route.network.model.NetworkBrand
+import com.route.network.model.NetworkCategory
+import com.route.network.model.NetworkProduct
+import com.route.network.model.NetworkSubCategory
 import com.route.network.model.SignUpRequest
-import com.route.network.model.SubCategory
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
@@ -28,19 +28,19 @@ interface RouteApi {
     ): Response<AuthResponse>
 
     @GET("categories")
-    suspend fun getCategories(): DataResponse<List<Category>>
+    suspend fun getCategories(): DataResponse<List<NetworkCategory>>
 
     @GET("subcategories")
-    suspend fun getSubCategories(): DataResponse<List<SubCategory>>
+    suspend fun getSubCategories(): DataResponse<List<NetworkSubCategory>>
 
     @GET("brands")
     suspend fun getBrands(
         @Query("limit") limit: Int = 50,
-    ): DataResponse<List<Brand>>
+    ): DataResponse<List<NetworkBrand>>
 
     @GET("products")
     suspend fun getProducts(
         @Query("limit") limit: Int = 50,
-    ): DataResponse<List<Product>>
+    ): DataResponse<List<NetworkProduct>>
 
 }

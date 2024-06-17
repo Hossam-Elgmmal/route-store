@@ -7,7 +7,7 @@ class NetworkRepository @Inject constructor(
     private val routeApi: RouteApi
 ) {
 
-    suspend fun getCategories(): List<Category> {
+    suspend fun getCategories(): List<NetworkCategory> {
         return try {
             routeApi.getCategories().data
         } catch (e: Exception) {
@@ -15,7 +15,7 @@ class NetworkRepository @Inject constructor(
         }
     }
 
-    suspend fun getSubCategories(): List<SubCategory> {
+    suspend fun getSubCategories(): List<NetworkSubCategory> {
         return try {
             routeApi.getSubCategories().data
         } catch (e: Exception) {
@@ -23,7 +23,7 @@ class NetworkRepository @Inject constructor(
         }
     }
 
-    suspend fun getBrands(): List<Brand> {
+    suspend fun getBrands(): List<NetworkBrand> {
         return try {
             routeApi.getBrands().data
         } catch (e: Exception) {
@@ -31,7 +31,7 @@ class NetworkRepository @Inject constructor(
         }
     }
 
-    suspend fun getProducts(): List<Product> {
+    suspend fun getProducts(): List<NetworkProduct> {
         return try {
             routeApi.getProducts().data
         } catch (e: Exception) {

@@ -6,5 +6,7 @@ import androidx.compose.ui.unit.dp
 
 val shapes = Shapes(
     extraSmall = RoundedCornerShape(4.dp), // TextField
-    medium = RoundedCornerShape(4.dp), // Button
+    small = RoundedCornerShape(4.dp),
+    medium = RoundedCornerShape(16.dp, 0.dp, 16.dp, 0.dp), // Button
+
 )

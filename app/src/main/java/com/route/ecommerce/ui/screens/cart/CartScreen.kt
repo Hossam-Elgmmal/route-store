@@ -1,9 +1,7 @@
-package com.route.ecommerce.ui.screens.home
+package com.route.ecommerce.ui.screens.cart
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,22 +10,23 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.route.ecommerce.ui.EcomAppState
 
 @Composable
-fun HomeScreen(
+fun CartScreen(
     appState: EcomAppState,
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: CartViewModel = hiltViewModel()
 ) {
     Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize()
+        modifier = modifier.fillMaxSize()
     ) {
-        Text(text = "welcome home")
-        Button(onClick = appState::navigateToProducts) {
-            Text(text = "products")
-        }
+        Text(text = "Cart Screen")
         Button(onClick = appState::navigateToProductDetails) {
             Text(text = "product details")
+        }
+        Button(onClick = appState::navigateToWishlist) {
+            Text(text = "Wishlist screen")
+        }
+        Button(onClick = appState::navigateToCheckout) {
+            Text(text = "Checkout screen")
         }
     }
 }

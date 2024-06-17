@@ -16,7 +16,7 @@ import com.route.ecommerce.navigation.TopLevelDestination
 @Composable
 fun EcomNavRail(
     destinations: List<TopLevelDestination>,
-    onNavigateToDestination: (TopLevelDestination, Boolean) -> Unit,
+    onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
@@ -28,7 +28,7 @@ fun EcomNavRail(
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             EcomNavRailItem(
                 selected = selected,
-                onClick = { onNavigateToDestination(destination, selected) },
+                onClick = { onNavigateToDestination(destination) },
                 icon = {
                     Icon(
                         painter = painterResource(id = destination.iconId),
@@ -44,7 +44,7 @@ fun EcomNavRail(
                 label = {
                     Text(
                         text = stringResource(id = destination.iconTextId),
-                        fontWeight = if (selected) FontWeight.Normal else FontWeight.Light
+                        fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal
                     )
                 },
             )

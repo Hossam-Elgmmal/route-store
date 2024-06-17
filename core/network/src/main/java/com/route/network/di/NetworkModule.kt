@@ -1,9 +1,12 @@
 package com.route.network.di
 
 import android.content.Context
+import coil.ImageLoader
+import coil.util.DebugLogger
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.route.network.BuildConfig
 import com.route.network.RouteApi
+import dagger.Lazy
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -53,7 +56,7 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(
         json: Json,
-        okHttpFactory: dagger.Lazy<Call.Factory>
+        okHttpFactory: Lazy<Call.Factory>
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -68,5 +71,22 @@ object NetworkModule {
     fun provideRouteApi(
         retrofit: Retrofit
     ): RouteApi = retrofit.create(RouteApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideImageLoader(
+        @ApplicationContext context: Context,
+        okHttpFactory: Lazy<Call.Factory>,
+    ): ImageLoader =
+        ImageLoader.Builder(context)
+            .callFactory(okHttpFactory.get())
+            .apply {
+                if (BuildConfig.DEBUG) {
+                    logger(DebugLogger())
+                }
+            }
+            .build()
+
+
 
 }

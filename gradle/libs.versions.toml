@@ -1,6 +1,6 @@
 [versions]
 agp = "8.5.0"
-compose = "1.0.0-beta01"
+coilCompose = "2.6.0"
 coreSplashscreen = "1.0.1"
 datastore = "1.1.1"
 hiltAndroid = "2.51.1"
@@ -38,7 +38,7 @@ androidx-navigation-compose = { module = "androidx.navigation:navigation-compose
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomRuntime" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
-glide-compose = { module = "com.github.bumptech.glide:compose", version.ref = "compose" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

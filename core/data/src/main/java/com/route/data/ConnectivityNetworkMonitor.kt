@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 class ConnectivityNetworkMonitor @Inject constructor(
     @ApplicationContext private val context: Context
-) {
-    val isOnline: Flow<Boolean> = callbackFlow {
+) : NetworkMonitor {
+    override val isOnline: Flow<Boolean> = callbackFlow {
         val connectivityManager = context.getSystemService<ConnectivityManager>()
         if (connectivityManager == null) {
             channel.trySend(false)
@@ -55,4 +55,8 @@ class ConnectivityNetworkMonitor @Inject constructor(
         activeNetwork
             ?.let(::getNetworkCapabilities)
             ?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) ?: false
+}
+
+interface NetworkMonitor {
+    val isOnline: Flow<Boolean>
 }

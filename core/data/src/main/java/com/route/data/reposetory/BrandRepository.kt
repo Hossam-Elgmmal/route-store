@@ -3,10 +3,11 @@ package com.route.data.reposetory
 import com.route.data.Syncable
 import com.route.data.Synchronizer
 import com.route.data.dataVersionSync
+import com.route.data.model.Brand
 import com.route.database.dao.BrandDao
 import com.route.database.model.BrandEntity
 import com.route.datastore.DataVersion
-import com.route.network.model.Brand
+import com.route.network.model.NetworkBrand
 import com.route.network.model.NetworkRepository
 import javax.inject.Inject
 
@@ -29,7 +30,7 @@ class BrandRepositoryImpl @Inject constructor(
             },
             updateModelData = { brandList ->
                 if (brandList.isNotEmpty()) {
-                    val newList = brandList.map(Brand::asEntity)
+                    val newList = brandList.map(NetworkBrand::asEntity)
                     brandDao.addBrands(newList)
                 }
             },
@@ -37,11 +38,27 @@ class BrandRepositoryImpl @Inject constructor(
                 copy(brandVersion = latestVersion)
             }
         )
+
+    override suspend fun getBrands() =
+        brandDao.getBrands().map(BrandEntity::asExternalModel)
+
+    override suspend fun getBrandById(id: String) =
+        brandDao.getBrandById(id = id).asExternalModel()
 }
 
-interface BrandRepository : Syncable
+interface BrandRepository : Syncable {
 
-fun Brand.asEntity() = BrandEntity(
+    suspend fun getBrands(): List<Brand>
+    suspend fun getBrandById(id: String): Brand
+}
+
+fun NetworkBrand.asEntity() = BrandEntity(
+    id = id,
+    name = name,
+    imageUrl = imageUrl
+)
+
+fun BrandEntity.asExternalModel() = Brand(
     id = id,
     name = name,
     imageUrl = imageUrl

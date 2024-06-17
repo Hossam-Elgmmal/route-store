@@ -3,10 +3,11 @@ package com.route.data.reposetory
 import com.route.data.Syncable
 import com.route.data.Synchronizer
 import com.route.data.dataVersionSync
+import com.route.data.model.Category
 import com.route.database.dao.CategoryDao
 import com.route.database.model.CategoryEntity
 import com.route.datastore.DataVersion
-import com.route.network.model.Category
+import com.route.network.model.NetworkCategory
 import com.route.network.model.NetworkRepository
 import javax.inject.Inject
 
@@ -28,7 +29,7 @@ class CategoryRepositoryImpl @Inject constructor(
             },
             updateModelData = { categoriesList ->
                 if (categoriesList.isNotEmpty()) {
-                    val newList = categoriesList.map(Category::asEntity)
+                    val newList = categoriesList.map(NetworkCategory::asEntity)
                     categoryDao.addCategories(newList)
                 }
             },
@@ -36,11 +37,28 @@ class CategoryRepositoryImpl @Inject constructor(
                 copy(categoryVersion = latestVersion)
             }
         )
+
+    override suspend fun getCategories() =
+        categoryDao.getCategories().map(CategoryEntity::asExternalModel)
+
+    override suspend fun getCategoryById(id: String) =
+        categoryDao.getCategoryById(id = id).asExternalModel()
+
 }
 
-interface CategoryRepository : Syncable
+interface CategoryRepository : Syncable {
 
-fun Category.asEntity() = CategoryEntity(
+    suspend fun getCategories(): List<Category>
+    suspend fun getCategoryById(id: String): Category
+}
+
+fun NetworkCategory.asEntity() = CategoryEntity(
+    id = id,
+    name = name,
+    imageUrl = imageUrl
+)
+
+fun CategoryEntity.asExternalModel() = Category(
     id = id,
     name = name,
     imageUrl = imageUrl
