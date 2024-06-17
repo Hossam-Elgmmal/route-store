@@ -39,6 +39,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(project(":core:datastore-proto"))
     implementation(project(":core:network"))
+    implementation(project(":core:database"))
     testImplementation(libs.junit)
     //
     implementation(libs.hilt.android)

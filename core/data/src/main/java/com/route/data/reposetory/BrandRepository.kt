@@ -1,35 +1,65 @@
 package com.route.data.reposetory
 
-import android.util.Log
 import com.route.data.Syncable
 import com.route.data.Synchronizer
 import com.route.data.dataVersionSync
+import com.route.data.model.Brand
+import com.route.database.dao.BrandDao
+import com.route.database.model.BrandEntity
 import com.route.datastore.DataVersion
-import com.route.network.model.Brand
+import com.route.network.model.NetworkBrand
+import com.route.network.model.NetworkRepository
 import javax.inject.Inject
 
 private const val TAG = "BrandRepositoryImpl"
 
-class BrandRepositoryImpl @Inject constructor() : BrandRepository {
+class BrandRepositoryImpl @Inject constructor(
+    private val networkRepository: NetworkRepository,
+    private val brandDao: BrandDao,
+) : BrandRepository {
+
     override suspend fun syncWith(synchronizer: Synchronizer): Boolean =
         synchronizer.dataVersionSync(
             versionReader = DataVersion::brandVersion,
             fetchDataList = { currentVersion ->
-                if (currentVersion >= 0) {
-                    Log.i(TAG, "syncWith: $currentVersion")
-                    // network.get
-                    emptyList<Brand>()
+                if (currentVersion <= 0) {
+                    networkRepository.getBrands()
                 } else {
                     emptyList()
                 }
             },
-            updateModelData = {
-                // TODO("need database")
+            updateModelData = { brandList ->
+                if (brandList.isNotEmpty()) {
+                    val newList = brandList.map(NetworkBrand::asEntity)
+                    brandDao.addBrands(newList)
+                }
             },
             versionUpdater = { latestVersion ->
                 copy(brandVersion = latestVersion)
             }
         )
+
+    override suspend fun getBrands() =
+        brandDao.getBrands().map(BrandEntity::asExternalModel)
+
+    override suspend fun getBrandById(id: String) =
+        brandDao.getBrandById(id = id).asExternalModel()
 }
 
-interface BrandRepository : Syncable
+interface BrandRepository : Syncable {
+
+    suspend fun getBrands(): List<Brand>
+    suspend fun getBrandById(id: String): Brand
+}
+
+fun NetworkBrand.asEntity() = BrandEntity(
+    id = id,
+    name = name,
+    imageUrl = imageUrl
+)
+
+fun BrandEntity.asExternalModel() = Brand(
+    id = id,
+    name = name,
+    imageUrl = imageUrl
+)

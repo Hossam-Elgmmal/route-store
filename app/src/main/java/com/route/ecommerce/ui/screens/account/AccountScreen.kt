@@ -32,7 +32,9 @@ fun AccountScreen(
         Button(onClick = appState::navigateToSignup) {
             Text(text = "to signup")
         }
-
+        Button(onClick = appState::navigateToWishlist) {
+            Text(text = "wishlist")
+        }
         DarkThemeButton(
             accountUiState = accountUiState,
             setDarkTheme = viewModel::setDarkTheme

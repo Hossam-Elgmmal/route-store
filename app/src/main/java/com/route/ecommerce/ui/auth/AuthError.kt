@@ -80,10 +80,7 @@ fun validatePassword(passwordValue: String): Set<PasswordError> {
 @Composable
 fun AuthUiEvents(
     authUiState: AuthUiState,
-    onSuccess: (
-        topLevelDestination: TopLevelDestination,
-        sameTopLevelDestination: Boolean
-    ) -> Unit,
+    onSuccess: (TopLevelDestination) -> Unit,
     onDismissRequest: () -> Unit,
 ) {
     when (authUiState) {
@@ -101,10 +98,7 @@ fun AuthUiEvents(
         }
 
         AuthUiState.Success -> {
-            onSuccess(
-                TopLevelDestination.ACCOUNT,
-                true
-            )
+            onSuccess(TopLevelDestination.ACCOUNT)
         }
     }
 }

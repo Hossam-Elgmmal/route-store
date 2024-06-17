@@ -18,7 +18,7 @@ import com.route.ecommerce.navigation.TopLevelDestination
 @Composable
 fun EcomNavigationBar(
     destinations: List<TopLevelDestination>,
-    onNavigateToDestination: (TopLevelDestination, Boolean) -> Unit,
+    onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
     modifier: Modifier = Modifier
 ) {
@@ -30,7 +30,7 @@ fun EcomNavigationBar(
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
             EcomNavigationBarItem(
                 selected = selected,
-                onClick = { onNavigateToDestination(destination, selected) },
+                onClick = { onNavigateToDestination(destination) },
                 icon = {
                     Icon(
                         painter = painterResource(id = destination.iconId),
@@ -46,7 +46,7 @@ fun EcomNavigationBar(
                 label = {
                     Text(
                         text = stringResource(id = destination.iconTextId),
-                        fontWeight = if (selected) FontWeight.Normal else FontWeight.Light
+                        fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal
                     )
                 }
             )

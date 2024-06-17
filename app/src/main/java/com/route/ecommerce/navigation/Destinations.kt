@@ -6,20 +6,21 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import androidx.navigation.compose.navigation
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.auth.forgotPasswordScreen
 import com.route.ecommerce.ui.auth.loginScreen
 import com.route.ecommerce.ui.auth.signupScreen
-import com.route.ecommerce.ui.screens.CartScreen
-import com.route.ecommerce.ui.screens.MenuScreen
+import com.route.ecommerce.ui.screens.CheckoutScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.ProductsScreen
 import com.route.ecommerce.ui.screens.SearchScreen
 import com.route.ecommerce.ui.screens.WishlistScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
+import com.route.ecommerce.ui.screens.cart.CartScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
+import com.route.ecommerce.ui.screens.menu.MenuScreen
 
 enum class TopLevelDestination(
     @DrawableRes val iconId: Int,
@@ -55,6 +56,7 @@ enum class LowLevelDestination {
     PRODUCTS,
     PRODUCT_DETAILS,
     SEARCH,
+    CHECKOUT,
 }
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) =
@@ -68,6 +70,9 @@ fun NavController.navigateToAccount(navOptions: NavOptions? = null) =
 
 fun NavController.navigateToWishlist(navOptions: NavOptions? = null) =
     navigate(LowLevelDestination.WISHLIST.name, navOptions)
+
+fun NavController.navigateToCheckout(navOptions: NavOptions? = null) =
+    navigate(LowLevelDestination.CHECKOUT.name, navOptions)
 
 
 fun NavController.navigateToCart(navOptions: NavOptions? = null) =
@@ -94,9 +99,13 @@ fun NavGraphBuilder.homeScreen(
     }
 }
 
-fun NavGraphBuilder.menuScreen() {
+fun NavGraphBuilder.menuScreen(
+    appState: EcomAppState
+) {
     composable(TopLevelDestination.MENU.name) {
-        MenuScreen()
+        MenuScreen(
+            appState = appState
+        )
     }
 }
 
@@ -124,33 +133,54 @@ fun NavGraphBuilder.accountScreen(
     }
 }
 
-fun NavGraphBuilder.cartScreen() {
+fun NavGraphBuilder.cartScreen(
+    appState: EcomAppState
+) {
     composable(TopLevelDestination.CART.name) {
-        CartScreen()
+        CartScreen(
+            appState = appState
+        )
     }
 }
 
-fun NavGraphBuilder.wishlistScreen() {
+fun NavGraphBuilder.wishlistScreen(
+    appState: EcomAppState
+) {
     composable(LowLevelDestination.WISHLIST.name) {
-        WishlistScreen()
+        WishlistScreen(
+            appState = appState
+        )
     }
 }
 
-
-fun NavGraphBuilder.productDetailsScreen() {
+fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
     composable(LowLevelDestination.PRODUCT_DETAILS.name) {
-        ProductDetailsScreen()
+        ProductDetailsScreen(
+            appState = appState
+        )
     }
 }
 
-fun NavGraphBuilder.productsScreen() {
+fun NavGraphBuilder.productsScreen(appState: EcomAppState) {
     composable(LowLevelDestination.PRODUCTS.name) {
-        ProductsScreen()
+        ProductsScreen(
+            appState = appState
+        )
     }
 }
 
-fun NavGraphBuilder.searchScreen() {
+fun NavGraphBuilder.searchScreen(appState: EcomAppState) {
     composable(route = LowLevelDestination.SEARCH.name) {
-        SearchScreen()
+        SearchScreen(
+            appState = appState
+        )
+    }
+}
+
+fun NavGraphBuilder.checkoutScreen(appState: EcomAppState) {
+    composable(LowLevelDestination.CHECKOUT.name) {
+        CheckoutScreen(
+            appState = appState
+        )
     }
 }

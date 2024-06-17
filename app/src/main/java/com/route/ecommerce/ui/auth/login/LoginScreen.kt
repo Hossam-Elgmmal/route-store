@@ -106,7 +106,7 @@ fun LoginScreen(
         Button(
             onClick = viewModel::login,
             modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.medium
+            shape = MaterialTheme.shapes.small
         ) {
             Text(
                 text = stringResource(R.string.login),

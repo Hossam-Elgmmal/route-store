@@ -1,5 +1,7 @@
 package com.route.data.di
 
+import com.route.data.ConnectivityNetworkMonitor
+import com.route.data.NetworkMonitor
 import com.route.data.reposetory.BrandRepository
 import com.route.data.reposetory.BrandRepositoryImpl
 import com.route.data.reposetory.CategoryRepository
@@ -36,5 +38,10 @@ abstract class DataModule {
     abstract fun bindsSubCategoryRepository(
         subCategoryRepository: SubCategoryRepositoryImpl
     ): SubCategoryRepository
+
+    @Binds
+    abstract fun bindNetworkMonitor(
+        networkMonitor: ConnectivityNetworkMonitor
+    ): NetworkMonitor
 
 }

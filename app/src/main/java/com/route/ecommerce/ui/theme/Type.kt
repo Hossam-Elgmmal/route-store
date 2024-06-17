@@ -13,7 +13,7 @@ val displayFontFamily = FontFamily(
 val bodyFontFamily = FontFamily(
     Font(R.font.montserrat),
     Font(R.font.montserrat_bold, FontWeight.Bold),
-    Font(R.font.montserrat_light, FontWeight.Light)
+    Font(R.font.montserrat_medium, FontWeight.Medium)
 )
 val baseline = Typography()
 

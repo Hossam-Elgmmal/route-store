@@ -29,8 +29,5 @@ fun HomeScreen(
         Button(onClick = appState::navigateToProductDetails) {
             Text(text = "product details")
         }
-        Button(onClick = appState::navigateToWishlist) {
-            Text(text = "wishlist")
-        }
     }
 }

@@ -86,7 +86,8 @@ dependencies {
     //
     implementation(libs.squareup.retrofit)
     implementation(libs.okhttp)
-
+    //
+    implementation(libs.coil.compose)
 }
 kapt {
     correctErrorTypes = true

@@ -18,7 +18,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.route.data.ConnectivityNetworkMonitor
+import com.route.data.NetworkMonitor
 import com.route.ecommerce.ui.EcomApp
 import com.route.ecommerce.ui.rememberEcomAppState
 import com.route.ecommerce.ui.theme.EcomTheme
@@ -34,7 +34,7 @@ import javax.inject.Inject
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var networkMonitor: ConnectivityNetworkMonitor
+    lateinit var networkMonitor: NetworkMonitor
 
     private val viewModel: MainActivityViewModel by viewModels()
 

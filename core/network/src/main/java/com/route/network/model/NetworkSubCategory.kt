@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SubCategory(
+data class NetworkSubCategory(
 
     @SerialName("_id")
     val id: String,

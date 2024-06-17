@@ -138,7 +138,7 @@ fun SignupScreen(
         Button(
             onClick = viewModel::signup,
             modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.medium
+            shape = MaterialTheme.shapes.small
         ) {
             Text(
                 text = stringResource(R.string.sign_up),
