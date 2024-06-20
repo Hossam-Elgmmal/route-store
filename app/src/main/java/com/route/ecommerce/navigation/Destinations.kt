@@ -6,12 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
-import com.route.ecommerce.ui.auth.forgotPasswordScreen
-import com.route.ecommerce.ui.auth.loginScreen
-import com.route.ecommerce.ui.auth.signupScreen
 import com.route.ecommerce.ui.screens.CheckoutScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.ProductsScreen
@@ -48,8 +44,6 @@ enum class TopLevelDestination(
         iconTextId = R.string.account,
     ),
 }
-
-const val ACCOUNT_ROUTE = "account_route"
 
 enum class LowLevelDestination {
     WISHLIST,
@@ -100,45 +94,37 @@ fun NavGraphBuilder.homeScreen(
 }
 
 fun NavGraphBuilder.menuScreen(
-    appState: EcomAppState
+    appState: EcomAppState,
+    onBackPressed: () -> Unit
 ) {
     composable(TopLevelDestination.MENU.name) {
         MenuScreen(
-            appState = appState
+            appState = appState,
+            onBackPressed = onBackPressed
         )
     }
 }
 
 fun NavGraphBuilder.accountScreen(
-    appState: EcomAppState
+    appState: EcomAppState,
+    onBackPressed: () -> Unit
 ) {
-    navigation(
-        startDestination = ACCOUNT_ROUTE,
-        route = TopLevelDestination.ACCOUNT.name
-    ) {
-        composable(ACCOUNT_ROUTE) {
-            AccountScreen(
-                appState = appState
-            )
-        }
-        loginScreen(
-            appState = appState
-        )
-        signupScreen(
-            appState = appState
-        )
-        forgotPasswordScreen(
-            appState = appState
+    composable(TopLevelDestination.ACCOUNT.name) {
+        AccountScreen(
+            appState = appState,
+            onBackPressed = onBackPressed
         )
     }
 }
 
 fun NavGraphBuilder.cartScreen(
-    appState: EcomAppState
+    appState: EcomAppState,
+    onBackPressed: () -> Unit
 ) {
     composable(TopLevelDestination.CART.name) {
         CartScreen(
-            appState = appState
+            appState = appState,
+            onBackPressed = onBackPressed
         )
     }
 }

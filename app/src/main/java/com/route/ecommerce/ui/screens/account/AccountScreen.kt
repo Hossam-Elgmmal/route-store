@@ -1,5 +1,6 @@
 package com.route.ecommerce.ui.screens.account
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,11 +17,15 @@ import com.route.ecommerce.ui.EcomAppState
 @Composable
 fun AccountScreen(
     appState: EcomAppState,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: AccountViewModel = hiltViewModel()
 ) {
     val accountUiState by viewModel.accountUiState.collectAsState()
 
+    BackHandler {
+        onBackPressed()
+    }
     Column(
         modifier = modifier
             .fillMaxSize()

@@ -11,15 +11,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import com.route.ecommerce.navigation.TopLevelDestination
 
 @Composable
 fun EcomNavigationBar(
     destinations: List<TopLevelDestination>,
-    onNavigateToDestination: (TopLevelDestination) -> Unit,
-    currentDestination: NavDestination?,
+    onNavigateToDestination: (TopLevelDestination, Boolean) -> Unit,
+    latestTopLevelDestination: TopLevelDestination,
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
@@ -27,10 +25,10 @@ fun EcomNavigationBar(
         tonalElevation = 0.dp
     ) {
         destinations.forEach { destination ->
-            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+            val selected = latestTopLevelDestination == destination
             EcomNavigationBarItem(
                 selected = selected,
-                onClick = { onNavigateToDestination(destination) },
+                onClick = { onNavigateToDestination(destination, selected) },
                 icon = {
                     Icon(
                         painter = painterResource(id = destination.iconId),
@@ -73,8 +71,3 @@ fun RowScope.EcomNavigationBarItem(
         modifier = modifier
     )
 }
-
-fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
-    this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
-    } ?: false

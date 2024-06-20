@@ -12,7 +12,6 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.route.data.NetworkMonitor
-import com.route.ecommerce.navigation.ACCOUNT_ROUTE
 import com.route.ecommerce.navigation.LowLevelDestination
 import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.navigation.navigateToAccount
@@ -61,7 +60,7 @@ class EcomAppState(
     networkMonitor: NetworkMonitor,
     coroutineScope: CoroutineScope,
 ) {
-    val currentDestination: NavDestination?
+    private val currentDestination: NavDestination?
         @Composable
         get() = navController.currentBackStackEntryAsState().value?.destination
 
@@ -71,7 +70,7 @@ class EcomAppState(
             TopLevelDestination.HOME.name -> TopLevelDestination.HOME
             TopLevelDestination.MENU.name -> TopLevelDestination.MENU
             TopLevelDestination.CART.name -> TopLevelDestination.CART
-            ACCOUNT_ROUTE -> TopLevelDestination.ACCOUNT
+            TopLevelDestination.ACCOUNT.name -> TopLevelDestination.ACCOUNT
             else -> null
         }
     val canNavigateUp: Boolean
@@ -105,18 +104,28 @@ class EcomAppState(
         )
 
     fun navigateToTopLevelDestinations(
-        topLevelDestination: TopLevelDestination
+        destination: TopLevelDestination,
+        selected: Boolean,
     ) {
-        val topLevelNavOptions =
+        val topLevelNavOptions = if (destination == TopLevelDestination.HOME && selected)
             navOptions {
                 popUpTo(navController.graph.findStartDestination().id) {
-                    saveState = true
+                    inclusive = true
+                    saveState = false
+                }
+                launchSingleTop = false
+                restoreState = false
+            }
+        else
+            navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = !selected
                 }
                 launchSingleTop = true
-                restoreState = true
+                restoreState = !selected
             }
 
-        when (topLevelDestination) {
+        when (destination) {
             TopLevelDestination.HOME -> navController.navigateToHome(topLevelNavOptions)
             TopLevelDestination.MENU -> navController.navigateToMenu(topLevelNavOptions)
             TopLevelDestination.CART -> navController.navigateToCart(topLevelNavOptions)
@@ -133,5 +142,6 @@ class EcomAppState(
     fun navigateToCheckout() = navController.navigateToCheckout()
     fun navigateToSearch() = navController.navigateToSearch()
     fun navigateUp() = navController.navigateUp()
+    fun popBackStack() = navController.popBackStack()
 
 }

@@ -1,5 +1,6 @@
 package com.route.ecommerce.ui.screens.cart
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
@@ -12,9 +13,13 @@ import com.route.ecommerce.ui.EcomAppState
 @Composable
 fun CartScreen(
     appState: EcomAppState,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: CartViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        onBackPressed()
+    }
     Column(
         modifier = modifier.fillMaxSize()
     ) {

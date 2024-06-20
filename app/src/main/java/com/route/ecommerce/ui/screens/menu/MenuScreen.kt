@@ -1,5 +1,6 @@
 package com.route.ecommerce.ui.screens.menu
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,9 +17,13 @@ import com.route.ecommerce.ui.components.CategoryItem
 @Composable
 fun MenuScreen(
     appState: EcomAppState,
+    onBackPressed: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: MenuViewModel = hiltViewModel()
 ) {
+    BackHandler {
+        onBackPressed()
+    }
     Column(
         modifier = modifier.fillMaxSize()
     ) {

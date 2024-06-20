@@ -20,12 +20,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.route.ecommerce.R
 import com.route.ecommerce.navigation.EcomNavHost
+import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.ui.components.EcomBackground
 import com.route.ecommerce.ui.components.EcomNavRail
 import com.route.ecommerce.ui.components.EcomNavigationBar
@@ -49,6 +53,29 @@ fun EcomApp(
             )
         }
     }
+
+    var latestTopLevelDestination by
+    rememberSaveable { mutableStateOf(TopLevelDestination.HOME) }
+
+    LaunchedEffect(key1 = Unit) {
+        appState.navController.addOnDestinationChangedListener { _, navDestination, _ ->
+            when (navDestination.route) {
+                TopLevelDestination.HOME.name ->
+                    latestTopLevelDestination = TopLevelDestination.HOME
+
+                TopLevelDestination.MENU.name ->
+                    latestTopLevelDestination = TopLevelDestination.MENU
+
+                TopLevelDestination.CART.name ->
+                    latestTopLevelDestination = TopLevelDestination.CART
+
+                TopLevelDestination.ACCOUNT.name ->
+                    latestTopLevelDestination = TopLevelDestination.ACCOUNT
+
+                else -> {}
+            }
+        }
+    }
     EcomBackground {
         Scaffold(
             modifier = modifier,
@@ -59,8 +86,11 @@ fun EcomApp(
                 if (appState.shouldShowBottomBar) {
                     EcomNavigationBar(
                         destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestinations,
-                        currentDestination = appState.currentDestination,
+                        onNavigateToDestination = { destination, selected ->
+                            appState.navigateToTopLevelDestinations(destination, selected)
+                            latestTopLevelDestination = destination
+                        },
+                        latestTopLevelDestination = latestTopLevelDestination,
                         modifier = Modifier.animateContentSize()
                     )
                 }
@@ -80,8 +110,11 @@ fun EcomApp(
                 if (appState.shouldShowNavRail) {
                     EcomNavRail(
                         destinations = appState.topLevelDestinations,
-                        onNavigateToDestination = appState::navigateToTopLevelDestinations,
-                        currentDestination = appState.currentDestination,
+                        onNavigateToDestination = { destination, selected ->
+                            appState.navigateToTopLevelDestinations(destination, selected)
+                            latestTopLevelDestination = destination
+                        },
+                        latestTopLevelDestination = latestTopLevelDestination,
                         modifier = Modifier
                             .safeDrawingPadding()
                     )
@@ -99,6 +132,10 @@ fun EcomApp(
                     }
                     EcomNavHost(
                         appState = appState,
+                        onBackPressed = {
+                            appState.navigateToTopLevelDestinations(TopLevelDestination.HOME, false)
+                            latestTopLevelDestination = TopLevelDestination.HOME
+                        },
                         modifier = if (appState.shouldShowTopBar) {
                             Modifier.consumeWindowInsets(
                                 WindowInsets.safeDrawing.only(
