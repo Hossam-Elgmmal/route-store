@@ -43,4 +43,11 @@
     <string name="passwords_must_match">passwords must match</string>
     <string name="confirm_password">confirm password</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="clear_search_text">clear search text</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="clear_recent_searches">clear recent searches</string>
+    <string name="no_search_results">No search results for %s.</string>
+    <string name="no_search_results_suggestion">Try checking your spelling or use more general terms</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="in_stock">%1$s In stock, Order Now!</string>
 </resources>

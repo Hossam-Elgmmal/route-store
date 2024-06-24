@@ -23,6 +23,9 @@ import com.route.ecommerce.navigation.navigateToProductDetails
 import com.route.ecommerce.navigation.navigateToProducts
 import com.route.ecommerce.navigation.navigateToSearch
 import com.route.ecommerce.navigation.navigateToWishlist
+import com.route.ecommerce.ui.auth.FORGOT_PASSWORD_ROUTE
+import com.route.ecommerce.ui.auth.LOGIN_ROUTE
+import com.route.ecommerce.ui.auth.SIGNUP_ROUTE
 import com.route.ecommerce.ui.auth.navigateToForgotPassword
 import com.route.ecommerce.ui.auth.navigateToLogin
 import com.route.ecommerce.ui.auth.navigateToSignup
@@ -79,10 +82,12 @@ class EcomAppState(
 
     val canGoToSearch: Boolean
         @Composable get() = when (currentDestination?.route) {
-            TopLevelDestination.HOME.name -> true
-            TopLevelDestination.MENU.name -> true
-            TopLevelDestination.CART.name -> true
-            else -> false
+            TopLevelDestination.ACCOUNT.name -> false
+            LowLevelDestination.CHECKOUT.name -> false
+            LOGIN_ROUTE -> false
+            SIGNUP_ROUTE -> false
+            FORGOT_PASSWORD_ROUTE -> false
+            else -> true
         }
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
@@ -137,7 +142,7 @@ class EcomAppState(
     fun navigateToSignup() = navController.navigateToSignup()
     fun navigateToForgotPassword() = navController.navigateToForgotPassword()
     fun navigateToProducts() = navController.navigateToProducts()
-    fun navigateToProductDetails() = navController.navigateToProductDetails()
+    fun navigateToProductDetails(id: String) = navController.navigateToProductDetails(id)
     fun navigateToWishlist() = navController.navigateToWishlist()
     fun navigateToCheckout() = navController.navigateToCheckout()
     fun navigateToSearch() = navController.navigateToSearch()

@@ -1,6 +1,7 @@
 package com.route.ecommerce.ui
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
@@ -130,22 +131,24 @@ fun EcomApp(
                             navigateUp = appState::navigateUp,
                         )
                     }
-                    EcomNavHost(
-                        appState = appState,
-                        onBackPressed = {
-                            appState.navigateToTopLevelDestinations(TopLevelDestination.HOME, false)
-                            latestTopLevelDestination = TopLevelDestination.HOME
-                        },
-                        modifier = if (appState.shouldShowTopBar) {
-                            Modifier.consumeWindowInsets(
-                                WindowInsets.safeDrawing.only(
-                                    WindowInsetsSides.Top
+                    Box(
+                        modifier = Modifier.consumeWindowInsets(
+                            if (appState.shouldShowTopBar)
+                                WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
+                            else WindowInsets(0, 0, 0, 0)
+                        )
+                    ) {
+                        EcomNavHost(
+                            appState = appState,
+                            onBackPressed = {
+                                appState.navigateToTopLevelDestinations(
+                                    TopLevelDestination.HOME,
+                                    false
                                 )
-                            )
-                        } else {
-                            Modifier
-                        },
-                    )
+                                latestTopLevelDestination = TopLevelDestination.HOME
+                            },
+                        )
+                    }
                 }
             }
         }

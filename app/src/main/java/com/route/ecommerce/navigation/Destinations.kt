@@ -5,18 +5,20 @@ import androidx.annotation.StringRes
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.screens.CheckoutScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.ProductsScreen
-import com.route.ecommerce.ui.screens.SearchScreen
 import com.route.ecommerce.ui.screens.WishlistScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
 import com.route.ecommerce.ui.screens.cart.CartScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
 import com.route.ecommerce.ui.screens.menu.MenuScreen
+import com.route.ecommerce.ui.screens.search.SearchScreen
 
 enum class TopLevelDestination(
     @DrawableRes val iconId: Int,
@@ -73,8 +75,8 @@ fun NavController.navigateToCart(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.CART.name, navOptions)
 
 
-fun NavController.navigateToProductDetails(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.PRODUCT_DETAILS.name, navOptions)
+fun NavController.navigateToProductDetails(id: String, navOptions: NavOptions? = null) =
+    navigate("${LowLevelDestination.PRODUCT_DETAILS.name}/$id", navOptions)
 
 fun NavController.navigateToProducts(navOptions: NavOptions? = null) =
     navigate(LowLevelDestination.PRODUCTS.name, navOptions)
@@ -139,10 +141,20 @@ fun NavGraphBuilder.wishlistScreen(
     }
 }
 
+const val productId = "product_id"
 fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
-    composable(LowLevelDestination.PRODUCT_DETAILS.name) {
+    composable(
+        route = "${LowLevelDestination.PRODUCT_DETAILS.name}/{${productId}}",
+        arguments = listOf(
+            navArgument(productId) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        val productId = backStackEntry.arguments?.getString(productId) ?: ""
         ProductDetailsScreen(
-            appState = appState
+            appState = appState,
+            productId = productId,
         )
     }
 }

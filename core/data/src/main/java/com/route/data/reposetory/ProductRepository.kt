@@ -91,11 +91,10 @@ fun NetworkProduct.asEntity() = ProductEntity(
     searchText = subcategoryList.first().name
             + networkCategory.name
             + networkBrand.name
-            + title
-            + description,
+            + title,
 
-    ratingsQuantity = ratingsQuantity,
-    quantity = quantity,
+    ratingsQuantity = quantity,
+    quantity = ratingsQuantity,
     sold = sold,
     price = price,
     ratingsAverage = ratingsAverage,

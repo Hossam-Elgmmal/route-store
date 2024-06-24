@@ -2,7 +2,7 @@ package com.route.ecommerce.ui.screens.cart
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,10 +21,10 @@ fun CartScreen(
         onBackPressed()
     }
     Column(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(text = "Cart Screen")
-        Button(onClick = appState::navigateToProductDetails) {
+        Button(onClick = { appState.navigateToProductDetails("123") }) {
             Text(text = "product details")
         }
         Button(onClick = appState::navigateToWishlist) {

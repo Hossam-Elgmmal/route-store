@@ -8,6 +8,8 @@ import com.route.data.reposetory.CategoryRepository
 import com.route.data.reposetory.CategoryRepositoryImpl
 import com.route.data.reposetory.ProductRepository
 import com.route.data.reposetory.ProductRepositoryImpl
+import com.route.data.reposetory.RecentSearchQueryRepository
+import com.route.data.reposetory.RecentSearchQueryRepositoryImpl
 import com.route.data.reposetory.SubCategoryRepository
 import com.route.data.reposetory.SubCategoryRepositoryImpl
 import dagger.Binds
@@ -43,5 +45,10 @@ abstract class DataModule {
     abstract fun bindNetworkMonitor(
         networkMonitor: ConnectivityNetworkMonitor
     ): NetworkMonitor
+
+    @Binds
+    abstract fun bindSearchQueryRepository(
+        searchQueryRepository: RecentSearchQueryRepositoryImpl
+    ): RecentSearchQueryRepository
 
 }

@@ -6,6 +6,7 @@ import com.route.database.EcomDatabase
 import com.route.database.dao.BrandDao
 import com.route.database.dao.CategoryDao
 import com.route.database.dao.ProductDao
+import com.route.database.dao.SearchQueryDao
 import com.route.database.dao.SubCategoryDao
 import dagger.Module
 import dagger.Provides
@@ -49,5 +50,10 @@ object DatabaseModule {
     fun provideProductDao(
         database: EcomDatabase
     ): ProductDao = database.getProductDao()
+
+    @Provides
+    fun provideSearchQueryDao(
+        database: EcomDatabase
+    ): SearchQueryDao = database.getSearchQueryDao()
 
 }

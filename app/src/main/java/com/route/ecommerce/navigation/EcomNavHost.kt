@@ -4,6 +4,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.route.ecommerce.ui.EcomAppState
@@ -20,6 +21,7 @@ fun EcomNavHost(
     NavHost(
         navController = appState.navController,
         startDestination = TopLevelDestination.HOME.name,
+        contentAlignment = Alignment.TopStart,
         modifier = modifier,
         enterTransition = {
             slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(300))
