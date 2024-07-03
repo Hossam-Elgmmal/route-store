@@ -1,6 +1,5 @@
 package com.route.ecommerce.ui
 
-import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -44,6 +43,8 @@ fun EcomApp(
     val snackbarHostState = remember { SnackbarHostState() }
     val isOffline by appState.isOffline.collectAsState()
     val notConnectedMessage = stringResource(id = R.string.not_connected)
+    val cartItems by appState.cartMap.collectAsState()
+    val cartCount = cartItems.values.sum()
 
     LaunchedEffect(key1 = isOffline) {
         if (isOffline) {
@@ -92,7 +93,7 @@ fun EcomApp(
                             latestTopLevelDestination = destination
                         },
                         latestTopLevelDestination = latestTopLevelDestination,
-                        modifier = Modifier.animateContentSize()
+                        cartCount = cartCount,
                     )
                 }
             }
@@ -117,7 +118,8 @@ fun EcomApp(
                         },
                         latestTopLevelDestination = latestTopLevelDestination,
                         modifier = Modifier
-                            .safeDrawingPadding()
+                            .safeDrawingPadding(),
+                        cartCount = cartCount,
                     )
                 }
                 Column(

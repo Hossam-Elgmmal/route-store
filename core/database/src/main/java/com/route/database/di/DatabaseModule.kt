@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.route.database.EcomDatabase
 import com.route.database.dao.BrandDao
+import com.route.database.dao.CartProductDao
 import com.route.database.dao.CategoryDao
 import com.route.database.dao.ProductDao
 import com.route.database.dao.SearchQueryDao
@@ -56,4 +57,8 @@ object DatabaseModule {
         database: EcomDatabase
     ): SearchQueryDao = database.getSearchQueryDao()
 
+    @Provides
+    fun provideCartProductDao(
+        database: EcomDatabase
+    ): CartProductDao = database.getCartProductDao()
 }

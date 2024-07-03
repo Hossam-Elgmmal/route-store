@@ -4,6 +4,8 @@ import com.route.data.ConnectivityNetworkMonitor
 import com.route.data.NetworkMonitor
 import com.route.data.reposetory.BrandRepository
 import com.route.data.reposetory.BrandRepositoryImpl
+import com.route.data.reposetory.CartRepository
+import com.route.data.reposetory.CartRepositoryImpl
 import com.route.data.reposetory.CategoryRepository
 import com.route.data.reposetory.CategoryRepositoryImpl
 import com.route.data.reposetory.ProductRepository
@@ -50,5 +52,10 @@ abstract class DataModule {
     abstract fun bindSearchQueryRepository(
         searchQueryRepository: RecentSearchQueryRepositoryImpl
     ): RecentSearchQueryRepository
+
+    @Binds
+    abstract fun bindCartRepository(
+        cartRepositoryImpl: CartRepositoryImpl
+    ): CartRepository
 
 }

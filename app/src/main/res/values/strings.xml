@@ -50,4 +50,6 @@
     <string name="no_search_results_suggestion">Try checking your spelling or use more general terms</string>
     <string name="add_to_cart">Add to cart</string>
     <string name="in_stock">%1$s In stock, Order Now!</string>
+    <string name="remove">remove</string>
+    <string name="in_basket">"In basket - "</string>
 </resources>

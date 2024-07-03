@@ -1,29 +1,24 @@
 package com.route.ecommerce.ui.screens.menu
 
-import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.route.data.model.Category
 import com.route.data.reposetory.CategoryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
 class MenuViewModel @Inject constructor(
-    private val categoryRepository: CategoryRepository,
+    categoryRepository: CategoryRepository,
 ) : ViewModel() {
 
-    var categoriesList = mutableStateListOf<Category>()
+    val categoriesList =
+        categoryRepository.getCategories()
+            .stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5_000),
+                initialValue = emptyList()
+            )
 
-    init {
-        getCategories()
-    }
-
-    private fun getCategories() {
-        viewModelScope.launch(Dispatchers.IO) {
-            categoriesList.addAll(categoryRepository.getCategories())
-        }
-    }
 }

@@ -3,6 +3,7 @@ package com.route.ecommerce.ui.components
 import android.icu.text.NumberFormat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -36,11 +37,13 @@ import java.util.Locale
 fun SearchItem(
     product: Product,
     onItemClick: () -> Unit,
-    addToCart: () -> Unit,
+    addToCart: (String) -> Unit,
+    removeFromCart: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
+    var canRemoveItem by remember { mutableStateOf(false) }
 
     val imageLoader = rememberAsyncImagePainter(
         model = product.imageCoverUrl,
@@ -105,11 +108,33 @@ fun SearchItem(
                     )
                 }
                 Button(
-                    onClick = addToCart,
+                    onClick = {
+                        addToCart(product.id)
+                        canRemoveItem = true
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     enabled = product.quantity > 0
                 ) {
                     Text(text = stringResource(R.string.add_to_cart))
+                }
+                if (canRemoveItem) {
+                    Row(
+                        modifier = Modifier.padding(4.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.in_basket),
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                        Text(
+                            text = stringResource(R.string.remove),
+                            modifier = Modifier
+                                .clickable {
+                                    removeFromCart(product.id)
+                                    canRemoveItem = false
+                                },
+                            style = MaterialTheme.typography.labelSmall
+                        )
+                    }
                 }
             }
         }

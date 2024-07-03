@@ -1,8 +1,8 @@
 package com.route.ecommerce.navigation
 
 import androidx.compose.animation.core.tween
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,20 +21,10 @@ fun EcomNavHost(
     NavHost(
         navController = appState.navController,
         startDestination = TopLevelDestination.HOME.name,
-        contentAlignment = Alignment.TopStart,
+        contentAlignment = Alignment.TopCenter,
         modifier = modifier,
-        enterTransition = {
-            slideInHorizontally(initialOffsetX = { it }, animationSpec = tween(300))
-        },
-        exitTransition = {
-            slideOutHorizontally(targetOffsetX = { -it }, animationSpec = tween(300))
-        },
-        popEnterTransition = {
-            slideInHorizontally(initialOffsetX = { -it }, animationSpec = tween(300))
-        },
-        popExitTransition = {
-            slideOutHorizontally(targetOffsetX = { it }, animationSpec = tween(300))
-        }
+        enterTransition = { fadeIn(animationSpec = tween(350)) },
+        exitTransition = { fadeOut(animationSpec = tween(350)) }
     ) {
         homeScreen(
             appState = appState

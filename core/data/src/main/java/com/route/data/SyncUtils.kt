@@ -43,7 +43,7 @@ suspend fun <T> Synchronizer.dataVersionSync(
 
     updateModelData(newDataList)
 
-    val latestVersion = currentVersion + 1
+    val latestVersion = if (newDataList.isNotEmpty()) currentVersion + 1 else currentVersion
 
     updateDataVersion(
         update = {

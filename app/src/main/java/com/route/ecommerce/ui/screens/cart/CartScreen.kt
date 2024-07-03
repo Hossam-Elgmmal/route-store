@@ -3,9 +3,13 @@ package com.route.ecommerce.ui.screens.cart
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.route.ecommerce.ui.EcomAppState
@@ -17,6 +21,8 @@ fun CartScreen(
     modifier: Modifier = Modifier,
     viewModel: CartViewModel = hiltViewModel()
 ) {
+    val cartProducts by viewModel.cartProducts.collectAsState()
+
     BackHandler {
         onBackPressed()
     }
@@ -32,6 +38,12 @@ fun CartScreen(
         }
         Button(onClick = appState::navigateToCheckout) {
             Text(text = "Checkout screen")
+        }
+        LazyColumn {
+            items(cartProducts) {
+                Text(text = it.id)
+                Text(text = it.count.toString())
+            }
         }
     }
 }

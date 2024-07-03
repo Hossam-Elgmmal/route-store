@@ -5,9 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.route.data.model.Product
 import com.route.data.model.SearchQuery
+import com.route.data.reposetory.CartRepository
 import com.route.data.reposetory.ProductRepository
 import com.route.data.reposetory.RecentSearchQueryRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -20,6 +22,7 @@ import javax.inject.Inject
 class SearchViewModel @Inject constructor(
     private val productRepository: ProductRepository,
     private val recentSearchQueryRepository: RecentSearchQueryRepository,
+    private val cartRepository: CartRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -64,6 +67,17 @@ class SearchViewModel @Inject constructor(
     fun clearRecentSearch() {
         viewModelScope.launch {
             recentSearchQueryRepository.clearSearchQuery()
+        }
+    }
+    fun addCartProduct(productId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            cartRepository.addCartProduct(productId)
+        }
+    }
+
+    fun removeCartProduct(productId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            cartRepository.removeCartProduct(productId)
         }
     }
 }

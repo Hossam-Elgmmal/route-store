@@ -87,9 +87,11 @@ fun SearchScreen(
                             SearchItem(
                                 product = product,
                                 onItemClick = {
+                                    viewModel.onSearchTriggered(searchQuery)
                                     appState.navigateToProductDetails(id = product.id)
                                 },
-                                addToCart = {/*TODO()*/ }
+                                addToCart = viewModel::addCartProduct,
+                                removeFromCart = viewModel::removeCartProduct,
                             )
                         }
                     }

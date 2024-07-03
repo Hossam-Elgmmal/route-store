@@ -9,6 +9,8 @@ import com.route.database.model.CategoryEntity
 import com.route.datastore.DataVersion
 import com.route.network.model.NetworkCategory
 import com.route.network.model.NetworkRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 private const val TAG = "CategoryRepositoryImpl"
@@ -38,8 +40,9 @@ class CategoryRepositoryImpl @Inject constructor(
             }
         )
 
-    override suspend fun getCategories() =
-        categoryDao.getCategories().map(CategoryEntity::asExternalModel)
+    override fun getCategories() =
+        categoryDao.getCategories()
+            .map { it.map(CategoryEntity::asExternalModel) }
 
     override suspend fun getCategoryById(id: String) =
         categoryDao.getCategoryById(id = id).asExternalModel()
@@ -48,7 +51,7 @@ class CategoryRepositoryImpl @Inject constructor(
 
 interface CategoryRepository : Syncable {
 
-    suspend fun getCategories(): List<Category>
+    fun getCategories(): Flow<List<Category>>
     suspend fun getCategoryById(id: String): Category
 }
 

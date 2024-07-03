@@ -19,6 +19,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.route.data.NetworkMonitor
+import com.route.data.reposetory.CartRepository
 import com.route.ecommerce.ui.EcomApp
 import com.route.ecommerce.ui.rememberEcomAppState
 import com.route.ecommerce.ui.theme.EcomTheme
@@ -35,6 +36,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var networkMonitor: NetworkMonitor
+
+    @Inject
+    lateinit var cartRepository: CartRepository
 
     private val viewModel: MainActivityViewModel by viewModels()
 
@@ -77,6 +81,7 @@ class MainActivity : ComponentActivity() {
             val appState = rememberEcomAppState(
                 windowSizeClass = calculateWindowSizeClass(activity = this),
                 networkMonitor = networkMonitor,
+                cartProductList = cartRepository.getCartProducts()
             )
             EcomTheme(
                 darkTheme = darkTheme

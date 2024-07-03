@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Card
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -76,22 +75,15 @@ fun CategoryItem(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Spacer(modifier = Modifier.width(20.dp))
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    Image(
-                        painter = if (!isError) imageLoader else painterResource(id = R.drawable.ic_error),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .size(120.dp)
-                            .background(MaterialTheme.colorScheme.surfaceContainerLow),
-                    )
-                    if (isLoading) {
-                        CircularProgressIndicator()
-                    }
-                }
+                Image(
+                    painter = if (!isError) imageLoader else painterResource(id = R.drawable.ic_error),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .clip(CircleShape)
+                        .size(120.dp)
+                        .background(MaterialTheme.colorScheme.surfaceContainerLow),
+                )
                 Text(
                     text = category.name,
                     style = MaterialTheme.typography.titleLarge,

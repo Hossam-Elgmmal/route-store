@@ -12,6 +12,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.route.data.NetworkMonitor
+import com.route.data.model.CartProduct
 import com.route.ecommerce.navigation.LowLevelDestination
 import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.navigation.navigateToAccount
@@ -30,7 +31,9 @@ import com.route.ecommerce.ui.auth.navigateToForgotPassword
 import com.route.ecommerce.ui.auth.navigateToLogin
 import com.route.ecommerce.ui.auth.navigateToSignup
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 
@@ -38,20 +41,23 @@ import kotlinx.coroutines.flow.stateIn
 @Composable
 fun rememberEcomAppState(
     windowSizeClass: WindowSizeClass,
-    navController: NavHostController = rememberNavController(),
     networkMonitor: NetworkMonitor,
-    coroutineScope: CoroutineScope = rememberCoroutineScope()
+    cartProductList: Flow<List<CartProduct>>,
+    navController: NavHostController = rememberNavController(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ): EcomAppState {
     return remember(
         windowSizeClass,
         navController,
+        cartProductList,
         networkMonitor,
         coroutineScope
     ) {
         EcomAppState(
             windowSizeClass = windowSizeClass,
-            navController = navController,
             networkMonitor = networkMonitor,
+            cartProductList = cartProductList,
+            navController = navController,
             coroutineScope = coroutineScope
         )
     }
@@ -60,6 +66,7 @@ fun rememberEcomAppState(
 class EcomAppState(
     val windowSizeClass: WindowSizeClass,
     val navController: NavHostController,
+    cartProductList: Flow<List<CartProduct>>,
     networkMonitor: NetworkMonitor,
     coroutineScope: CoroutineScope,
 ) {
@@ -106,6 +113,15 @@ class EcomAppState(
             scope = coroutineScope,
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = false,
+        )
+
+    val cartMap: StateFlow<Map<String, Int>> =
+        cartProductList.map { list ->
+            list.associate { it.id to it.count }
+        }.stateIn(
+            scope = coroutineScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = emptyMap(),
         )
 
     fun navigateToTopLevelDestinations(
