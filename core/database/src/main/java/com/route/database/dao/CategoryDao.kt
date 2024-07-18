@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.route.database.model.CategoryEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
@@ -12,7 +13,7 @@ interface CategoryDao {
     suspend fun addCategories(categories: List<CategoryEntity>)
 
     @Query("select * from categories")
-    suspend fun getCategories(): List<CategoryEntity>
+    fun getCategories(): Flow<List<CategoryEntity>>
 
     @Query("select * from categories where id = :id")
     suspend fun getCategoryById(id: String): CategoryEntity

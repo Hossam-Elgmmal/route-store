@@ -157,7 +157,10 @@ fun SignupScreen(
                 text = stringResource(R.string.login),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.clickable(
-                    onClick = appState::navigateToLogin
+                    onClick = {
+                        appState.popBackStack()
+                        appState.navigateToLogin()
+                    }
                 ),
                 color = MaterialTheme.colorScheme.onSurface
             )

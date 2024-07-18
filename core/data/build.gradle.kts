@@ -44,6 +44,7 @@ dependencies {
     //
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+    implementation(libs.kotlinx.datetime)
 }
 kapt {
     correctErrorTypes = true

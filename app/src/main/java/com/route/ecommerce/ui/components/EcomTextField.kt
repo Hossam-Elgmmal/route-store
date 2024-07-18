@@ -19,11 +19,11 @@ fun EcomTextField(
     onValueChange: (String) -> Unit,
     @StringRes labelId: Int,
     @StringRes supportTextId: Int,
-    @DrawableRes leadingIconId: Int,
-    @DrawableRes trailingIconId: Int?,
     trailingIconAction: () -> Unit,
     keyboardOptions: KeyboardOptions,
     modifier: Modifier = Modifier,
+    @DrawableRes leadingIconId: Int? = null,
+    @DrawableRes trailingIconId: Int? = null,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     isError: Boolean = false
 ) {
@@ -35,10 +35,12 @@ fun EcomTextField(
         label = { Text(stringResource(labelId)) },
         supportingText = { Text(stringResource(supportTextId)) },
         leadingIcon = {
-            Icon(
-                painter = painterResource(id = leadingIconId),
-                contentDescription = null
-            )
+            if (leadingIconId != null) {
+                Icon(
+                    painter = painterResource(id = leadingIconId),
+                    contentDescription = null
+                )
+            }
         },
         trailingIcon = {
             if (trailingIconId != null) {

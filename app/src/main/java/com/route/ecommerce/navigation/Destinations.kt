@@ -5,22 +5,20 @@ import androidx.annotation.StringRes
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
-import com.route.ecommerce.ui.auth.forgotPasswordScreen
-import com.route.ecommerce.ui.auth.loginScreen
-import com.route.ecommerce.ui.auth.signupScreen
 import com.route.ecommerce.ui.screens.CheckoutScreen
 import com.route.ecommerce.ui.screens.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.ProductsScreen
-import com.route.ecommerce.ui.screens.SearchScreen
 import com.route.ecommerce.ui.screens.WishlistScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
 import com.route.ecommerce.ui.screens.cart.CartScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
 import com.route.ecommerce.ui.screens.menu.MenuScreen
+import com.route.ecommerce.ui.screens.search.SearchScreen
 
 enum class TopLevelDestination(
     @DrawableRes val iconId: Int,
@@ -48,8 +46,6 @@ enum class TopLevelDestination(
         iconTextId = R.string.account,
     ),
 }
-
-const val ACCOUNT_ROUTE = "account_route"
 
 enum class LowLevelDestination {
     WISHLIST,
@@ -79,8 +75,8 @@ fun NavController.navigateToCart(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.CART.name, navOptions)
 
 
-fun NavController.navigateToProductDetails(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.PRODUCT_DETAILS.name, navOptions)
+fun NavController.navigateToProductDetails(id: String, navOptions: NavOptions? = null) =
+    navigate("${LowLevelDestination.PRODUCT_DETAILS.name}/$id", navOptions)
 
 fun NavController.navigateToProducts(navOptions: NavOptions? = null) =
     navigate(LowLevelDestination.PRODUCTS.name, navOptions)
@@ -100,45 +96,37 @@ fun NavGraphBuilder.homeScreen(
 }
 
 fun NavGraphBuilder.menuScreen(
-    appState: EcomAppState
+    appState: EcomAppState,
+    onBackPressed: () -> Unit
 ) {
     composable(TopLevelDestination.MENU.name) {
         MenuScreen(
-            appState = appState
+            appState = appState,
+            onBackPressed = onBackPressed
         )
     }
 }
 
 fun NavGraphBuilder.accountScreen(
-    appState: EcomAppState
+    appState: EcomAppState,
+    onBackPressed: () -> Unit
 ) {
-    navigation(
-        startDestination = ACCOUNT_ROUTE,
-        route = TopLevelDestination.ACCOUNT.name
-    ) {
-        composable(ACCOUNT_ROUTE) {
-            AccountScreen(
-                appState = appState
-            )
-        }
-        loginScreen(
-            appState = appState
-        )
-        signupScreen(
-            appState = appState
-        )
-        forgotPasswordScreen(
-            appState = appState
+    composable(TopLevelDestination.ACCOUNT.name) {
+        AccountScreen(
+            appState = appState,
+            onBackPressed = onBackPressed
         )
     }
 }
 
 fun NavGraphBuilder.cartScreen(
-    appState: EcomAppState
+    appState: EcomAppState,
+    onBackPressed: () -> Unit
 ) {
     composable(TopLevelDestination.CART.name) {
         CartScreen(
-            appState = appState
+            appState = appState,
+            onBackPressed = onBackPressed
         )
     }
 }
@@ -153,10 +141,20 @@ fun NavGraphBuilder.wishlistScreen(
     }
 }
 
+private const val productId = "product_id"
 fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
-    composable(LowLevelDestination.PRODUCT_DETAILS.name) {
+    composable(
+        route = "${LowLevelDestination.PRODUCT_DETAILS.name}/{${productId}}",
+        arguments = listOf(
+            navArgument(productId) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        val productId = backStackEntry.arguments?.getString(productId) ?: ""
         ProductDetailsScreen(
-            appState = appState
+            appState = appState,
+            productId = productId,
         )
     }
 }
@@ -169,10 +167,11 @@ fun NavGraphBuilder.productsScreen(appState: EcomAppState) {
     }
 }
 
-fun NavGraphBuilder.searchScreen(appState: EcomAppState) {
+fun NavGraphBuilder.searchScreen(appState: EcomAppState, cartItems: Map<String, Int>) {
     composable(route = LowLevelDestination.SEARCH.name) {
         SearchScreen(
-            appState = appState
+            appState = appState,
+            cartItems = cartItems
         )
     }
 }

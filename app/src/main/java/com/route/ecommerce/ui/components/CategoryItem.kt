@@ -1,6 +1,7 @@
 package com.route.ecommerce.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,17 +11,24 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.route.data.model.Category
+import com.route.ecommerce.R
 
 @Composable
 fun CategoryItem(
@@ -28,9 +36,21 @@ fun CategoryItem(
     onCardClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val imageLoader = rememberAsyncImagePainter(model = category.imageUrl)
+    var isLoading by remember {
+        mutableStateOf(true)
+    }
+    var isError by remember {
+        mutableStateOf(false)
+    }
+    val imageLoader = rememberAsyncImagePainter(
+        model = category.imageUrl,
+        onState = { state ->
+            isLoading = state is AsyncImagePainter.State.Loading
+            isError = state is AsyncImagePainter.State.Error
+        }
+    )
 
-    ElevatedCard(
+    Card(
         onClick = onCardClick,
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
@@ -38,15 +58,15 @@ fun CategoryItem(
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(160.dp),
+                .height(150.dp),
             contentAlignment = Alignment.CenterStart
         ) {
             Image(
-                painter = imageLoader,
+                painter = if (!isError) imageLoader else painterResource(id = R.drawable.ic_error),
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(160.dp),
+                    .height(150.dp),
                 contentScale = ContentScale.Crop,
                 alpha = 0.15f
             )
@@ -56,12 +76,13 @@ fun CategoryItem(
             ) {
                 Spacer(modifier = Modifier.width(20.dp))
                 Image(
-                    painter = imageLoader,
+                    painter = if (!isError) imageLoader else painterResource(id = R.drawable.ic_error),
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
                         .clip(CircleShape)
-                        .size(120.dp),
+                        .size(120.dp)
+                        .background(MaterialTheme.colorScheme.surfaceContainerLow),
                 )
                 Text(
                     text = category.name,

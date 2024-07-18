@@ -36,23 +36,31 @@ class UserPreferencesRepository @Inject constructor(
             DarkTheme.DARK -> UserPreferences.DarkTheme.DARK
             else -> UserPreferences.DarkTheme.FOLLOW_SYSTEM
         }
-        userPreferences.updateData {
-            it.toBuilder()
-                .setDarkTheme(newDarkTheme)
-                .build()
+        try {
+            userPreferences.updateData {
+                it.toBuilder()
+                    .setDarkTheme(newDarkTheme)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
         }
     }
 
     suspend fun setUserInfo(
         userInfo: UserInfo
     ) {
-        userPreferences.updateData {
-            it.toBuilder()
-                .setUserName(userInfo.name)
-                .setUserEmail(userInfo.email)
-                .setUserPassword(userInfo.password)
-                .setUserToken(userInfo.token)
-                .build()
+        try {
+            userPreferences.updateData {
+                it.toBuilder()
+                    .setUserName(userInfo.name)
+                    .setUserEmail(userInfo.email)
+                    .setUserPassword(userInfo.password)
+                    .setUserToken(userInfo.token)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
         }
     }
 
@@ -63,8 +71,24 @@ class UserPreferencesRepository @Inject constructor(
                 subCategoryVersion = it.subCategoryVersion,
                 brandVersion = it.brandVersion,
                 productVersion = it.productVersion,
+                cartVersion = it.cartVersion
             )
         }.firstOrNull() ?: DataVersion()
+
+    fun getToken() =
+        userData.map { it.userToken }
+
+    suspend fun setCartId(id: String) {
+        try {
+            userPreferences.updateData {
+                it.toBuilder()
+                    .setCartId(id)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
+        }
+    }
 
     suspend fun updateDataVersion(update: DataVersion.() -> DataVersion) {
         try {
@@ -76,6 +100,7 @@ class UserPreferencesRepository @Inject constructor(
                         subCategoryVersion = preferences.subCategoryVersion,
                         brandVersion = preferences.brandVersion,
                         productVersion = preferences.productVersion,
+                        cartVersion = preferences.cartVersion
                     )
                 )
 
@@ -84,6 +109,7 @@ class UserPreferencesRepository @Inject constructor(
                     .setSubCategoryVersion(updatedVersions.subCategoryVersion)
                     .setBrandVersion(updatedVersions.brandVersion)
                     .setProductVersion(updatedVersions.productVersion)
+                    .setCartVersion(updatedVersions.cartVersion)
                     .build()
             }
 

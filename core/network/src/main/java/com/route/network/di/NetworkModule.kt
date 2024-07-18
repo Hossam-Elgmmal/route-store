@@ -85,6 +85,7 @@ object NetworkModule {
                     logger(DebugLogger())
                 }
             }
+            .crossfade(true)
             .build()
 
 

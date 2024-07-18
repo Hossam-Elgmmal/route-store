@@ -1,9 +1,7 @@
 package com.route.ecommerce.ui.screens.home
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,15 +16,13 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     Column(
-        modifier = modifier
-            .verticalScroll(rememberScrollState())
-            .fillMaxSize()
+        modifier = modifier.fillMaxWidth()
     ) {
         Text(text = "welcome home")
         Button(onClick = appState::navigateToProducts) {
             Text(text = "products")
         }
-        Button(onClick = appState::navigateToProductDetails) {
+        Button(onClick = { appState.navigateToProductDetails("123") }) {
             Text(text = "product details")
         }
     }

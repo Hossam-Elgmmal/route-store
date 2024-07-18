@@ -9,15 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.navigation.NavDestination
 import com.route.ecommerce.navigation.TopLevelDestination
 
 @Composable
 fun EcomNavRail(
     destinations: List<TopLevelDestination>,
-    onNavigateToDestination: (TopLevelDestination) -> Unit,
-    currentDestination: NavDestination?,
+    onNavigateToDestination: (TopLevelDestination, Boolean) -> Unit,
+    latestTopLevelDestination: TopLevelDestination,
+    cartCount: Int,
     modifier: Modifier = Modifier
 ) {
     NavigationRail(
@@ -25,26 +24,23 @@ fun EcomNavRail(
         modifier = modifier
     ) {
         destinations.forEach { destination ->
-            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+            val selected = latestTopLevelDestination == destination
+            val iconId = if (selected) destination.selectedIconId else destination.iconId
             EcomNavRailItem(
                 selected = selected,
-                onClick = { onNavigateToDestination(destination) },
+                onClick = { onNavigateToDestination(destination, selected) },
                 icon = {
-                    Icon(
-                        painter = painterResource(id = destination.iconId),
-                        contentDescription = null
-                    )
-                },
-                selectedIcon = {
-                    Icon(
-                        painter = painterResource(id = destination.selectedIconId),
-                        contentDescription = null
-                    )
+                    if (destination == TopLevelDestination.CART) {
+                        EcomBadgedIcon(iconId = iconId, badgeText = cartCount.toString())
+                    } else {
+                        Icon(
+                            painter = painterResource(id = iconId), contentDescription = null
+                        )
+                    }
                 },
                 label = {
                     Text(
                         text = stringResource(id = destination.iconTextId),
-                        fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal
                     )
                 },
             )
@@ -57,17 +53,14 @@ fun EcomNavRailItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    alwaysShowLabel: Boolean = true,
     icon: @Composable () -> Unit,
-    selectedIcon: @Composable () -> Unit = icon,
     label: @Composable () -> Unit
 ) {
     NavigationRailItem(
         selected = selected,
         onClick = onClick,
-        icon = if (selected) selectedIcon else icon,
+        icon = icon,
         modifier = modifier,
         label = label,
-        alwaysShowLabel = alwaysShowLabel
     )
 }

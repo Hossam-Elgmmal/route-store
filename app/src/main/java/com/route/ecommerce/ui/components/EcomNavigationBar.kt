@@ -1,7 +1,11 @@
 package com.route.ecommerce.ui.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
@@ -9,17 +13,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavDestination
-import androidx.navigation.NavDestination.Companion.hierarchy
 import com.route.ecommerce.navigation.TopLevelDestination
 
 @Composable
 fun EcomNavigationBar(
     destinations: List<TopLevelDestination>,
-    onNavigateToDestination: (TopLevelDestination) -> Unit,
-    currentDestination: NavDestination?,
+    onNavigateToDestination: (TopLevelDestination, Boolean) -> Unit,
+    latestTopLevelDestination: TopLevelDestination,
+    cartCount: Int,
     modifier: Modifier = Modifier
 ) {
     NavigationBar(
@@ -27,26 +29,23 @@ fun EcomNavigationBar(
         tonalElevation = 0.dp
     ) {
         destinations.forEach { destination ->
-            val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
+            val selected = latestTopLevelDestination == destination
+            val iconId = if (selected) destination.selectedIconId else destination.iconId
             EcomNavigationBarItem(
                 selected = selected,
-                onClick = { onNavigateToDestination(destination) },
+                onClick = { onNavigateToDestination(destination, selected) },
                 icon = {
-                    Icon(
-                        painter = painterResource(id = destination.iconId),
-                        contentDescription = null
-                    )
-                },
-                selectedIcon = {
-                    Icon(
-                        painter = painterResource(id = destination.selectedIconId),
-                        contentDescription = null
-                    )
+                    if (destination == TopLevelDestination.CART) {
+                        EcomBadgedIcon(iconId = iconId, badgeText = cartCount.toString())
+                    } else {
+                        Icon(
+                            painter = painterResource(id = iconId), contentDescription = null
+                        )
+                    }
                 },
                 label = {
                     Text(
                         text = stringResource(id = destination.iconTextId),
-                        fontWeight = if (selected) FontWeight.Medium else FontWeight.Normal
                     )
                 }
             )
@@ -59,22 +58,35 @@ fun RowScope.EcomNavigationBarItem(
     selected: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    alwaysShowLabel: Boolean = true,
     icon: @Composable () -> Unit,
-    selectedIcon: @Composable () -> Unit = icon,
     label: @Composable () -> Unit
 ) {
     NavigationBarItem(
         selected = selected,
         onClick = onClick,
-        icon = if (selected) selectedIcon else icon,
-        alwaysShowLabel = alwaysShowLabel,
+        icon = icon,
         label = label,
         modifier = modifier
     )
 }
 
-fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
-    this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
-    } ?: false
+@Composable
+fun EcomBadgedIcon(
+    @DrawableRes iconId: Int,
+    badgeText: String,
+    modifier: Modifier = Modifier
+) {
+    BadgedBox(
+        badge = {
+            if (badgeText.isNotEmpty()) {
+                Badge(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                ) { Text(text = badgeText) }
+            }
+        },
+        modifier = modifier
+    ) {
+        Icon(painter = painterResource(iconId), contentDescription = null)
+    }
+}

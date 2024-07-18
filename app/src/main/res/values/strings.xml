@@ -43,4 +43,23 @@
     <string name="passwords_must_match">passwords must match</string>
     <string name="confirm_password">confirm password</string>
     <string name="already_have_an_account">Already have an account?</string>
+    <string name="clear_search_text">clear search text</string>
+    <string name="recent_searches">Recent searches</string>
+    <string name="clear_recent_searches">clear recent searches</string>
+    <string name="no_search_results">No search results for %s.</string>
+    <string name="no_search_results_suggestion">Try checking your spelling or use more general terms</string>
+    <string name="add_to_cart">Add to cart</string>
+    <string name="in_stock_order_now">%1$s In stock, Order Now!</string>
+    <string name="remove">remove</string>
+    <string name="in_basket">" In basket - "</string>
+    <string name="in_stock">In stock</string>
+    <string name="subtotal">"Subtotal "</string>
+    <string name="proceed_to_buy">Proceed to buy</string>
+    <string name="all_prices_include_vat">All prices include VAT.</string>
+    <string name="quantity_minus_one">quantity minus one</string>
+    <string name="quantity_plus_one">quantity plus one</string>
+    <string name="delete">delete</string>
+    <string name="add_to_wishlist">Add to wishlist</string>
+    <string name="your_cart_is_empty">Your cart is empty</string>
+    <string name="have_not_added_anything_to_your_cart">Looks like you have not added anything to your cart.</string>
 </resources>

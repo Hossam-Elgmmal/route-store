@@ -9,6 +9,8 @@ import com.route.database.model.ProductEntity
 import com.route.datastore.DataVersion
 import com.route.network.model.NetworkProduct
 import com.route.network.model.NetworkRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 private const val TAG = "ProductRepositoryImpl"
@@ -61,6 +63,9 @@ class ProductRepositoryImpl @Inject constructor(
         productDao.searchProducts(query = query)
             .map(ProductEntity::asExternalModel)
 
+    override fun getProductsInCart(idList: List<String>) =
+        productDao.getProductsInCart(idList)
+            .map { it.map(ProductEntity::asExternalModel) }
 }
 
 interface ProductRepository : Syncable {
@@ -73,6 +78,7 @@ interface ProductRepository : Syncable {
     suspend fun getProductsByBrandId(brandId: String): List<Product>
 
     suspend fun searchProducts(query: String): List<Product>
+    fun getProductsInCart(idList: List<String>): Flow<List<Product>>
 
 }
 
@@ -91,11 +97,10 @@ fun NetworkProduct.asEntity() = ProductEntity(
     searchText = subcategoryList.first().name
             + networkCategory.name
             + networkBrand.name
-            + title
-            + description,
+            + title,
 
-    ratingsQuantity = ratingsQuantity,
-    quantity = quantity,
+    ratingsQuantity = quantity,
+    quantity = ratingsQuantity,
     sold = sold,
     price = price,
     ratingsAverage = ratingsAverage,
