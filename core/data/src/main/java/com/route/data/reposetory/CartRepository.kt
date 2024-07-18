@@ -50,10 +50,28 @@ class CartRepositoryImpl @Inject constructor(
     }
 
     override suspend fun updateCartProduct(productId: String, count: Int) {
-        cartProductDao.addCartProduct(CartProductEntity(productId, count))
-        val t = token.firstOrNull() ?: ""
-        if (t != "") {
-            networkRepository.updateProductCount(t, count, productId)
+        if (count > 0) {
+            cartProductDao.addCartProduct(CartProductEntity(productId, count))
+            val t = token.firstOrNull() ?: ""
+            if (t != "") {
+                networkRepository.updateProductCount(t, count, productId)
+            }
+        } else {
+            removeCartProduct(productId)
+        }
+    }
+
+    override suspend fun plusOneCartProduct(productId: String) {
+        val newCount = cartProductDao.getProductCount(productId) + 1
+        updateCartProduct(productId, newCount)
+    }
+
+    override suspend fun minusOneCartProduct(productId: String) {
+        val newCount = cartProductDao.getProductCount(productId) - 1
+        if (newCount <= 0) {
+            removeCartProduct(productId)
+        } else {
+            updateCartProduct(productId, newCount)
         }
     }
 
@@ -75,6 +93,8 @@ interface CartRepository : Syncable {
     fun getCartProducts(): Flow<List<CartProduct>>
     suspend fun addCartProduct(productId: String)
     suspend fun updateCartProduct(productId: String, count: Int)
+    suspend fun plusOneCartProduct(productId: String)
+    suspend fun minusOneCartProduct(productId: String)
     suspend fun removeCartProduct(productId: String)
 }
 

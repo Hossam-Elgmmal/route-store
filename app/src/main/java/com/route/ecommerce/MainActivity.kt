@@ -28,6 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3WindowSizeClassApi::class)
@@ -54,6 +55,7 @@ class MainActivity : ComponentActivity() {
                     .collect()
             }
         }
+        Locale.setDefault(Locale("en", "EG"))
 
         val splashScreen = installSplashScreen()
         splashScreen.setKeepOnScreenCondition {

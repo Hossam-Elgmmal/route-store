@@ -1,6 +1,5 @@
 package com.route.ecommerce.ui.components
 
-import android.icu.text.NumberFormat
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,29 +30,24 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.route.data.model.Product
 import com.route.ecommerce.R
-import java.util.Locale
 
 @Composable
 fun SearchItem(
     product: Product,
+    itemCountInCart: Int,
     onItemClick: () -> Unit,
-    addToCart: (String) -> Unit,
+    addToCart: (String, Int) -> Unit,
     removeFromCart: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var isLoading by remember { mutableStateOf(true) }
     var isError by remember { mutableStateOf(false) }
-    var canRemoveItem by remember { mutableStateOf(false) }
-
     val imageLoader = rememberAsyncImagePainter(
         model = product.imageCoverUrl,
         onState = { state ->
-            isLoading = state is AsyncImagePainter.State.Loading
             isError = state is AsyncImagePainter.State.Error
         }
     )
-    val locale = Locale.getDefault()
-    val formatter = NumberFormat.getCurrencyInstance(locale)
+
     Surface(
         onClick = onItemClick,
         modifier = modifier
@@ -93,36 +87,36 @@ fun SearchItem(
                     rating = product.ratingsAverage,
                     ratingQuantity = product.ratingsQuantity
                 )
-                Text(
-                    text = formatter.format(product.price),
-                    maxLines = 3,
-                    overflow = TextOverflow.Ellipsis,
-                    style = MaterialTheme.typography.headlineSmall,
-                )
+                PriceText(price = product.price)
                 if (product.quantity <= 10) {
                     Text(
-                        text = stringResource(R.string.in_stock, product.quantity),
+                        text = stringResource(R.string.in_stock_order_now, product.quantity),
                         style = MaterialTheme.typography.labelMedium,
                         fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colorScheme.error
                     )
+                } else {
+                    Text(
+                        text = stringResource(R.string.in_stock),
+                        style = MaterialTheme.typography.labelMedium,
+                        fontWeight = FontWeight.Normal
+                    )
                 }
                 Button(
                     onClick = {
-                        addToCart(product.id)
-                        canRemoveItem = true
+                        addToCart(product.id, itemCountInCart)
                     },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = product.quantity > 0
+                    enabled = product.quantity > itemCountInCart
                 ) {
                     Text(text = stringResource(R.string.add_to_cart))
                 }
-                if (canRemoveItem) {
+                if (itemCountInCart > 0) {
                     Row(
                         modifier = Modifier.padding(4.dp)
                     ) {
                         Text(
-                            text = stringResource(R.string.in_basket),
+                            text = itemCountInCart.toString() + stringResource(R.string.in_basket),
                             style = MaterialTheme.typography.bodySmall
                         )
                         Text(
@@ -130,7 +124,6 @@ fun SearchItem(
                             modifier = Modifier
                                 .clickable {
                                     removeFromCart(product.id)
-                                    canRemoveItem = false
                                 },
                             style = MaterialTheme.typography.labelSmall
                         )

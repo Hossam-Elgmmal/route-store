@@ -23,6 +23,7 @@ import com.route.ecommerce.ui.components.SearchToolBar
 @Composable
 fun SearchScreen(
     appState: EcomAppState,
+    cartItems: Map<String, Int>,
     modifier: Modifier = Modifier,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
@@ -82,10 +83,13 @@ fun SearchScreen(
                     ) {
                         items(
                             (searchResultUiState as? SearchResultUiState.Success)?.products
-                                ?: emptyList()
+                                ?: emptyList(),
+                            key = { it.id }
                         ) { product ->
+                            val itemCountInCart = cartItems[product.id] ?: 0
                             SearchItem(
                                 product = product,
+                                itemCountInCart = itemCountInCart,
                                 onItemClick = {
                                     viewModel.onSearchTriggered(searchQuery)
                                     appState.navigateToProductDetails(id = product.id)

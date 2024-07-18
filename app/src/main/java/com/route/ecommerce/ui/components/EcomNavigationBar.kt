@@ -80,7 +80,8 @@ fun EcomBadgedIcon(
         badge = {
             if (badgeText.isNotEmpty()) {
                 Badge(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
                 ) { Text(text = badgeText) }
             }
         },

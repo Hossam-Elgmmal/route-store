@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.route.database.model.ProductEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ProductDao {
@@ -33,4 +34,7 @@ interface ProductDao {
 
     @Query("delete from products where id = :id")
     suspend fun deleteProductById(id: String)
+
+    @Query("select * from products where id in (:idList)")
+    fun getProductsInCart(idList: List<String>): Flow<List<ProductEntity>>
 }

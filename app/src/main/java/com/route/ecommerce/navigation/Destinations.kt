@@ -141,7 +141,7 @@ fun NavGraphBuilder.wishlistScreen(
     }
 }
 
-const val productId = "product_id"
+private const val productId = "product_id"
 fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
     composable(
         route = "${LowLevelDestination.PRODUCT_DETAILS.name}/{${productId}}",
@@ -167,10 +167,11 @@ fun NavGraphBuilder.productsScreen(appState: EcomAppState) {
     }
 }
 
-fun NavGraphBuilder.searchScreen(appState: EcomAppState) {
+fun NavGraphBuilder.searchScreen(appState: EcomAppState, cartItems: Map<String, Int>) {
     composable(route = LowLevelDestination.SEARCH.name) {
         SearchScreen(
-            appState = appState
+            appState = appState,
+            cartItems = cartItems
         )
     }
 }

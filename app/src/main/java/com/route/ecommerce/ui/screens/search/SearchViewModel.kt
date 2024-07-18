@@ -69,9 +69,13 @@ class SearchViewModel @Inject constructor(
             recentSearchQueryRepository.clearSearchQuery()
         }
     }
-    fun addCartProduct(productId: String) {
+    fun addCartProduct(productId: String, itemCount: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.addCartProduct(productId)
+            if (itemCount == 0) {
+                cartRepository.addCartProduct(productId)
+            } else {
+                cartRepository.plusOneCartProduct(productId)
+            }
         }
     }
 

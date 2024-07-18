@@ -15,6 +15,9 @@ interface CartProductDao {
     @Upsert
     suspend fun addCartProduct(product: CartProductEntity)
 
+    @Query("select count from cartProducts where id = :productId")
+    suspend fun getProductCount(productId: String): Int
+
     @Query("select * from cartProducts")
     fun getCartProducts(): Flow<List<CartProductEntity>>
 

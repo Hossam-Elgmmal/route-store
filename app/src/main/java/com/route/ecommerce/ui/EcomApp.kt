@@ -149,6 +149,7 @@ fun EcomApp(
                                 )
                                 latestTopLevelDestination = TopLevelDestination.HOME
                             },
+                            cartItems = cartItems
                         )
                     }
                 }

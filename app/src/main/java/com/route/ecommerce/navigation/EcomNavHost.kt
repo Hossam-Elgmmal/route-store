@@ -16,6 +16,7 @@ import com.route.ecommerce.ui.auth.signupScreen
 fun EcomNavHost(
     appState: EcomAppState,
     onBackPressed: () -> Unit,
+    cartItems: Map<String, Int>,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -23,8 +24,10 @@ fun EcomNavHost(
         startDestination = TopLevelDestination.HOME.name,
         contentAlignment = Alignment.TopCenter,
         modifier = modifier,
-        enterTransition = { fadeIn(animationSpec = tween(350)) },
-        exitTransition = { fadeOut(animationSpec = tween(350)) }
+        enterTransition = { fadeIn(animationSpec = tween(300)) },
+        exitTransition = { fadeOut(animationSpec = tween(300)) },
+        popEnterTransition = { fadeIn(animationSpec = tween(300)) },
+        popExitTransition = { fadeOut(animationSpec = tween(300)) },
     ) {
         homeScreen(
             appState = appState
@@ -46,7 +49,10 @@ fun EcomNavHost(
         forgotPasswordScreen(appState)
         productsScreen(appState)
         productDetailsScreen(appState)
-        searchScreen(appState)
+        searchScreen(
+            appState = appState,
+            cartItems = cartItems
+        )
         wishlistScreen(appState)
         checkoutScreen(appState)
     }
