@@ -71,7 +71,7 @@ fun CartItem(
                         .border(
                             width = 1.dp,
                             color = MaterialTheme.colorScheme.outline,
-                            shape = MaterialTheme.shapes.small
+                            shape = MaterialTheme.shapes.medium
                         )
                         .clip(MaterialTheme.shapes.medium),
                     contentScale = ContentScale.Crop

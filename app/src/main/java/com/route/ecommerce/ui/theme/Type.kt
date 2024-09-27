@@ -8,6 +8,7 @@ import com.route.ecommerce.R
 
 
 val displayFontFamily = FontFamily(
+    Font(R.font.roboto_slab),
     Font(R.font.roboto_slab_bold, FontWeight.Bold)
 )
 val bodyFontFamily = FontFamily(

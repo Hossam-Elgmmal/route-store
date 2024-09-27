@@ -10,11 +10,13 @@ import com.route.ecommerce.ui.EcomAppState
 @Composable
 fun ProductsScreen(
     appState: EcomAppState,
+    brandId: String,
     modifier: Modifier = Modifier
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
         Text(text = "Products Screen")
+        Text(text = brandId)
     }
 }
