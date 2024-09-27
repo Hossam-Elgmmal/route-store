@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Upsert
 import com.route.database.model.BrandEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BrandDao {
@@ -12,7 +13,7 @@ interface BrandDao {
     suspend fun addBrands(brands: List<BrandEntity>)
 
     @Query("select * from brands")
-    suspend fun getBrands(): List<BrandEntity>
+    fun getBrands(): Flow<List<BrandEntity>>
 
     @Query("select * from brands where id = :id")
     suspend fun getBrandById(id: String): BrandEntity

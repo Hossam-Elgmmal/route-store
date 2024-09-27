@@ -62,4 +62,12 @@
     <string name="add_to_wishlist">Add to wishlist</string>
     <string name="your_cart_is_empty">Your cart is empty</string>
     <string name="have_not_added_anything_to_your_cart">Looks like you have not added anything to your cart.</string>
+    <string name="today_s_deal">Today\'s Deal</string>
+    <string name="big_sale">BIG SALE</string>
+    <string name="_50_off">50% OFF</string>
+    <string name="shop_now">shop now</string>
+    <string name="best_sellers">Best Sellers</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="new_arrivals">New Arrivals</string>
+    <string name="brands">Brands</string>
 </resources>
