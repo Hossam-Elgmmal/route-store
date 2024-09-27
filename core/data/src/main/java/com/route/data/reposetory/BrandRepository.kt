@@ -9,6 +9,8 @@ import com.route.database.model.BrandEntity
 import com.route.datastore.DataVersion
 import com.route.network.model.NetworkBrand
 import com.route.network.model.NetworkRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 private const val TAG = "BrandRepositoryImpl"
@@ -39,8 +41,8 @@ class BrandRepositoryImpl @Inject constructor(
             }
         )
 
-    override suspend fun getBrands() =
-        brandDao.getBrands().map(BrandEntity::asExternalModel)
+    override fun getBrands() =
+        brandDao.getBrands().map { it.map(BrandEntity::asExternalModel) }
 
     override suspend fun getBrandById(id: String) =
         brandDao.getBrandById(id = id).asExternalModel()
@@ -48,7 +50,7 @@ class BrandRepositoryImpl @Inject constructor(
 
 interface BrandRepository : Syncable {
 
-    suspend fun getBrands(): List<Brand>
+    fun getBrands(): Flow<List<Brand>>
     suspend fun getBrandById(id: String): Brand
 }
 

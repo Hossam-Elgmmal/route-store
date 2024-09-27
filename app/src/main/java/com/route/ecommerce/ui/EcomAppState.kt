@@ -157,7 +157,7 @@ class EcomAppState(
     fun navigateToLogin() = navController.navigateToLogin()
     fun navigateToSignup() = navController.navigateToSignup()
     fun navigateToForgotPassword() = navController.navigateToForgotPassword()
-    fun navigateToProducts() = navController.navigateToProducts()
+    fun navigateToProducts(brandId: String) = navController.navigateToProducts(brandId = brandId)
     fun navigateToProductDetails(id: String) = navController.navigateToProductDetails(id)
     fun navigateToWishlist() = navController.navigateToWishlist()
     fun navigateToCheckout() = navController.navigateToCheckout()

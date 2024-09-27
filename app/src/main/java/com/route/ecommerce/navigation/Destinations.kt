@@ -78,8 +78,8 @@ fun NavController.navigateToCart(navOptions: NavOptions? = null) =
 fun NavController.navigateToProductDetails(id: String, navOptions: NavOptions? = null) =
     navigate("${LowLevelDestination.PRODUCT_DETAILS.name}/$id", navOptions)
 
-fun NavController.navigateToProducts(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.PRODUCTS.name, navOptions)
+fun NavController.navigateToProducts(brandId: String, navOptions: NavOptions? = null) =
+    navigate("${LowLevelDestination.PRODUCTS.name}?brand=$brandId", navOptions)
 
 
 fun NavController.navigateToSearch(navOptions: NavOptions? = null) =
@@ -144,7 +144,7 @@ fun NavGraphBuilder.wishlistScreen(
 private const val productId = "product_id"
 fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
     composable(
-        route = "${LowLevelDestination.PRODUCT_DETAILS.name}/{${productId}}",
+        route = "${LowLevelDestination.PRODUCT_DETAILS.name}/{$productId}",
         arguments = listOf(
             navArgument(productId) {
                 type = NavType.StringType
@@ -159,10 +159,20 @@ fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
     }
 }
 
+private const val brandId = "brand_id"
 fun NavGraphBuilder.productsScreen(appState: EcomAppState) {
-    composable(LowLevelDestination.PRODUCTS.name) {
+    composable(
+        route = "${LowLevelDestination.PRODUCTS.name}?brand={$brandId}",
+        arguments = listOf(
+            navArgument(brandId) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        val brandId = backStackEntry.arguments?.getString(brandId) ?: ""
         ProductsScreen(
-            appState = appState
+            appState = appState,
+            brandId = brandId
         )
     }
 }
