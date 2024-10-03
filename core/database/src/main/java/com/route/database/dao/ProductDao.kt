@@ -15,7 +15,7 @@ interface ProductDao {
     fun getProducts(): Flow<List<ProductEntity>>
 
     @Query("select * from products where id = :id")
-    suspend fun getProductById(id: String): ProductEntity
+    fun getProductById(id: String): Flow<ProductEntity>
 
     @Query("select * from products where categoryId = :categoryId")
     suspend fun getProductsByCategoryId(categoryId: String): List<ProductEntity>

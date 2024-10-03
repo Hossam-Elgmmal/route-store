@@ -60,7 +60,7 @@ fun CartScreen(
                     ) { product ->
                         CartItem(
                             product = product,
-                            count = cartProductsMap[product.id] ?: 0,
+                            countInCart = cartProductsMap[product.id] ?: 0,
                             onCountClick = { /*TODO()*/ },
                             onItemClick = { appState.navigateToProductDetails(product.id) },
                             onPlusClick = viewModel::plusOneCartProduct,
