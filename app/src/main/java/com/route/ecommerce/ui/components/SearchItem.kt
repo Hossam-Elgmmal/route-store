@@ -20,6 +20,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -85,7 +86,11 @@ fun SearchItem(
 
                 RatingRow(
                     rating = product.ratingsAverage,
-                    ratingQuantity = product.ratingsQuantity
+                    ratingQuantity = product.ratingsQuantity,
+                    modifier = Modifier.graphicsLayer {
+                        scaleX = 0.9f
+                        scaleY = 0.9f
+                    }
                 )
                 PriceText(price = product.price)
                 if (product.quantity <= 10) {

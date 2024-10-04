@@ -33,7 +33,7 @@ import com.route.ecommerce.R
 @Composable
 fun CategoryItem(
     category: Category,
-    onCardClick: (String) -> Unit,
+    onCardClick: (brandId: String, categoryId: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isLoading by remember {
@@ -51,7 +51,7 @@ fun CategoryItem(
     )
 
     Card(
-        onClick = { onCardClick("") },
+        onClick = { onCardClick("", category.id) },
         shape = MaterialTheme.shapes.medium,
         modifier = modifier
     ) {

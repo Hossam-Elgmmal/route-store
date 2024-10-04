@@ -6,16 +6,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.material3.FilledTonalButton
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -37,7 +35,7 @@ import com.route.ecommerce.R
 @Composable
 fun CartItem(
     product: Product,
-    count: Int,
+    countInCart: Int,
     onCountClick: () -> Unit,
     onItemClick: () -> Unit,
     onPlusClick: (String) -> Unit,
@@ -111,52 +109,51 @@ fun CartItem(
                 }
             }
             Row(
-                modifier = Modifier.padding(vertical = 16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
+                modifier = Modifier
+                    .padding(vertical = 8.dp)
+                    .fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
 
             ) {
-                Row(
-                    modifier = Modifier
-                        .border(
-                            1.dp,
-                            MaterialTheme.colorScheme.outline,
-                            MaterialTheme.shapes.small
-                        )
+                Surface(
+                    modifier = modifier,
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.secondaryContainer
                 ) {
-                    FilledTonalButton(
-                        onClick = { onMinusClick(product.id) },
-                        shape = MaterialTheme.shapes.small
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_minus),
-                            contentDescription = stringResource(R.string.quantity_minus_one)
-                        )
-                    }
-                    TextButton(
-                        onClick = onCountClick,
-                        shape = MaterialTheme.shapes.small
-                    ) {
-                        Text(text = count.toString())
-                    }
-                    FilledTonalButton(
-                        onClick = { onPlusClick(product.id) },
-                        shape = MaterialTheme.shapes.small,
-                        enabled = count < product.quantity
-                    ) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_add),
-                            contentDescription = stringResource(R.string.quantity_plus_one)
-                        )
+                    Row {
+                        IconButton(
+                            onClick = { onMinusClick(product.id) },
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_minus),
+                                contentDescription = stringResource(R.string.quantity_minus_one)
+                            )
+                        }
+                        IconButton(
+                            onClick = onCountClick,
+                        ) {
+                            Text(text = countInCart.toString())
+                        }
+                        IconButton(
+                            onClick = { onPlusClick(product.id) },
+                            enabled = countInCart < product.quantity,
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_add),
+                                contentDescription = stringResource(R.string.quantity_plus_one)
+                            )
+                        }
                     }
                 }
-                OutlinedButton(
+                IconButton(
                     onClick = { onDeleteClick(product.id) },
-                    shape = MaterialTheme.shapes.small,
-                    modifier = Modifier.height(48.dp)
+                    modifier = Modifier
+                        .border(1.dp, MaterialTheme.colorScheme.error, CircleShape)
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_delete),
                         contentDescription = stringResource(id = R.string.delete),
+                        tint = MaterialTheme.colorScheme.error,
                     )
                 }
             }

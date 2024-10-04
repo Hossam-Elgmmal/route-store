@@ -50,8 +50,7 @@ fun EcomApp(
         if (isOffline) {
             snackbarHostState.showSnackbar(
                 message = notConnectedMessage,
-                withDismissAction = true,
-                duration = SnackbarDuration.Indefinite
+                duration = SnackbarDuration.Short
             )
         }
     }

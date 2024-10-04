@@ -44,8 +44,8 @@ class ProductRepositoryImpl @Inject constructor(
         productDao.getProducts()
             .map { it.map(ProductEntity::asExternalModel) }
 
-    override suspend fun getProductById(id: String) =
-        productDao.getProductById(id = id).asExternalModel()
+    override fun getProductById(id: String) =
+        productDao.getProductById(id = id).map(ProductEntity::asExternalModel)
 
     override suspend fun getProductsByCategoryId(categoryId: String) =
         productDao.getProductsByCategoryId(categoryId = categoryId)
@@ -71,7 +71,7 @@ class ProductRepositoryImpl @Inject constructor(
 interface ProductRepository : Syncable {
 
     fun getProducts(): Flow<List<Product>>
-    suspend fun getProductById(id: String): Product
+    fun getProductById(id: String): Flow<Product>
 
     suspend fun getProductsByCategoryId(categoryId: String): List<Product>
     suspend fun getProductsBySubCategoryId(subCategoryId: String): List<Product>
