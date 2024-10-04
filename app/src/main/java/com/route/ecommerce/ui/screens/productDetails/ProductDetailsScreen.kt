@@ -1,8 +1,9 @@
 package com.route.ecommerce.ui.screens.productDetails
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -37,8 +38,7 @@ fun ProductDetailsScreen(
             LazyVerticalGrid(
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
-                contentPadding = PaddingValues(8.dp),
+                    .padding(horizontal = 8.dp),
                 columns = GridCells.Adaptive(310.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -66,6 +66,11 @@ fun ProductDetailsScreen(
                         onCountClick = {},
                         modifier = Modifier.padding(horizontal = 8.dp)
                     )
+                }
+                item(
+                    span = { GridItemSpan(maxLineSpan) }
+                ) {
+                    Spacer(Modifier.height(8.dp))
                 }
             }
         }

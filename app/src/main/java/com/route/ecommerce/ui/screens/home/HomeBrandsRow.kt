@@ -27,7 +27,7 @@ import com.route.ecommerce.R
 
 @Composable
 fun HomeBrandsRow(
-    onItemClick: (String) -> Unit,
+    onItemClick: (brandId: String, categoryId: String) -> Unit,
     brandsList: List<Brand>,
     modifier: Modifier = Modifier
 ) {
@@ -65,12 +65,12 @@ fun HomeBrandsRow(
 
 @Composable
 fun HomeBrand(
-    onItemClick: (String) -> Unit,
+    onItemClick: (brandId: String, categoryId: String) -> Unit,
     brand: Brand,
     modifier: Modifier = Modifier
 ) {
     ElevatedCard(
-        onClick = { onItemClick(brand.id) },
+        onClick = { onItemClick(brand.id, "") },
         modifier = modifier
             .padding(8.dp)
             .width(180.dp)
