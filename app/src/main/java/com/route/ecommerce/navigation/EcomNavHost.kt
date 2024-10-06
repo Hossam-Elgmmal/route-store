@@ -3,6 +3,7 @@ package com.route.ecommerce.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,6 +18,7 @@ fun EcomNavHost(
     appState: EcomAppState,
     onBackPressed: () -> Unit,
     cartItems: Map<String, Int>,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier
 ) {
     NavHost(
@@ -38,7 +40,8 @@ fun EcomNavHost(
         )
         cartScreen(
             appState = appState,
-            onBackPressed = onBackPressed
+            onBackPressed = onBackPressed,
+            snackbarHostState = snackbarHostState
         )
         accountScreen(
             appState = appState,
@@ -48,12 +51,15 @@ fun EcomNavHost(
         signupScreen(appState)
         forgotPasswordScreen(appState)
         productsScreen(appState)
-        productDetailsScreen(appState)
+        productDetailsScreen(
+            appState = appState,
+            snackbarHostState = snackbarHostState
+        )
         searchScreen(
             appState = appState,
-            cartItems = cartItems
+            cartItems = cartItems,
+            snackbarHostState = snackbarHostState
         )
-        wishlistScreen(appState)
         checkoutScreen(appState)
     }
 }

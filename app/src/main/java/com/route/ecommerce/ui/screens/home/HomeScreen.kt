@@ -33,7 +33,7 @@ fun HomeScreen(
 
     LaunchedEffect(key1 = Unit) {
         while (true) {
-            delay(2_500)
+            delay(3_500)
             currentIndex = (currentIndex + 1) % images.size
         }
     }

@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -37,7 +38,7 @@ fun SubtotalBody(
         Button(
             onClick = onCheckout,
             modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.small
+            shape = CircleShape
         ) {
             Text(
                 text = stringResource(R.string.proceed_to_buy),

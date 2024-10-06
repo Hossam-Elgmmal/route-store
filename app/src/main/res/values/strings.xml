@@ -10,7 +10,7 @@
     <string name="ok">OK</string>
     <string name="set_dark_theme">set dark theme</string>
     <string name="not_connected">⚠️ No internet connection</string>
-    <string name="login">login</string>
+    <string name="sign_in">Sign in</string>
     <string name="enter_name">name</string>
     <string name="enter_email">email</string>
     <string name="login_email_support" />
@@ -33,9 +33,9 @@
     <string name="dismiss">Dismiss</string>
     <string name="do_not_have_an_account">Don\'t have an account?</string>
     <string name="sign_up">Sign up</string>
-    <string name="follow_system">Follow system</string>
-    <string name="light_theme">Light theme</string>
-    <string name="dark_theme">Dark theme</string>
+    <string name="system_default">System default</string>
+    <string name="light">Light</string>
+    <string name="dark">Dark</string>
     <string name="create_account">Create Account</string>
     <string name="username">name</string>
     <string name="sign_up_username_support" />
@@ -71,4 +71,6 @@
     <string name="new_arrivals">New Arrivals</string>
     <string name="brands">Brands</string>
     <string name="about_this_item">about this item</string>
+    <string name="welcome_to_route">Welcome to Route</string>
+    <string name="settings">Settings</string>
 </resources>

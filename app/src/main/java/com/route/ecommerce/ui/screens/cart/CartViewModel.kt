@@ -38,27 +38,9 @@ class CartViewModel @Inject constructor(
             initialValue = CartUiState.Loading
         )
 
-    fun plusOneCartProduct(productId: String) {
+    fun upsertCartProduct(productId: String, count: Int) {
         viewModelScope.launch {
-            cartRepository.plusOneCartProduct(productId)
-        }
-    }
-
-    fun minusOneCartProduct(productId: String) {
-        viewModelScope.launch {
-            cartRepository.minusOneCartProduct(productId)
-        }
-    }
-
-    fun updateCartItemCount(productId: String, count: Int) {
-        viewModelScope.launch {
-            cartRepository.updateCartProduct(productId, count)
-        }
-    }
-
-    fun removeCartItem(productId: String) {
-        viewModelScope.launch {
-            cartRepository.removeCartProduct(productId)
+            cartRepository.upsertCartProduct(productId, count)
         }
     }
 }

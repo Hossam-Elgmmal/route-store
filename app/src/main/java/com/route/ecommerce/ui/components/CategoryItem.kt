@@ -22,6 +22,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -34,6 +36,7 @@ import com.route.ecommerce.R
 fun CategoryItem(
     category: Category,
     onCardClick: (brandId: String, categoryId: String) -> Unit,
+    shape: Shape,
     modifier: Modifier = Modifier
 ) {
     var isLoading by remember {
@@ -52,7 +55,7 @@ fun CategoryItem(
 
     Card(
         onClick = { onCardClick("", category.id) },
-        shape = MaterialTheme.shapes.medium,
+        shape = shape,
         modifier = modifier
     ) {
         Box(
@@ -80,6 +83,7 @@ fun CategoryItem(
                     contentDescription = null,
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
+                        .shadow(1.dp, CircleShape)
                         .clip(CircleShape)
                         .size(120.dp)
                         .background(MaterialTheme.colorScheme.surfaceContainerLow),

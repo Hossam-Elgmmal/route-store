@@ -12,13 +12,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import com.route.ecommerce.R
-import com.route.ecommerce.ui.theme.logoColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EcomTopBar(
     canGoToSearch: Boolean,
+    canShowSettings: Boolean,
     onNavigateToSearch: () -> Unit,
+    onSettingsClick: () -> Unit,
     canNavigateUp: Boolean,
     navigateUp: () -> Unit,
     modifier: Modifier = Modifier
@@ -38,7 +39,7 @@ fun EcomTopBar(
             Icon(
                 painter = painterResource(id = R.drawable.ic_app_bar_logo),
                 contentDescription = null,
-                tint = MaterialTheme.logoColor
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         },
         actions = {
@@ -47,6 +48,13 @@ fun EcomTopBar(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_search),
                         contentDescription = stringResource(id = R.string.search)
+                    )
+                }
+            } else if (canShowSettings) {
+                IconButton(onClick = onSettingsClick) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_settings),
+                        contentDescription = stringResource(R.string.settings),
                     )
                 }
             }

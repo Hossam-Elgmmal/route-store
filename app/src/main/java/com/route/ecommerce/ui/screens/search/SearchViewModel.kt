@@ -69,21 +69,13 @@ class SearchViewModel @Inject constructor(
             recentSearchQueryRepository.clearSearchQuery()
         }
     }
-    fun addCartProduct(productId: String, itemCount: Int) {
+
+    fun upsertCartProduct(productId: String, itemCount: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (itemCount == 0) {
-                cartRepository.addCartProduct(productId)
-            } else {
-                cartRepository.plusOneCartProduct(productId)
-            }
+            cartRepository.upsertCartProduct(productId, itemCount)
         }
     }
 
-    fun removeCartProduct(productId: String) {
-        viewModelScope.launch(Dispatchers.IO) {
-            cartRepository.removeCartProduct(productId)
-        }
-    }
 }
 
 private const val SEARCH_QUERY = "search_query"

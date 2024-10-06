@@ -69,16 +69,16 @@ fun ProductImages(
                     contentDescription = null,
                     contentScale = ContentScale.FillHeight,
                     modifier = Modifier
-                        .height(320.dp)
-                        .width(232.dp)
+                        .height(360.dp)
+                        .width(261.dp)
                 )
             }
 
             var selectedIndex by rememberSaveable { mutableIntStateOf(0) }
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
-                contentPadding = PaddingValues(8.dp),
-                modifier = Modifier.height(320.dp)
+                contentPadding = PaddingValues(8.dp, 16.dp),
+                modifier = Modifier.height(360.dp)
             ) {
                 item {
                     ProductSmallImage(

@@ -3,6 +3,7 @@ package com.route.ecommerce.ui.auth.signup
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
@@ -26,6 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
@@ -138,10 +141,13 @@ fun SignupScreen(
         Button(
             onClick = viewModel::signup,
             modifier = Modifier.fillMaxWidth(),
-            shape = MaterialTheme.shapes.small
+            shape = CircleShape,
+            contentPadding = PaddingValues(12.dp)
         ) {
             Text(
                 text = stringResource(R.string.sign_up),
+                style = MaterialTheme.typography.bodyLarge,
+                fontSize = 18.sp
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -154,7 +160,7 @@ fun SignupScreen(
             )
             Spacer(modifier = Modifier.width(4.dp))
             Text(
-                text = stringResource(R.string.login),
+                text = stringResource(R.string.sign_in),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.clickable(
                     onClick = {

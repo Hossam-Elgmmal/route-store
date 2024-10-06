@@ -23,7 +23,6 @@ import com.route.ecommerce.navigation.navigateToMenu
 import com.route.ecommerce.navigation.navigateToProductDetails
 import com.route.ecommerce.navigation.navigateToProducts
 import com.route.ecommerce.navigation.navigateToSearch
-import com.route.ecommerce.navigation.navigateToWishlist
 import com.route.ecommerce.ui.auth.FORGOT_PASSWORD_ROUTE
 import com.route.ecommerce.ui.auth.LOGIN_ROUTE
 import com.route.ecommerce.ui.auth.SIGNUP_ROUTE
@@ -91,16 +90,18 @@ class EcomAppState(
         @Composable get() = when (currentDestination?.route) {
             TopLevelDestination.ACCOUNT.name -> false
             LowLevelDestination.CHECKOUT.name -> false
+            LowLevelDestination.SEARCH.name -> false
             LOGIN_ROUTE -> false
             SIGNUP_ROUTE -> false
             FORGOT_PASSWORD_ROUTE -> false
             else -> true
         }
 
+    val canShowSettings: Boolean
+        @Composable get() = currentDestination?.route == TopLevelDestination.ACCOUNT.name
+
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.entries
 
-    val shouldShowTopBar: Boolean
-        @Composable get() = currentDestination?.route != LowLevelDestination.SEARCH.name
     val shouldShowBottomBar: Boolean
         get() = windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact
 
@@ -160,7 +161,6 @@ class EcomAppState(
     fun navigateToProducts(brandId: String, categoryId: String) =
         navController.navigateToProducts(brandId = brandId, categoryId = categoryId)
     fun navigateToProductDetails(id: String) = navController.navigateToProductDetails(id)
-    fun navigateToWishlist() = navController.navigateToWishlist()
     fun navigateToCheckout() = navController.navigateToCheckout()
     fun navigateToSearch() = navController.navigateToSearch()
     fun navigateUp() = navController.navigateUp()

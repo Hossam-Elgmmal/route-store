@@ -34,6 +34,7 @@ import com.route.ecommerce.ui.components.EcomBackground
 import com.route.ecommerce.ui.components.EcomNavRail
 import com.route.ecommerce.ui.components.EcomNavigationBar
 import com.route.ecommerce.ui.components.EcomTopBar
+import com.route.ecommerce.ui.screens.settings.SettingsDialog
 
 @Composable
 fun EcomApp(
@@ -57,6 +58,8 @@ fun EcomApp(
 
     var latestTopLevelDestination by
     rememberSaveable { mutableStateOf(TopLevelDestination.HOME) }
+
+    var showSettingsDialog by rememberSaveable { mutableStateOf(false) }
 
     LaunchedEffect(key1 = Unit) {
         appState.navController.addOnDestinationChangedListener { _, navDestination, _ ->
@@ -124,19 +127,17 @@ fun EcomApp(
                 Column(
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    if (appState.shouldShowTopBar) {
-                        EcomTopBar(
-                            canGoToSearch = appState.canGoToSearch,
-                            onNavigateToSearch = appState::navigateToSearch,
-                            canNavigateUp = appState.canNavigateUp,
-                            navigateUp = appState::navigateUp,
-                        )
-                    }
+                    EcomTopBar(
+                        canGoToSearch = appState.canGoToSearch,
+                        canShowSettings = appState.canShowSettings,
+                        onNavigateToSearch = appState::navigateToSearch,
+                        onSettingsClick = { showSettingsDialog = true },
+                        canNavigateUp = appState.canNavigateUp,
+                        navigateUp = appState::navigateUp,
+                    )
                     Box(
                         modifier = Modifier.consumeWindowInsets(
-                            if (appState.shouldShowTopBar)
-                                WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
-                            else WindowInsets(0, 0, 0, 0)
+                            WindowInsets.safeDrawing.only(WindowInsetsSides.Top)
                         )
                     ) {
                         EcomNavHost(
@@ -148,11 +149,17 @@ fun EcomApp(
                                 )
                                 latestTopLevelDestination = TopLevelDestination.HOME
                             },
-                            cartItems = cartItems
+                            cartItems = cartItems,
+                            snackbarHostState = snackbarHostState,
                         )
                     }
                 }
             }
+        }
+        if (showSettingsDialog) {
+            SettingsDialog(
+                onDismiss = { showSettingsDialog = false },
+            )
         }
     }
 }

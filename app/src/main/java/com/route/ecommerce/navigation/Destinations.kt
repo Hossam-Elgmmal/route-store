@@ -2,6 +2,7 @@ package com.route.ecommerce.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -11,7 +12,6 @@ import androidx.navigation.navArgument
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.screens.CheckoutScreen
-import com.route.ecommerce.ui.screens.WishlistScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
 import com.route.ecommerce.ui.screens.cart.CartScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
@@ -63,9 +63,6 @@ fun NavController.navigateToMenu(navOptions: NavOptions? = null) =
 
 fun NavController.navigateToAccount(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.ACCOUNT.name, navOptions)
-
-fun NavController.navigateToWishlist(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.WISHLIST.name, navOptions)
 
 fun NavController.navigateToCheckout(navOptions: NavOptions? = null) =
     navigate(LowLevelDestination.CHECKOUT.name, navOptions)
@@ -128,28 +125,24 @@ fun NavGraphBuilder.accountScreen(
 
 fun NavGraphBuilder.cartScreen(
     appState: EcomAppState,
-    onBackPressed: () -> Unit
+    onBackPressed: () -> Unit,
+    snackbarHostState: SnackbarHostState,
 ) {
     composable(TopLevelDestination.CART.name) {
         CartScreen(
             appState = appState,
-            onBackPressed = onBackPressed
+            onBackPressed = onBackPressed,
+            snackbarHostState = snackbarHostState,
         )
     }
 }
 
-fun NavGraphBuilder.wishlistScreen(
-    appState: EcomAppState
-) {
-    composable(LowLevelDestination.WISHLIST.name) {
-        WishlistScreen(
-            appState = appState
-        )
-    }
-}
 
 private const val productId = "product_id"
-fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
+fun NavGraphBuilder.productDetailsScreen(
+    appState: EcomAppState,
+    snackbarHostState: SnackbarHostState,
+) {
     composable(
         route = "${LowLevelDestination.PRODUCT_DETAILS.name}/{$productId}",
         arguments = listOf(
@@ -162,6 +155,7 @@ fun NavGraphBuilder.productDetailsScreen(appState: EcomAppState) {
         ProductDetailsScreen(
             appState = appState,
             productId = productId,
+            snackbarHostState = snackbarHostState,
         )
     }
 }
@@ -190,11 +184,16 @@ fun NavGraphBuilder.productsScreen(appState: EcomAppState) {
     }
 }
 
-fun NavGraphBuilder.searchScreen(appState: EcomAppState, cartItems: Map<String, Int>) {
+fun NavGraphBuilder.searchScreen(
+    appState: EcomAppState,
+    cartItems: Map<String, Int>,
+    snackbarHostState: SnackbarHostState,
+) {
     composable(route = LowLevelDestination.SEARCH.name) {
         SearchScreen(
             appState = appState,
-            cartItems = cartItems
+            cartItems = cartItems,
+            snackbarHostState = snackbarHostState
         )
     }
 }

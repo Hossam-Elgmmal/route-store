@@ -3,42 +3,44 @@ package com.route.ecommerce.ui.screens.search
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.windowInsetsTopHeight
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.components.SearchItem
-import com.route.ecommerce.ui.components.SearchToolBar
+import com.route.ecommerce.ui.components.SearchTextField
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun SearchScreen(
     appState: EcomAppState,
     cartItems: Map<String, Int>,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    viewModel: SearchViewModel = hiltViewModel()
+    viewModel: SearchViewModel = hiltViewModel(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     val searchQuery by viewModel.query.collectAsState()
     val searchResultUiState by viewModel.searchResultUiState.collectAsState()
     val recentSearchUiState by viewModel.recentSearchQueryUiState.collectAsState()
     Column(
-        modifier = modifier
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Spacer(modifier = Modifier.windowInsetsTopHeight(WindowInsets.safeDrawing))
-        SearchToolBar(
+        SearchTextField(
             query = searchQuery,
             onQueryChange = viewModel::onQueryChange,
             onSearch = viewModel::onSearchTriggered,
-            onBackClick = appState::navigateUp
+            modifier = Modifier.padding(horizontal = 16.dp)
         )
         when (searchResultUiState) {
             SearchResultUiState.LoadFailed,
@@ -89,13 +91,14 @@ fun SearchScreen(
                             val itemCountInCart = cartItems[product.id] ?: 0
                             SearchItem(
                                 product = product,
-                                itemCountInCart = itemCountInCart,
+                                countInCart = itemCountInCart,
                                 onItemClick = {
                                     viewModel.onSearchTriggered(searchQuery)
                                     appState.navigateToProductDetails(id = product.id)
                                 },
-                                addToCart = viewModel::addCartProduct,
-                                removeFromCart = viewModel::removeCartProduct,
+                                upsertCartProduct = viewModel::upsertCartProduct,
+                                coroutineScope = coroutineScope,
+                                snackbarHostState = snackbarHostState,
                             )
                         }
                     }

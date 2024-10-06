@@ -21,7 +21,7 @@ class CartRepositoryImpl @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) : CartRepository {
 
-    private val token = userPreferencesRepository.getToken()
+    private val token = userPreferencesRepository.getToken() /* TODO("use token in checkout") */
 
     override suspend fun syncWith(synchronizer: Synchronizer): Boolean =
         synchronizer.dataVersionSync(
@@ -41,37 +41,11 @@ class CartRepositoryImpl @Inject constructor(
             }
         )
 
-    override suspend fun addCartProduct(productId: String) {
-        cartProductDao.addCartProduct(CartProductEntity(productId, 1))
-        val t = token.firstOrNull() ?: ""
-        if (t != "") {
-            networkRepository.addProductToCart(t, productId)
-        }
-    }
-
-    override suspend fun updateCartProduct(productId: String, count: Int) {
+    override suspend fun upsertCartProduct(productId: String, count: Int) {
         if (count > 0) {
-            cartProductDao.addCartProduct(CartProductEntity(productId, count))
-            val t = token.firstOrNull() ?: ""
-            if (t != "") {
-                networkRepository.updateProductCount(t, count, productId)
-            }
+            cartProductDao.upsertCartProduct(CartProductEntity(productId, count))
         } else {
-            removeCartProduct(productId)
-        }
-    }
-
-    override suspend fun plusOneCartProduct(productId: String) {
-        val newCount = cartProductDao.getProductCount(productId) + 1
-        updateCartProduct(productId, newCount)
-    }
-
-    override suspend fun minusOneCartProduct(productId: String) {
-        val newCount = cartProductDao.getProductCount(productId) - 1
-        if (newCount <= 0) {
-            removeCartProduct(productId)
-        } else {
-            updateCartProduct(productId, newCount)
+            cartProductDao.removeCartProduct(productId)
         }
     }
 
@@ -80,22 +54,11 @@ class CartRepositoryImpl @Inject constructor(
             it.map(CartProductEntity::asExternalModel)
         }
 
-    override suspend fun removeCartProduct(productId: String) {
-        cartProductDao.removeCartProduct(productId)
-        val t = token.firstOrNull() ?: ""
-        if (t != "") {
-            networkRepository.removeCartItem(t, productId)
-        }
-    }
 }
 
 interface CartRepository : Syncable {
     fun getCartProducts(): Flow<List<CartProduct>>
-    suspend fun addCartProduct(productId: String)
-    suspend fun updateCartProduct(productId: String, count: Int)
-    suspend fun plusOneCartProduct(productId: String)
-    suspend fun minusOneCartProduct(productId: String)
-    suspend fun removeCartProduct(productId: String)
+    suspend fun upsertCartProduct(productId: String, count: Int)
 }
 
 fun NetworkCartProduct.asEntity() = CartProductEntity(

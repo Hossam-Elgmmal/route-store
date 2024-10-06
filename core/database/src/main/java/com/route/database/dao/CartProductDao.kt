@@ -13,7 +13,7 @@ interface CartProductDao {
     suspend fun updateCartProducts(products: List<CartProductEntity>)
 
     @Upsert
-    suspend fun addCartProduct(product: CartProductEntity)
+    suspend fun upsertCartProduct(product: CartProductEntity)
 
     @Query("select count from cartProducts where id = :productId")
     suspend fun getProductCount(productId: String): Int

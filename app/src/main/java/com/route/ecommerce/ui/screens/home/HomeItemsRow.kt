@@ -19,6 +19,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -82,14 +83,15 @@ fun HomeItem(
             .padding(8.dp)
             .width(140.dp)
             .fillMaxHeight(),
-        shape = MaterialTheme.shapes.extraSmall
+        shape = MaterialTheme.shapes.extraSmall,
     ) {
         AsyncImage(
             model = product.imageCoverUrl,
             contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(200.dp)
+                .clip(MaterialTheme.shapes.extraSmall),
             contentScale = ContentScale.Crop
         )
         Column(

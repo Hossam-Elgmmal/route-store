@@ -6,18 +6,23 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -31,17 +36,19 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import com.route.data.model.Product
 import com.route.ecommerce.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 @Composable
 fun CartItem(
     product: Product,
     countInCart: Int,
+    upsertCartProduct: (String, Int) -> Unit,
     onCountClick: () -> Unit,
     onItemClick: () -> Unit,
-    onPlusClick: (String) -> Unit,
-    onMinusClick: (String) -> Unit,
-    onDeleteClick: (String) -> Unit,
-    modifier: Modifier = Modifier
+    snackbarHostState: SnackbarHostState,
+    modifier: Modifier = Modifier,
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
     var isError by remember { mutableStateOf(false) }
 
@@ -77,7 +84,8 @@ fun CartItem(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp),
+                        .height(200.dp)
+                        .padding(top = 8.dp, start = 8.dp, end = 8.dp),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     Text(
@@ -122,7 +130,19 @@ fun CartItem(
                 ) {
                     Row {
                         IconButton(
-                            onClick = { onMinusClick(product.id) },
+                            onClick = {
+                                if (countInCart == 1) {
+                                    onCartProductRemoved(
+                                        coroutineScope = coroutineScope,
+                                        snackbarHostState = snackbarHostState,
+                                        countInCart = countInCart,
+                                        onActionPerformed = {
+                                            upsertCartProduct(product.id, countInCart)
+                                        }
+                                    )
+                                }
+                                upsertCartProduct(product.id, countInCart - 1)
+                            },
                         ) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_minus),
@@ -135,7 +155,7 @@ fun CartItem(
                             Text(text = countInCart.toString())
                         }
                         IconButton(
-                            onClick = { onPlusClick(product.id) },
+                            onClick = { upsertCartProduct(product.id, countInCart + 1) },
                             enabled = countInCart < product.quantity,
                         ) {
                             Icon(
@@ -146,7 +166,17 @@ fun CartItem(
                     }
                 }
                 IconButton(
-                    onClick = { onDeleteClick(product.id) },
+                    onClick = {
+                        onCartProductRemoved(
+                            coroutineScope = coroutineScope,
+                            snackbarHostState = snackbarHostState,
+                            countInCart = countInCart,
+                            onActionPerformed = {
+                                upsertCartProduct(product.id, countInCart)
+                            }
+                        )
+                        upsertCartProduct(product.id, 0)
+                    },
                     modifier = Modifier
                         .border(1.dp, MaterialTheme.colorScheme.error, CircleShape)
                 ) {
@@ -157,6 +187,30 @@ fun CartItem(
                     )
                 }
             }
+        }
+    }
+}
+
+fun onCartProductRemoved(
+    coroutineScope: CoroutineScope,
+    snackbarHostState: SnackbarHostState,
+    countInCart: Int,
+    onActionPerformed: () -> Unit,
+) {
+    coroutineScope.launch {
+        val message =
+            if (countInCart > 1) {
+                "$countInCart items removed"
+            } else {
+                "1 item removed"
+            }
+        val result = snackbarHostState.showSnackbar(
+            message = message,
+            duration = SnackbarDuration.Short,
+            actionLabel = "undo"
+        )
+        if (result == SnackbarResult.ActionPerformed) {
+            onActionPerformed()
         }
     }
 }

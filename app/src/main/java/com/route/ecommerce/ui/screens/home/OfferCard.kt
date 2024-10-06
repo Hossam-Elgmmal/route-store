@@ -19,8 +19,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -74,7 +74,7 @@ fun OfferCard(
                 ) {
                     Surface(
                         modifier = Modifier.align(Alignment.Start),
-                        shape = MaterialTheme.shapes.medium
+                        shape = RoundedCornerShape(16.dp, 0.dp, 16.dp, 0.dp)
                     ) {
                         Text(
                             text = stringResource(R.string.today_s_deal),
@@ -105,17 +105,23 @@ fun OfferCard(
                                 translationY = -10f
                             )
                     )
-                    ElevatedButton(
-                        onClick = onClick
+                    Surface(
+                        shape = CircleShape,
+                        color = MaterialTheme.colorScheme.surfaceContainerLow,
+                        contentColor = MaterialTheme.colorScheme.primary,
                     ) {
-                        Text(
-                            text = stringResource(R.string.shop_now),
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_arrow_forward),
-                            contentDescription = null
-                        )
+                        Row(
+                            modifier = Modifier.padding(16.dp, 8.dp)
+                        ) {
+                            Text(
+                                text = stringResource(R.string.shop_now),
+                            )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_arrow_forward),
+                                contentDescription = null
+                            )
+                        }
                     }
                 }
                 ElevatedCard(

@@ -14,9 +14,11 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -25,6 +27,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.route.data.model.Product
 import com.route.ecommerce.R
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun ProductData(
@@ -72,13 +75,13 @@ fun ProductData(
 
 @Composable
 fun AddRemoveCard(
-    onMinusClick: (String) -> Unit,
-    onPlusClick: (String) -> Unit,
     countInCart: Int,
     product: Product,
-    addToCart: (String, Int) -> Unit,
+    upsertCartProduct: (String, Int) -> Unit,
+    snackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     onCountClick: () -> Unit = {},
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
 ) {
     ElevatedCard(
         shape = MaterialTheme.shapes.extraSmall,
@@ -101,7 +104,19 @@ fun AddRemoveCard(
             ) {
                 Row {
                     IconButton(
-                        onClick = { onMinusClick(product.id) },
+                        onClick = {
+                            if (countInCart == 1) {
+                                onCartProductRemoved(
+                                    coroutineScope = coroutineScope,
+                                    snackbarHostState = snackbarHostState,
+                                    countInCart = countInCart,
+                                    onActionPerformed = {
+                                        upsertCartProduct(product.id, countInCart)
+                                    }
+                                )
+                            }
+                            upsertCartProduct(product.id, countInCart - 1)
+                        },
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_minus),
@@ -114,7 +129,7 @@ fun AddRemoveCard(
                         Text(text = countInCart.toString())
                     }
                     IconButton(
-                        onClick = { onPlusClick(product.id) },
+                        onClick = { upsertCartProduct(product.id, countInCart + 1) },
                         enabled = countInCart < product.quantity,
                     ) {
                         Icon(
@@ -127,7 +142,7 @@ fun AddRemoveCard(
         }
         Button(
             onClick = {
-                addToCart(product.id, countInCart)
+                upsertCartProduct(product.id, countInCart + 1)
             },
             modifier = Modifier
                 .fillMaxWidth()

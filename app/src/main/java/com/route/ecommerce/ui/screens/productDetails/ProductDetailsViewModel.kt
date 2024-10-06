@@ -22,7 +22,6 @@ class ProductDetailsViewModel @Inject constructor(
     private val cartRepository: CartRepository
 ) : ViewModel() {
 
-
     @OptIn(ExperimentalCoroutinesApi::class)
     fun getUiState(id: String): StateFlow<ProductDetailsUiState> {
         return productRepository.getProductById(id)
@@ -38,40 +37,11 @@ class ProductDetailsViewModel @Inject constructor(
             )
     }
 
-    fun addCartProduct(productId: String, itemCount: Int) {
+    fun upsertCartProduct(productId: String, itemCount: Int) {
         viewModelScope.launch(Dispatchers.IO) {
-            if (itemCount == 0) {
-                cartRepository.addCartProduct(productId)
-            } else {
-                cartRepository.plusOneCartProduct(productId)
-            }
+            cartRepository.upsertCartProduct(productId, itemCount)
         }
     }
-
-    fun plusOneCartProduct(productId: String) {
-        viewModelScope.launch {
-            cartRepository.plusOneCartProduct(productId)
-        }
-    }
-
-    fun minusOneCartProduct(productId: String) {
-        viewModelScope.launch {
-            cartRepository.minusOneCartProduct(productId)
-        }
-    }
-
-    fun updateCartItemCount(productId: String, count: Int) {
-        viewModelScope.launch {
-            cartRepository.updateCartProduct(productId, count)
-        }
-    }
-
-    fun removeCartItem(productId: String) {
-        viewModelScope.launch {
-            cartRepository.removeCartProduct(productId)
-        }
-    }
-
 }
 
 sealed interface ProductDetailsUiState {
