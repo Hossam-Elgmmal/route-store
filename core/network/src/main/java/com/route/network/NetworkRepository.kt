@@ -1,6 +1,13 @@
-package com.route.network.model
+package com.route.network
 
-import com.route.network.RouteApi
+import com.route.network.model.AddedCart
+import com.route.network.model.Cart
+import com.route.network.model.NetworkBrand
+import com.route.network.model.NetworkCategory
+import com.route.network.model.NetworkProduct
+import com.route.network.model.NetworkSubCategory
+import com.route.network.model.ProductCount
+import com.route.network.model.ProductToAddCart
 import javax.inject.Inject
 
 class NetworkRepository @Inject constructor(

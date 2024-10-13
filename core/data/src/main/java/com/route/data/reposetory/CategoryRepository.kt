@@ -7,8 +7,8 @@ import com.route.data.model.Category
 import com.route.database.dao.CategoryDao
 import com.route.database.model.CategoryEntity
 import com.route.datastore.DataVersion
+import com.route.network.NetworkRepository
 import com.route.network.model.NetworkCategory
-import com.route.network.model.NetworkRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

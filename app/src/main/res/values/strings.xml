@@ -26,7 +26,7 @@
     <string name="unexpected_error">Unexpected error, please try again</string>
     <string name="login_password_support" />
     <string name="sign_up_password_support">Use at least 8 Characters, one uppercase letter one lowercase letter and one number</string>
-    <string name="login_password_support_error">wrong password</string>
+    <string name="login_password_support_error">invalid password</string>
     <string name="forgot_password">Forgot password?</string>
     <string name="or_create_a_new_account">or create a new account</string>
     <string name="welcome_back">welcome back.</string>
@@ -73,4 +73,24 @@
     <string name="about_this_item">about this item</string>
     <string name="welcome_to_route">Welcome to Route</string>
     <string name="settings">Settings</string>
+    <string name="first_order_get_free_shipping">First Order? Get Free Shipping!</string>
+    <string name="returns_made_easy">Returns Made Easy.</string>
+    <string name="shop_anytime_anywhere">Shop Anytime, Anywhere</string>
+    <string name="shop_smart_save_time">Shop Smart, Save Time</string>
+    <string name="your_online_shopping_destination">Your Online Shopping Destination</string>
+    <string name="effortless_shopping_endless_possibilities">Effortless Shopping, Endless Possibilities</string>
+    <string name="exclusive_deals_tailored_to_your_preferences">Exclusive Deals Tailored to Your Preferences!</string>
+    <string name="success">Success</string>
+    <string name="send_code">send code</string>
+    <string name="email_not_found">Email not found</string>
+    <string name="verification_code_sent_to_your_email">Verification code sent to your email</string>
+    <string name="sign_out">Sign out</string>
+    <string name="reset_code_is_invalid_or_has_expired">Reset code is invalid or has expired</string>
+    <string name="enter_the_code_sent_to">Enter the code sent to \n</string>
+    <string name="submit">Submit</string>
+    <string name="will_send_you_a_verification_code">please, enter your email and we will send you a verification code</string>
+    <string name="reset_password">Reset password</string>
+    <string name="check_your_email">Check your email</string>
+    <string name="verified_code_successfully">verified code successfully</string>
+    <string name="enter_your_new_password">Enter your new password</string>
 </resources>

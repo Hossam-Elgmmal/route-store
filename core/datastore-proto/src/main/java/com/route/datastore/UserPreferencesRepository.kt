@@ -117,4 +117,17 @@ class UserPreferencesRepository @Inject constructor(
             Log.e(TAG, "Failed to update user preferences: ", e)
         }
     }
+
+    suspend fun setToken(token: String) {
+        try {
+            userPreferences.updateData { preferences ->
+                preferences
+                    .toBuilder()
+                    .setUserToken(token)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
+        }
+    }
 }

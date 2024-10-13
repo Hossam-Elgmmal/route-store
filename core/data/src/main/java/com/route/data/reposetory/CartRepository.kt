@@ -8,8 +8,8 @@ import com.route.database.dao.CartProductDao
 import com.route.database.model.CartProductEntity
 import com.route.datastore.DataVersion
 import com.route.datastore.UserPreferencesRepository
+import com.route.network.NetworkRepository
 import com.route.network.model.NetworkCartProduct
-import com.route.network.model.NetworkRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map

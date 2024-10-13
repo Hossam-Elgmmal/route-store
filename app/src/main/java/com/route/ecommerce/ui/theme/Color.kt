@@ -79,3 +79,5 @@ val logoColorLight = Color(0xFF35082E)
 val logoColorDark = Color(0xFFF5F5F5)
 val logoColorLightVariant = Color(0xFF000000)
 val logoColorDarkVariant = Color(0xFFFFD7F0)
+
+val successIconColor = Color(0xFF2E7D32)

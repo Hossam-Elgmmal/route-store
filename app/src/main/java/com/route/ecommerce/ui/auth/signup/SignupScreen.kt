@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -34,12 +35,14 @@ import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.auth.AuthUiEvents
 import com.route.ecommerce.ui.components.EcomTextField
+import kotlinx.coroutines.CoroutineScope
 
 @Composable
 fun SignupScreen(
     appState: EcomAppState,
     modifier: Modifier = Modifier,
-    viewModel: SignupViewModel = hiltViewModel()
+    viewModel: SignupViewModel = hiltViewModel(),
+    coroutineScope: CoroutineScope = rememberCoroutineScope()
 ) {
 
     val signUpUiState by viewModel.signUpUiState.collectAsState()
@@ -174,7 +177,8 @@ fun SignupScreen(
         AuthUiEvents(
             authUiState = signUpUiState,
             onSuccess = appState::navigateToTopLevelDestinations,
-            onDismissRequest = viewModel::resetUiState
+            onDismissRequest = viewModel::resetUiState,
+            coroutineScope = coroutineScope
         )
     }
 }

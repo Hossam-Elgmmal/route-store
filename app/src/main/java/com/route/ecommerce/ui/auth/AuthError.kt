@@ -3,10 +3,14 @@ package com.route.ecommerce.ui.auth
 import android.util.Patterns
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import com.route.ecommerce.R
 import com.route.ecommerce.navigation.TopLevelDestination
 import com.route.ecommerce.ui.components.EcomErrorDialog
 import com.route.ecommerce.ui.components.LoadingDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 enum class EmailError {
@@ -40,6 +44,12 @@ enum class UiError(
     ),
     UNEXPECTED_ERROR(
         errorMessageId = R.string.unexpected_error
+    ),
+    EMAIL_NOT_FOUND(
+        errorMessageId = R.string.email_not_found
+    ),
+    RESET_CODE_INVALID(
+        errorMessageId = R.string.reset_code_is_invalid_or_has_expired
     )
 }
 
@@ -82,6 +92,7 @@ fun AuthUiEvents(
     authUiState: AuthUiState,
     onSuccess: (TopLevelDestination, Boolean) -> Unit,
     onDismissRequest: () -> Unit,
+    coroutineScope: CoroutineScope,
 ) {
     when (authUiState) {
         AuthUiState.Idle -> {}
@@ -98,7 +109,17 @@ fun AuthUiEvents(
         }
 
         AuthUiState.Success -> {
-            onSuccess(TopLevelDestination.ACCOUNT, true)
+            EcomErrorDialog(
+                iconId = R.drawable.ic_success,
+                textId = R.string.success,
+                onDismissRequest = {},
+            )
+            LaunchedEffect(Unit) {
+                coroutineScope.launch {
+                    delay(2_000)
+                    onSuccess(TopLevelDestination.ACCOUNT, true)
+                }
+            }
         }
     }
 }

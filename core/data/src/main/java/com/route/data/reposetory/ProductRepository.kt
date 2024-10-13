@@ -7,8 +7,8 @@ import com.route.data.model.Product
 import com.route.database.dao.ProductDao
 import com.route.database.model.ProductEntity
 import com.route.datastore.DataVersion
+import com.route.network.NetworkRepository
 import com.route.network.model.NetworkProduct
-import com.route.network.model.NetworkRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

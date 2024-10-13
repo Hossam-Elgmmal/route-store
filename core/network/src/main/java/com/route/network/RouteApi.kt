@@ -4,6 +4,8 @@ import com.route.network.model.AddedCart
 import com.route.network.model.AuthResponse
 import com.route.network.model.Cart
 import com.route.network.model.DataResponse
+import com.route.network.model.ForgotPasswordRequest
+import com.route.network.model.ForgotPasswordResponse
 import com.route.network.model.LoginRequest
 import com.route.network.model.NetworkBrand
 import com.route.network.model.NetworkCategory
@@ -11,7 +13,11 @@ import com.route.network.model.NetworkProduct
 import com.route.network.model.NetworkSubCategory
 import com.route.network.model.ProductCount
 import com.route.network.model.ProductToAddCart
+import com.route.network.model.ResetPasswordRequest
+import com.route.network.model.ResetPasswordResponse
 import com.route.network.model.SignUpRequest
+import com.route.network.model.VerifyCodeRequest
+import com.route.network.model.VerifyCodeResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -75,4 +81,18 @@ interface RouteApi {
         @Path("id") productId: String,
     ): DataResponse<AddedCart>
 
+    @POST("auth/forgotPasswords")
+    suspend fun forgotPassword(
+        @Body forgotPasswordRequest: ForgotPasswordRequest
+    ): Response<ForgotPasswordResponse>
+
+    @POST("auth/verifyResetCode")
+    suspend fun verifyResetCode(
+        @Body verifyCodeRequest: VerifyCodeRequest
+    ): Response<VerifyCodeResponse>
+
+    @PUT("auth/resetPassword")
+    suspend fun resetPassword(
+        @Body resetPasswordRequest: ResetPasswordRequest
+    ): Response<ResetPasswordResponse>
 }

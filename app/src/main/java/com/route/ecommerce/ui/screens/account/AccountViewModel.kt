@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -26,6 +27,11 @@ class AccountViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = AccountUiState.Loading
             )
+    fun signOut() {
+        viewModelScope.launch {
+            userPreferencesRepository.setToken("")
+        }
+    }
 }
 
 sealed interface AccountUiState {

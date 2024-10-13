@@ -7,13 +7,12 @@ import com.route.data.model.Brand
 import com.route.database.dao.BrandDao
 import com.route.database.model.BrandEntity
 import com.route.datastore.DataVersion
+import com.route.network.NetworkRepository
 import com.route.network.model.NetworkBrand
-import com.route.network.model.NetworkRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-private const val TAG = "BrandRepositoryImpl"
 
 class BrandRepositoryImpl @Inject constructor(
     private val networkRepository: NetworkRepository,

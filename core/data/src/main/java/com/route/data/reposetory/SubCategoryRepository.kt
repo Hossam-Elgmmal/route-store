@@ -7,11 +7,10 @@ import com.route.data.model.SubCategory
 import com.route.database.dao.SubCategoryDao
 import com.route.database.model.SubCategoryEntity
 import com.route.datastore.DataVersion
-import com.route.network.model.NetworkRepository
+import com.route.network.NetworkRepository
 import com.route.network.model.NetworkSubCategory
 import javax.inject.Inject
 
-private const val TAG = "SubCategoryRepositoryImpl"
 
 class SubCategoryRepositoryImpl @Inject constructor(
     private val networkRepository: NetworkRepository,
