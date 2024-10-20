@@ -27,9 +27,16 @@ class AccountViewModel @Inject constructor(
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = AccountUiState.Loading
             )
+
     fun signOut() {
         viewModelScope.launch {
             userPreferencesRepository.setToken("")
+        }
+    }
+
+    fun setUserImgName(fileName: String) {
+        viewModelScope.launch {
+            userPreferencesRepository.setUserImgName(fileName)
         }
     }
 }

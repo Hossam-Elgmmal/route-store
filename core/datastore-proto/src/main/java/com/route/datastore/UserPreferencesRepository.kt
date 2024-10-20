@@ -27,6 +27,7 @@ class UserPreferencesRepository @Inject constructor(
             userEmail = preferences.userEmail,
             userPassword = preferences.userPassword,
             userToken = preferences.userToken,
+            userImgPath = preferences.userImgName,
         )
     }
 
@@ -124,6 +125,19 @@ class UserPreferencesRepository @Inject constructor(
                 preferences
                     .toBuilder()
                     .setUserToken(token)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
+        }
+    }
+
+    suspend fun setUserImgName(fileName: String) {
+        try {
+            userPreferences.updateData { preferences ->
+                preferences
+                    .toBuilder()
+                    .setUserImgName(fileName)
                     .build()
             }
         } catch (e: IOException) {

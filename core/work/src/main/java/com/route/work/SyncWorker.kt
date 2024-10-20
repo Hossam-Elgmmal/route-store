@@ -1,9 +1,9 @@
 package com.route.work
 
 import android.content.Context
-import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
+import androidx.work.ForegroundInfo
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.OutOfQuotaPolicy
 import androidx.work.WorkerParameters
@@ -25,7 +25,7 @@ import kotlinx.coroutines.withContext
 
 @HiltWorker
 class SyncWorker @AssistedInject constructor(
-    @Assisted appContext: Context,
+    @Assisted private val appContext: Context,
     @Assisted workerParameters: WorkerParameters,
     private val userPreferencesRepository: UserPreferencesRepository,
     private val categoryRepository: CategoryRepository,
@@ -36,8 +36,8 @@ class SyncWorker @AssistedInject constructor(
 ) : CoroutineWorker(appContext, workerParameters), Synchronizer {
     override suspend fun doWork(): Result =
         withContext(Dispatchers.IO) {
+            setForeground(getForegroundInfo())
 
-            Log.i("SyncWorker", "doWork")
             val syncedSuccessfully = awaitAll(
                 async { categoryRepository.sync() },
                 async { subCategoryRepository.sync() },
@@ -58,6 +58,9 @@ class SyncWorker @AssistedInject constructor(
     override suspend fun updateDataVersion(
         update: DataVersion.() -> DataVersion
     ) = userPreferencesRepository.updateDataVersion(update)
+
+    override suspend fun getForegroundInfo(): ForegroundInfo =
+        appContext.syncForegroundInfo()
 
     companion object {
         fun startUpSyncWork() =

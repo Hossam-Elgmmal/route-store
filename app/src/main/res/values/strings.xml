@@ -93,4 +93,10 @@
     <string name="check_your_email">Check your email</string>
     <string name="verified_code_successfully">verified code successfully</string>
     <string name="enter_your_new_password">Enter your new password</string>
+    <string name="user_image">user image</string>
+    <string name="name">"name: "</string>
+    <string name="are_you_sure_you_want_to_sign_out">Are you sure you want to sign out?</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="orders">Orders</string>
 </resources>

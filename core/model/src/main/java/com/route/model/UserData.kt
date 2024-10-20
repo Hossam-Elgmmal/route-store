@@ -6,6 +6,7 @@ data class UserData(
     val userEmail: String,
     val userPassword: String,
     val userToken: String,
+    val userImgPath: String,
 )
 
 enum class DarkTheme {

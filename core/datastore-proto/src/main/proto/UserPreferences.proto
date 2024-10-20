@@ -18,6 +18,8 @@ message UserPreferences {
   int32 cartVersion = 10;
 
   string cartId = 11;
+  string userImgName = 12;
+
   enum DarkTheme {
     FOLLOW_SYSTEM = 0;
     LIGHT = 1;

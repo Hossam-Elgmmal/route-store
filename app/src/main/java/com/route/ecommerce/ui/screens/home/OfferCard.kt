@@ -166,7 +166,8 @@ fun OfferCard(
                         ) { id ->
                             Image(
                                 painter = painterResource(id = id),
-                                contentDescription = null
+                                contentDescription = null,
+                                modifier = Modifier.fillMaxHeight(0.8f)
                             )
                         }
                     }
