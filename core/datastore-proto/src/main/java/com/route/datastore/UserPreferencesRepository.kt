@@ -28,6 +28,7 @@ class UserPreferencesRepository @Inject constructor(
             userPassword = preferences.userPassword,
             userToken = preferences.userToken,
             userImgPath = preferences.userImgName,
+            userPhone = preferences.userPhone
         )
     }
 
@@ -138,6 +139,35 @@ class UserPreferencesRepository @Inject constructor(
                 preferences
                     .toBuilder()
                     .setUserImgName(fileName)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
+        }
+    }
+
+    suspend fun updateUserInfo(name: String, email: String, phone: String) {
+        try {
+            userPreferences.updateData { preferences ->
+                preferences
+                    .toBuilder()
+                    .setUserName(name)
+                    .setUserEmail(email)
+                    .setUserPhone(phone)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
+        }
+    }
+
+    suspend fun updateUserPassword(newToken: String, password: String) {
+        try {
+            userPreferences.updateData { preferences ->
+                preferences
+                    .toBuilder()
+                    .setUserToken(newToken)
+                    .setUserPassword(password)
                     .build()
             }
         } catch (e: IOException) {

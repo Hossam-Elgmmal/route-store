@@ -99,4 +99,20 @@
     <string name="cancel">Cancel</string>
     <string name="edit_profile">Edit profile</string>
     <string name="orders">Orders</string>
+    <string name="not_set">Not Set</string>
+    <string name="edit_info">Edit info</string>
+    <string name="phone">"phone: "</string>
+    <string name="empty">""</string>
+    <string name="email_already_exists">"email already exists"</string>
+    <string name="update_account_info">Update Account info</string>
+    <string name="update">Update</string>
+    <string name="phone_number">Phone number</string>
+    <string name="please_enter_a_valid_phone_number">Please, enter a valid phone number</string>
+    <string name="phone_support_value" />
+    <string name="edit_password">Edit Password</string>
+    <string name="update_password">Update Password</string>
+    <string name="new_password">New Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="wrong_password">Wrong Password</string>
+    <string name="expired_token_please_login_again">Expired Token. please login again</string>
 </resources>

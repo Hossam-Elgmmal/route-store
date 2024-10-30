@@ -3,6 +3,7 @@ package com.route.network
 import com.route.network.model.AddedCart
 import com.route.network.model.AuthResponse
 import com.route.network.model.Cart
+import com.route.network.model.ChangePasswordRequest
 import com.route.network.model.DataResponse
 import com.route.network.model.ForgotPasswordRequest
 import com.route.network.model.ForgotPasswordResponse
@@ -16,6 +17,7 @@ import com.route.network.model.ProductToAddCart
 import com.route.network.model.ResetPasswordRequest
 import com.route.network.model.ResetPasswordResponse
 import com.route.network.model.SignUpRequest
+import com.route.network.model.UpdatedInfo
 import com.route.network.model.VerifyCodeRequest
 import com.route.network.model.VerifyCodeResponse
 import retrofit2.Response
@@ -95,4 +97,18 @@ interface RouteApi {
     suspend fun resetPassword(
         @Body resetPasswordRequest: ResetPasswordRequest
     ): Response<ResetPasswordResponse>
+
+    @PUT("users/updateMe/")
+    suspend fun updateUserInfo(
+        @Header("token") token: String,
+        @Body updatedInfo: UpdatedInfo,
+    ): Response<Unit>
+
+    @PUT("users/changeMyPassword")
+    suspend fun changeUserPassword(
+        @Header("token") token: String,
+        @Body changePasswordRequest: ChangePasswordRequest
+    ): Response<ResetPasswordResponse>
+
+
 }

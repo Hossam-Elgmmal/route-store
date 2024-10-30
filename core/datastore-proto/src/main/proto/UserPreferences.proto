@@ -19,6 +19,7 @@ message UserPreferences {
 
   string cartId = 11;
   string userImgName = 12;
+  string userPhone = 13;
 
   enum DarkTheme {
     FOLLOW_SYSTEM = 0;

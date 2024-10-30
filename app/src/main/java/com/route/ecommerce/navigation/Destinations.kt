@@ -11,9 +11,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
-import com.route.ecommerce.ui.screens.CheckoutScreen
 import com.route.ecommerce.ui.screens.account.AccountScreen
 import com.route.ecommerce.ui.screens.cart.CartScreen
+import com.route.ecommerce.ui.screens.checkout.CheckoutScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
 import com.route.ecommerce.ui.screens.menu.MenuScreen
 import com.route.ecommerce.ui.screens.productDetails.ProductDetailsScreen
