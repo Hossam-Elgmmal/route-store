@@ -1,6 +1,5 @@
 package com.route.network
 
-import com.route.network.model.AddedCart
 import com.route.network.model.AuthResponse
 import com.route.network.model.Cart
 import com.route.network.model.ChangePasswordRequest
@@ -63,14 +62,14 @@ interface RouteApi {
     suspend fun addProductToCart(
         @Header("token") token: String,
         @Body product: ProductToAddCart,
-    ): DataResponse<AddedCart>
+    ): Response<Unit>
 
     @PUT("cart/{id}")
     suspend fun updateProductCount(
         @Header("token") token: String,
         @Body product: ProductCount,
         @Path("id") productId: String,
-    ): DataResponse<AddedCart>
+    ): Response<Unit>
 
     @GET("cart")
     suspend fun getUserCart(
@@ -81,7 +80,7 @@ interface RouteApi {
     suspend fun removeCartItem(
         @Header("token") token: String,
         @Path("id") productId: String,
-    ): DataResponse<AddedCart>
+    ): Response<Unit>
 
     @POST("auth/forgotPasswords")
     suspend fun forgotPassword(

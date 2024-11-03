@@ -64,8 +64,8 @@ fun NavController.navigateToMenu(navOptions: NavOptions? = null) =
 fun NavController.navigateToAccount(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.ACCOUNT.name, navOptions)
 
-fun NavController.navigateToCheckout(navOptions: NavOptions? = null) =
-    navigate(LowLevelDestination.CHECKOUT.name, navOptions)
+fun NavController.navigateToCheckout(cartId: String, navOptions: NavOptions? = null) =
+    navigate("${LowLevelDestination.CHECKOUT.name}/$cartId", navOptions)
 
 
 fun NavController.navigateToCart(navOptions: NavOptions? = null) =
@@ -198,10 +198,20 @@ fun NavGraphBuilder.searchScreen(
     }
 }
 
+private const val cartId = "cart_id"
 fun NavGraphBuilder.checkoutScreen(appState: EcomAppState) {
-    composable(LowLevelDestination.CHECKOUT.name) {
+    composable(
+        route = "${LowLevelDestination.CHECKOUT.name}/{$cartId}",
+        arguments = listOf(
+            navArgument(cartId) {
+                type = NavType.StringType
+            }
+        )
+    ) { backStackEntry ->
+        val cartId = backStackEntry.arguments?.getString(cartId) ?: ""
         CheckoutScreen(
-            appState = appState
+            appState = appState,
+            cartId = cartId,
         )
     }
 }

@@ -1,6 +1,5 @@
 package com.route.network
 
-import com.route.network.model.AddedCart
 import com.route.network.model.Cart
 import com.route.network.model.NetworkBrand
 import com.route.network.model.NetworkCategory
@@ -49,22 +48,24 @@ class NetworkRepository @Inject constructor(
     suspend fun addProductToCart(
         token: String,
         productId: String
-    ): AddedCart =
+    ): Boolean =
         try {
-            routeApi.addProductToCart(token, ProductToAddCart(productId)).data
+            val response = routeApi.addProductToCart(token, ProductToAddCart(productId))
+            response.isSuccessful
         } catch (_: Exception) {
-            AddedCart("", "")
+            false
         }
 
     suspend fun updateProductCount(
         token: String,
         count: Int,
         productId: String
-    ): AddedCart =
+    ): Boolean =
         try {
-            routeApi.updateProductCount(token, ProductCount(count), productId).data
+            val response = routeApi.updateProductCount(token, ProductCount(count), productId)
+            response.isSuccessful
         } catch (_: Exception) {
-            AddedCart("", "")
+            false
         }
 
     suspend fun getUserCart(
@@ -79,11 +80,12 @@ class NetworkRepository @Inject constructor(
     suspend fun removeCartItem(
         token: String,
         productId: String
-    ): AddedCart =
+    ): Boolean =
         try {
-            routeApi.removeCartItem(token, productId).data
+            val response = routeApi.removeCartItem(token, productId)
+            response.isSuccessful
         } catch (_: Exception) {
-            AddedCart("", "")
+            false
         }
 
 }

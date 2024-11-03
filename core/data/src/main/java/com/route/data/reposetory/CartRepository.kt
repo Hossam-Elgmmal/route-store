@@ -1,45 +1,23 @@
 package com.route.data.reposetory
 
-import com.route.data.Syncable
-import com.route.data.Synchronizer
-import com.route.data.dataVersionSync
 import com.route.data.model.CartProduct
 import com.route.database.dao.CartProductDao
 import com.route.database.model.CartProductEntity
-import com.route.datastore.DataVersion
-import com.route.datastore.UserPreferencesRepository
 import com.route.network.NetworkRepository
+import com.route.network.model.Cart
 import com.route.network.model.NetworkCartProduct
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class CartRepositoryImpl @Inject constructor(
     private val networkRepository: NetworkRepository,
     private val cartProductDao: CartProductDao,
-    private val userPreferencesRepository: UserPreferencesRepository,
 ) : CartRepository {
-
-    private val token = userPreferencesRepository.getToken() /* TODO("use token in checkout") */
-
-    override suspend fun syncWith(synchronizer: Synchronizer): Boolean =
-        synchronizer.dataVersionSync(
-            versionReader = DataVersion::cartVersion,
-            fetchDataList = { _ ->
-                val t = token.firstOrNull() ?: ""
-                val cart = networkRepository.getUserCart(t)
-                userPreferencesRepository.setCartId(cart.cartId)
-                cart.products
-            },
-            updateModelData = { cartProducts ->
-                val list = cartProducts.map(NetworkCartProduct::asEntity)
-                cartProductDao.updateCartProducts(list)
-            },
-            versionUpdater = { latestVersion ->
-                copy(cartVersion = latestVersion)
-            }
-        )
 
     override suspend fun upsertCartProduct(productId: String, count: Int) {
         if (count > 0) {
@@ -54,11 +32,58 @@ class CartRepositoryImpl @Inject constructor(
             it.map(CartProductEntity::asExternalModel)
         }
 
+    override suspend fun uploadCart(
+        cartSet: Set<CartProduct>,
+        token: String
+    ): Cart = withContext(Dispatchers.IO) {
+
+        val onlineCart = networkRepository.getUserCart(token)
+        val onlineCartSet = onlineCart.products
+            .map(NetworkCartProduct::asEntity)
+            .map(CartProductEntity::asExternalModel)
+            .toSet()
+
+        if (cartSet == onlineCartSet) return@withContext onlineCart
+
+        val newSet = cartSet - onlineCartSet
+        val deletedSet = onlineCartSet - cartSet
+
+        val itemsDeletedSuccessfully =
+            deletedSet.map { cartItem ->
+                async {
+                    networkRepository.removeCartItem(token, cartItem.id)
+                }
+            }.awaitAll().all { it }
+
+        val itemsAddedSuccessfully =
+            newSet.map { cartItem ->
+                async {
+                    networkRepository.addProductToCart(token, cartItem.id)
+                }
+            }.awaitAll().all { it }
+
+        val itemsUpdatedSuccessfully =
+            newSet.filter { it.count > 1 }
+                .map { cartItem ->
+                    async {
+                        networkRepository.updateProductCount(
+                            token,
+                            cartItem.count,
+                            cartItem.id
+                        )
+                    }
+                }.awaitAll().all { it }
+
+        return@withContext if (itemsDeletedSuccessfully && itemsAddedSuccessfully && itemsUpdatedSuccessfully)
+            networkRepository.getUserCart(token)
+        else Cart("", "", emptyList())
+    }
 }
 
-interface CartRepository : Syncable {
+interface CartRepository {
     fun getCartProducts(): Flow<List<CartProduct>>
     suspend fun upsertCartProduct(productId: String, count: Int)
+    suspend fun uploadCart(cartSet: Set<CartProduct>, token: String): Cart
 }
 
 fun NetworkCartProduct.asEntity() = CartProductEntity(

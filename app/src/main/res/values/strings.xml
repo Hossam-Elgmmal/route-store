@@ -23,7 +23,7 @@
     <string name="account_already_exists">account already exists</string>
     <string name="server_error">server error. please, please try again later.</string>
     <string name="connection_error">network error, please check your connection.</string>
-    <string name="unexpected_error">Unexpected error, please try again</string>
+    <string name="unexpected_error">Something went Wrong, please try again</string>
     <string name="login_password_support" />
     <string name="sign_up_password_support">Use at least 8 Characters, one uppercase letter one lowercase letter and one number</string>
     <string name="login_password_support_error">invalid password</string>
@@ -115,4 +115,6 @@
     <string name="current_password">Current Password</string>
     <string name="wrong_password">Wrong Password</string>
     <string name="expired_token_please_login_again">Expired Token. please login again</string>
+    <string name="almost_done">Almost done!</string>
+    <string name="this_may_take_up_to_1_minute">This may take up to 1 minute on slower connections. Thank you for your patience!</string>
 </resources>

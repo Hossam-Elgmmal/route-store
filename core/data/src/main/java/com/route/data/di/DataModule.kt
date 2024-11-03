@@ -8,6 +8,8 @@ import com.route.data.reposetory.CartRepository
 import com.route.data.reposetory.CartRepositoryImpl
 import com.route.data.reposetory.CategoryRepository
 import com.route.data.reposetory.CategoryRepositoryImpl
+import com.route.data.reposetory.OrderRepository
+import com.route.data.reposetory.OrderRepositoryImpl
 import com.route.data.reposetory.ProductRepository
 import com.route.data.reposetory.ProductRepositoryImpl
 import com.route.data.reposetory.RecentSearchQueryRepository
@@ -57,5 +59,10 @@ abstract class DataModule {
     abstract fun bindCartRepository(
         cartRepositoryImpl: CartRepositoryImpl
     ): CartRepository
+
+    @Binds
+    abstract fun bindOrderRepository(
+        orderRepositoryImpl: OrderRepositoryImpl
+    ): OrderRepository
 
 }

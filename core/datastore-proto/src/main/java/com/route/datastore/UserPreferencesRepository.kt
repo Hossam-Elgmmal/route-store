@@ -73,24 +73,8 @@ class UserPreferencesRepository @Inject constructor(
                 subCategoryVersion = it.subCategoryVersion,
                 brandVersion = it.brandVersion,
                 productVersion = it.productVersion,
-                cartVersion = it.cartVersion
             )
         }.firstOrNull() ?: DataVersion()
-
-    fun getToken() =
-        userData.map { it.userToken }
-
-    suspend fun setCartId(id: String) {
-        try {
-            userPreferences.updateData {
-                it.toBuilder()
-                    .setCartId(id)
-                    .build()
-            }
-        } catch (e: IOException) {
-            Log.e(TAG, "Failed to update user preferences: ", e)
-        }
-    }
 
     suspend fun updateDataVersion(update: DataVersion.() -> DataVersion) {
         try {
@@ -102,7 +86,6 @@ class UserPreferencesRepository @Inject constructor(
                         subCategoryVersion = preferences.subCategoryVersion,
                         brandVersion = preferences.brandVersion,
                         productVersion = preferences.productVersion,
-                        cartVersion = preferences.cartVersion
                     )
                 )
 
@@ -111,7 +94,6 @@ class UserPreferencesRepository @Inject constructor(
                     .setSubCategoryVersion(updatedVersions.subCategoryVersion)
                     .setBrandVersion(updatedVersions.brandVersion)
                     .setProductVersion(updatedVersions.productVersion)
-                    .setCartVersion(updatedVersions.cartVersion)
                     .build()
             }
 

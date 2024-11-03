@@ -161,7 +161,7 @@ class EcomAppState(
     fun navigateToProducts(brandId: String, categoryId: String) =
         navController.navigateToProducts(brandId = brandId, categoryId = categoryId)
     fun navigateToProductDetails(id: String) = navController.navigateToProductDetails(id)
-    fun navigateToCheckout() = navController.navigateToCheckout()
+    fun navigateToCheckout(cartId: String) = navController.navigateToCheckout(cartId)
     fun navigateToSearch() = navController.navigateToSearch()
     fun navigateUp() = navController.navigateUp()
     fun popBackStack() = navController.popBackStack()
