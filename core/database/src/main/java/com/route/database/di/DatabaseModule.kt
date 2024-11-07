@@ -6,6 +6,7 @@ import com.route.database.EcomDatabase
 import com.route.database.dao.BrandDao
 import com.route.database.dao.CartProductDao
 import com.route.database.dao.CategoryDao
+import com.route.database.dao.OrderDao
 import com.route.database.dao.ProductDao
 import com.route.database.dao.SearchQueryDao
 import com.route.database.dao.SubCategoryDao
@@ -61,4 +62,9 @@ object DatabaseModule {
     fun provideCartProductDao(
         database: EcomDatabase
     ): CartProductDao = database.getCartProductDao()
+
+    @Provides
+    fun provideOrderDao(
+        database: EcomDatabase
+    ): OrderDao = database.getOrderDao()
 }

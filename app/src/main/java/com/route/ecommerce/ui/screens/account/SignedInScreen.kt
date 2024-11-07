@@ -9,7 +9,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,7 +22,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -41,6 +39,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.route.ecommerce.R
+import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.components.EcomErrorDialog
 import com.route.ecommerce.ui.components.LoadingDialog
 import com.route.model.UserData
@@ -56,12 +55,12 @@ fun SignedInScreen(
     coroutineScope: CoroutineScope,
     viewModel: AccountViewModel,
     userData: UserData,
+    appState: EcomAppState,
     modifier: Modifier = Modifier,
 ) {
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showEditInfoCard by remember { mutableStateOf(false) }
     var showEditPasswordCard by remember { mutableStateOf(false) }
-    var showOrdersDialog by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
     val pickMedia =
@@ -151,35 +150,26 @@ fun SignedInScreen(
             )
         }
 
-        OutlinedCard(
-            onClick = { showOrdersDialog = !showOrdersDialog },
+        ElevatedButton(
+            onClick = { appState.navigateToOrders() },
             shape = MaterialTheme.shapes.extraSmall,
-            modifier = Modifier.padding(vertical = 16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
         ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_orders),
-                    contentDescription = null,
-                )
-                Text(
-                    text = stringResource(R.string.orders),
-                )
-                Spacer(Modifier.weight(1f))
-                Icon(
-                    painter = painterResource(
-                        if (showOrdersDialog)
-                            R.drawable.ic_arrow_down
-                        else R.drawable.ic_arrow_up
-                    ),
-                    contentDescription = null,
-                )
-            }
+            Icon(
+                painter = painterResource(R.drawable.ic_orders),
+                contentDescription = null,
+            )
+            Text(
+                text = stringResource(R.string.orders),
+                modifier = Modifier.padding(8.dp)
+            )
+            Spacer(Modifier.weight(1f))
+            Icon(
+                painter = painterResource(R.drawable.ic_arrow_forward),
+                contentDescription = null,
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))

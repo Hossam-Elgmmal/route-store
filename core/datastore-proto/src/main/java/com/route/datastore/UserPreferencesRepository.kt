@@ -73,6 +73,7 @@ class UserPreferencesRepository @Inject constructor(
                 subCategoryVersion = it.subCategoryVersion,
                 brandVersion = it.brandVersion,
                 productVersion = it.productVersion,
+                orderVersion = it.orderVersion,
             )
         }.firstOrNull() ?: DataVersion()
 
@@ -86,6 +87,7 @@ class UserPreferencesRepository @Inject constructor(
                         subCategoryVersion = preferences.subCategoryVersion,
                         brandVersion = preferences.brandVersion,
                         productVersion = preferences.productVersion,
+                        orderVersion = preferences.orderVersion
                     )
                 )
 
@@ -94,6 +96,7 @@ class UserPreferencesRepository @Inject constructor(
                     .setSubCategoryVersion(updatedVersions.subCategoryVersion)
                     .setBrandVersion(updatedVersions.brandVersion)
                     .setProductVersion(updatedVersions.productVersion)
+                    .setOrderVersion(updatedVersions.orderVersion)
                     .build()
             }
 
@@ -114,6 +117,29 @@ class UserPreferencesRepository @Inject constructor(
             Log.e(TAG, "Failed to update user preferences: ", e)
         }
     }
+
+    suspend fun getToken() = userPreferences.data
+        .map {
+            it.userToken
+        }.firstOrNull() ?: ""
+
+    suspend fun setUserId(userId: String) {
+        try {
+            userPreferences.updateData { preferences ->
+                preferences
+                    .toBuilder()
+                    .setUserId(userId)
+                    .build()
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
+        }
+    }
+
+    suspend fun getUserId() = userPreferences.data
+        .map {
+            it.userId
+        }.firstOrNull() ?: ""
 
     suspend fun setUserImgName(fileName: String) {
         try {

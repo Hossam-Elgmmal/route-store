@@ -78,12 +78,17 @@ class CartRepositoryImpl @Inject constructor(
             networkRepository.getUserCart(token)
         else Cart("", "", emptyList())
     }
+
+    override suspend fun clearCart() {
+        cartProductDao.clearCart()
+    }
 }
 
 interface CartRepository {
     fun getCartProducts(): Flow<List<CartProduct>>
     suspend fun upsertCartProduct(productId: String, count: Int)
     suspend fun uploadCart(cartSet: Set<CartProduct>, token: String): Cart
+    suspend fun clearCart()
 }
 
 fun NetworkCartProduct.asEntity() = CartProductEntity(

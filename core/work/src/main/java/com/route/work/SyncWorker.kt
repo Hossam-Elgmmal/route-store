@@ -10,6 +10,7 @@ import androidx.work.WorkerParameters
 import com.route.data.Synchronizer
 import com.route.data.reposetory.BrandRepository
 import com.route.data.reposetory.CategoryRepository
+import com.route.data.reposetory.OrderRepository
 import com.route.data.reposetory.ProductRepository
 import com.route.data.reposetory.SubCategoryRepository
 import com.route.datastore.DataVersion
@@ -31,6 +32,7 @@ class SyncWorker @AssistedInject constructor(
     private val subCategoryRepository: SubCategoryRepository,
     private val brandRepository: BrandRepository,
     private val productRepository: ProductRepository,
+    private val orderRepository: OrderRepository,
 ) : CoroutineWorker(appContext, workerParameters), Synchronizer {
     override suspend fun doWork(): Result =
         withContext(Dispatchers.IO) {
@@ -41,6 +43,7 @@ class SyncWorker @AssistedInject constructor(
                 async { subCategoryRepository.sync() },
                 async { brandRepository.sync() },
                 async { productRepository.sync() },
+                async { orderRepository.sync() },
             ).all { it }
 
             if (syncedSuccessfully)

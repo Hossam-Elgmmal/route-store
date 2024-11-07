@@ -61,5 +61,6 @@ fun EcomNavHost(
             snackbarHostState = snackbarHostState
         )
         checkoutScreen(appState)
+        ordersScreen(appState)
     }
 }

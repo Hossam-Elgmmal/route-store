@@ -3,8 +3,10 @@ package com.route.network
 import com.route.network.model.Cart
 import com.route.network.model.NetworkBrand
 import com.route.network.model.NetworkCategory
+import com.route.network.model.NetworkOrder
 import com.route.network.model.NetworkProduct
 import com.route.network.model.NetworkSubCategory
+import com.route.network.model.OrderRequest
 import com.route.network.model.ProductCount
 import com.route.network.model.ProductToAddCart
 import javax.inject.Inject
@@ -86,6 +88,27 @@ class NetworkRepository @Inject constructor(
             response.isSuccessful
         } catch (_: Exception) {
             false
+        }
+
+    suspend fun createCashOrder(
+        token: String,
+        cartId: String,
+        orderRequest: OrderRequest,
+    ): Boolean =
+        try {
+            val response = routeApi.createCashOrder(token, orderRequest, cartId)
+            response.isSuccessful
+        } catch (_: Exception) {
+            false
+        }
+
+    suspend fun getUserOrders(
+        userId: String
+    ): List<NetworkOrder> =
+        try {
+            routeApi.getUserOrders(userId)
+        } catch (_: Exception) {
+            emptyList()
         }
 
 }

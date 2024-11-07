@@ -117,4 +117,6 @@
     <string name="expired_token_please_login_again">Expired Token. please login again</string>
     <string name="almost_done">Almost done!</string>
     <string name="this_may_take_up_to_1_minute">This may take up to 1 minute on slower connections. Thank you for your patience!</string>
+    <string name="refresh">Refresh</string>
+    <string name="orders_not_found">Orders Not Found</string>
 </resources>

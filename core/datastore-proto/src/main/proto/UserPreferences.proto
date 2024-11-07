@@ -15,9 +15,11 @@ message UserPreferences {
   int32 subCategoryVersion = 7;
   int32 brandVersion = 8;
   int32 productVersion = 9;
+  int32 orderVersion = 10;
 
-  string userImgName = 10;
-  string userPhone = 11;
+  string userImgName = 11;
+  string userPhone = 12;
+  string userId = 13;
 
   enum DarkTheme {
     FOLLOW_SYSTEM = 0;

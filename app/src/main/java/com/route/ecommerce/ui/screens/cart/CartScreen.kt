@@ -43,6 +43,7 @@ fun CartScreen(
     val cartUiState by viewModel.cartUiState.collectAsState()
     val token by viewModel.token.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val isOffline by appState.isOffline.collectAsState()
     val onlineCart by viewModel.onlineCart.collectAsState()
 
     var showErrorDialog by remember { mutableStateOf(false) }
@@ -70,17 +71,20 @@ fun CartScreen(
                 SubtotalBody(
                     subtotal = subtotal,
                     onCheckout = {
-                        if (token.isNotEmpty()) {
-                            viewModel.uploadCart(token, successUiState.cartProductsList)
-                        } else {
+                        if (token.isEmpty()) {
                             appState.navigateToLogin()
+                        } else if (isOffline) {
+                            showErrorDialog = true
+                        } else {
+                            viewModel.uploadCart(token, successUiState.cartProductsList)
                         }
                     }
                 )
                 LaunchedEffect(onlineCart) {
-                    onlineCart?.cartId?.let {
-                        if (it.isNotEmpty()) {
-                            appState.navigateToCheckout(onlineCart!!.cartId)
+                    onlineCart?.let {
+                        if (it.cartId.isNotEmpty() && it.ownerId.isNotEmpty()) {
+                            viewModel.setUserId(it.ownerId)
+                            appState.navigateToCheckout(it.cartId)
                             viewModel.resetCart()
                         } else {
                             showErrorDialog = true

@@ -2,6 +2,7 @@ package com.route.ecommerce.ui.screens.checkout
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,6 +19,12 @@ fun CheckoutScreen(
     Column(
         modifier = modifier.fillMaxWidth()
     ) {
-        Text(text = "Checkout Screen cartId = $cartId")
+        Button(
+            onClick = {
+                viewModel.createOrder(cartId)
+            }
+        ) {
+            Text(text = "Checkout")
+        }
     }
 }

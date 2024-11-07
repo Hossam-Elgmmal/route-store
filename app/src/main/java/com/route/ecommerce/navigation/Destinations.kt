@@ -16,6 +16,7 @@ import com.route.ecommerce.ui.screens.cart.CartScreen
 import com.route.ecommerce.ui.screens.checkout.CheckoutScreen
 import com.route.ecommerce.ui.screens.home.HomeScreen
 import com.route.ecommerce.ui.screens.menu.MenuScreen
+import com.route.ecommerce.ui.screens.orders.OrdersScreen
 import com.route.ecommerce.ui.screens.productDetails.ProductDetailsScreen
 import com.route.ecommerce.ui.screens.products.ProductsScreen
 import com.route.ecommerce.ui.screens.search.SearchScreen
@@ -48,7 +49,7 @@ enum class TopLevelDestination(
 }
 
 enum class LowLevelDestination {
-    WISHLIST,
+    ORDERS,
     PRODUCTS,
     PRODUCT_DETAILS,
     SEARCH,
@@ -88,6 +89,9 @@ fun NavController.navigateToProducts(
 
 fun NavController.navigateToSearch(navOptions: NavOptions? = null) =
     navigate(LowLevelDestination.SEARCH.name, navOptions)
+
+fun NavController.navigateToOrders(navOptions: NavOptions? = null) =
+    navigate(LowLevelDestination.ORDERS.name, navOptions)
 
 fun NavGraphBuilder.homeScreen(
     appState: EcomAppState
@@ -212,6 +216,16 @@ fun NavGraphBuilder.checkoutScreen(appState: EcomAppState) {
         CheckoutScreen(
             appState = appState,
             cartId = cartId,
+        )
+    }
+}
+
+fun NavGraphBuilder.ordersScreen(
+    appState: EcomAppState
+) {
+    composable(route = LowLevelDestination.ORDERS.name) {
+        OrdersScreen(
+            appState = appState
         )
     }
 }

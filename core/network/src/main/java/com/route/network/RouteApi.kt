@@ -9,8 +9,10 @@ import com.route.network.model.ForgotPasswordResponse
 import com.route.network.model.LoginRequest
 import com.route.network.model.NetworkBrand
 import com.route.network.model.NetworkCategory
+import com.route.network.model.NetworkOrder
 import com.route.network.model.NetworkProduct
 import com.route.network.model.NetworkSubCategory
+import com.route.network.model.OrderRequest
 import com.route.network.model.ProductCount
 import com.route.network.model.ProductToAddCart
 import com.route.network.model.ResetPasswordRequest
@@ -109,5 +111,16 @@ interface RouteApi {
         @Body changePasswordRequest: ChangePasswordRequest
     ): Response<ResetPasswordResponse>
 
+    @POST("orders/{cartId}")
+    suspend fun createCashOrder(
+        @Header("token") token: String,
+        @Body orderRequest: OrderRequest,
+        @Path("cartId") cartId: String,
+    ): Response<Unit>
+
+    @GET("orders/user/{userId}")
+    suspend fun getUserOrders(
+        @Path("userId") userId: String,
+    ): List<NetworkOrder>
 
 }

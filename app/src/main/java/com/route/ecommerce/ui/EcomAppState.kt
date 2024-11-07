@@ -20,6 +20,7 @@ import com.route.ecommerce.navigation.navigateToCart
 import com.route.ecommerce.navigation.navigateToCheckout
 import com.route.ecommerce.navigation.navigateToHome
 import com.route.ecommerce.navigation.navigateToMenu
+import com.route.ecommerce.navigation.navigateToOrders
 import com.route.ecommerce.navigation.navigateToProductDetails
 import com.route.ecommerce.navigation.navigateToProducts
 import com.route.ecommerce.navigation.navigateToSearch
@@ -163,6 +164,7 @@ class EcomAppState(
     fun navigateToProductDetails(id: String) = navController.navigateToProductDetails(id)
     fun navigateToCheckout(cartId: String) = navController.navigateToCheckout(cartId)
     fun navigateToSearch() = navController.navigateToSearch()
+    fun navigateToOrders() = navController.navigateToOrders()
     fun navigateUp() = navController.navigateUp()
     fun popBackStack() = navController.popBackStack()
 

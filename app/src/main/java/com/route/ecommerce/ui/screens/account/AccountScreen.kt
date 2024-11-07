@@ -49,7 +49,7 @@ fun AccountScreen(
 
                 } else {
                     item {
-                        SignedInScreen(coroutineScope, viewModel, userData)
+                        SignedInScreen(coroutineScope, viewModel, userData, appState)
                     }
                 }
                 item { Spacer(Modifier.height(8.dp)) }

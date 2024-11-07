@@ -26,7 +26,7 @@ import javax.inject.Inject
 class CartViewModel @Inject constructor(
     private val cartRepository: CartRepository,
     private val productRepository: ProductRepository,
-    userPreferencesRepository: UserPreferencesRepository,
+    private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
     val token: StateFlow<String> = userPreferencesRepository.userData
@@ -64,7 +64,7 @@ class CartViewModel @Inject constructor(
         )
 
     fun upsertCartProduct(productId: String, count: Int) {
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             cartRepository.upsertCartProduct(productId, count)
         }
     }
@@ -72,6 +72,11 @@ class CartViewModel @Inject constructor(
     fun resetCart() {
         viewModelScope.launch {
             _onlineCart.update { null }
+        }
+    }
+    fun setUserId(userId: String) {
+        viewModelScope.launch(Dispatchers.IO) {
+            userPreferencesRepository.setUserId(userId)
         }
     }
 
