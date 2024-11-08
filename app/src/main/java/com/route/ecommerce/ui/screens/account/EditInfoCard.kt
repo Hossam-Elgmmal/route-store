@@ -98,7 +98,7 @@ fun EditInfoCard(
                 trailingIconAction = viewModel::clearPhone,
                 keyboardOptions = KeyboardOptions.Default.copy(
                     imeAction = ImeAction.Done,
-                    keyboardType = KeyboardType.Phone
+                    keyboardType = KeyboardType.Number
                 ),
                 visualTransformation = VisualTransformation.None,
                 isError = viewModel.isPhoneError,

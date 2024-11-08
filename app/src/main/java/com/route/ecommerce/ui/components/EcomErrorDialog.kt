@@ -27,7 +27,7 @@ fun EcomErrorDialog(
             Icon(
                 painter = painterResource(id = iconId),
                 contentDescription = null,
-                tint = if (textId == R.string.success) successIconColor
+                tint = if (iconId == R.drawable.ic_success) successIconColor
                 else MaterialTheme.colorScheme.error
             )
         },

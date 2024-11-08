@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -20,6 +21,7 @@ import com.route.ecommerce.ui.components.PriceText
 @Composable
 fun SubtotalBody(
     subtotal: Int,
+    itemsCount: Int,
     onCheckout: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -37,11 +39,13 @@ fun SubtotalBody(
         }
         Button(
             onClick = onCheckout,
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp),
             shape = CircleShape
         ) {
             Text(
-                text = stringResource(R.string.proceed_to_buy),
+                text = stringResource(R.string.proceed_to_buy_items, itemsCount),
             )
         }
     }

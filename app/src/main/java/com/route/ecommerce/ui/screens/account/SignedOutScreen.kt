@@ -108,7 +108,7 @@ fun SignedOutScreen(appState: EcomAppState) {
         }
         Spacer(modifier = Modifier.height(8.dp))
         IconTextRow(
-            textId = R.string.first_order_get_free_shipping,
+            textId = R.string.free_shipping,
             iconId = R.drawable.ic_free_delivery
         )
         Spacer(modifier = Modifier.height(8.dp))

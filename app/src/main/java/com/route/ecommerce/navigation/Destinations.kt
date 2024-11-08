@@ -65,8 +65,13 @@ fun NavController.navigateToMenu(navOptions: NavOptions? = null) =
 fun NavController.navigateToAccount(navOptions: NavOptions? = null) =
     navigate(TopLevelDestination.ACCOUNT.name, navOptions)
 
-fun NavController.navigateToCheckout(cartId: String, navOptions: NavOptions? = null) =
-    navigate("${LowLevelDestination.CHECKOUT.name}/$cartId", navOptions)
+fun NavController.navigateToCheckout(
+    cartId: String,
+    subtotal: Int,
+    itemsCount: Int,
+    navOptions: NavOptions? = null
+) =
+    navigate("${LowLevelDestination.CHECKOUT.name}/$cartId/$subtotal/$itemsCount", navOptions)
 
 
 fun NavController.navigateToCart(navOptions: NavOptions? = null) =
@@ -203,19 +208,31 @@ fun NavGraphBuilder.searchScreen(
 }
 
 private const val cartId = "cart_id"
+private const val subtotal = "subtotal"
+private const val items = "items"
 fun NavGraphBuilder.checkoutScreen(appState: EcomAppState) {
     composable(
-        route = "${LowLevelDestination.CHECKOUT.name}/{$cartId}",
+        route = "${LowLevelDestination.CHECKOUT.name}/{$cartId}/{$subtotal}/{$items}",
         arguments = listOf(
             navArgument(cartId) {
                 type = NavType.StringType
-            }
+            },
+            navArgument(subtotal) {
+                type = NavType.IntType
+            },
+            navArgument(items) {
+                type = NavType.IntType
+            },
         )
     ) { backStackEntry ->
         val cartId = backStackEntry.arguments?.getString(cartId) ?: ""
+        val subtotal = backStackEntry.arguments?.getInt(subtotal) ?: 0
+        val items = backStackEntry.arguments?.getInt(items) ?: 0
         CheckoutScreen(
             appState = appState,
             cartId = cartId,
+            subtotal = subtotal,
+            items = items
         )
     }
 }

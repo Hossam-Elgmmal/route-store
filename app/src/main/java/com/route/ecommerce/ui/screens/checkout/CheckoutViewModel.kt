@@ -1,5 +1,8 @@
 package com.route.ecommerce.ui.screens.checkout
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.route.data.reposetory.CartRepository
@@ -19,15 +22,91 @@ class CheckoutViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
 ) : ViewModel() {
 
+    var uiState: CheckoutUiState by mutableStateOf(CheckoutUiState.Idle)
+
+    var address by mutableStateOf("")
+    var isAddressError by mutableStateOf(false)
+
+    var city by mutableStateOf("")
+    var isCityError by mutableStateOf(false)
+
+    var phone by mutableStateOf("")
+    var isPhoneError by mutableStateOf(false)
+
+    fun resetUiState() {
+        uiState = CheckoutUiState.Idle
+        clearAddress()
+        clearAddress()
+        clearPhone()
+        isCityError = false
+        isAddressError = false
+        isPhoneError = false
+    }
+
+    fun updateAddress(newValue: String) {
+        address = newValue
+    }
+
+    fun updateCity(newValue: String) {
+        city = newValue
+    }
+
+    fun clearCity() {
+        city = ""
+    }
+
+    fun updatePhone(newValue: String) {
+        if (newValue.all { it.isDigit() }) {
+            phone = newValue
+        }
+    }
+
+    fun clearAddress() {
+        address = ""
+    }
+
+    fun clearPhone() {
+        phone = ""
+    }
     fun createOrder(cartId: String) {
+
+        isAddressError = address.trim().isEmpty()
+        isCityError = city.trim().isEmpty()
+        isPhoneError = phone.length != 11
+
+        if (isAddressError || isCityError || isPhoneError)
+            return
+
         viewModelScope.launch(Dispatchers.IO) {
+            uiState = CheckoutUiState.Loading
             val token = userPreferencesRepository.getToken()
             val orderCreatedSuccessfully = orderRepository.createCashOrder(
                 token,
                 cartId,
-                OrderRequest(ShippingAddress("details", "Phone", "city")),
+                OrderRequest(ShippingAddress(address, phone, city)),
             )
-            cartRepository.clearCart()
+            if (orderCreatedSuccessfully) {
+                cartRepository.clearCart()
+                uiState = CheckoutUiState.Success
+                refreshOrders()
+            } else {
+                uiState = CheckoutUiState.Error
+            }
         }
     }
+
+    private fun refreshOrders() {
+        viewModelScope.launch(Dispatchers.IO) {
+            orderRepository.refreshOrders()
+            uiState = CheckoutUiState.Navigate
+        }
+    }
+}
+
+sealed interface CheckoutUiState {
+    data object Idle : CheckoutUiState
+    data object Loading : CheckoutUiState
+    data object Success : CheckoutUiState
+    data object Navigate : CheckoutUiState
+    data object Error : CheckoutUiState
 }

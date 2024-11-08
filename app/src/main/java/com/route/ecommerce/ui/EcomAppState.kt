@@ -8,6 +8,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
@@ -161,10 +162,15 @@ class EcomAppState(
     fun navigateToForgotPassword() = navController.navigateToForgotPassword()
     fun navigateToProducts(brandId: String, categoryId: String) =
         navController.navigateToProducts(brandId = brandId, categoryId = categoryId)
+
     fun navigateToProductDetails(id: String) = navController.navigateToProductDetails(id)
-    fun navigateToCheckout(cartId: String) = navController.navigateToCheckout(cartId)
+    fun navigateToCheckout(cartId: String, subtotal: Int, itemsCount: Int) =
+        navController.navigateToCheckout(cartId, subtotal, itemsCount)
+
     fun navigateToSearch() = navController.navigateToSearch()
-    fun navigateToOrders() = navController.navigateToOrders()
+    fun navigateToOrders(navOptions: NavOptions? = null) =
+        navController.navigateToOrders(navOptions)
+
     fun navigateUp() = navController.navigateUp()
     fun popBackStack() = navController.popBackStack()
 

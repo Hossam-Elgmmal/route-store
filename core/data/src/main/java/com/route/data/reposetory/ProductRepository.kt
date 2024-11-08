@@ -63,7 +63,7 @@ class ProductRepositoryImpl @Inject constructor(
         productDao.searchProducts(query = query)
             .map(ProductEntity::asExternalModel)
 
-    override fun getProductsInCart(idList: List<String>) =
+    override fun getProductsInCart(idList: Set<String>) =
         productDao.getProductsInCart(idList)
             .map { it.map(ProductEntity::asExternalModel) }
 }
@@ -78,7 +78,7 @@ interface ProductRepository : Syncable {
     suspend fun getProductsByBrandId(brandId: String): List<Product>
 
     suspend fun searchProducts(query: String): List<Product>
-    fun getProductsInCart(idList: List<String>): Flow<List<Product>>
+    fun getProductsInCart(idList: Set<String>): Flow<List<Product>>
 
 }
 

@@ -54,7 +54,6 @@
     <string name="in_basket">" In basket - "</string>
     <string name="in_stock">In stock</string>
     <string name="subtotal">"Subtotal "</string>
-    <string name="proceed_to_buy">Proceed to buy</string>
     <string name="all_prices_include_vat">All prices include VAT.</string>
     <string name="quantity_minus_one">quantity minus one</string>
     <string name="quantity_plus_one">quantity plus one</string>
@@ -73,7 +72,7 @@
     <string name="about_this_item">about this item</string>
     <string name="welcome_to_route">Welcome to Route</string>
     <string name="settings">Settings</string>
-    <string name="first_order_get_free_shipping">First Order? Get Free Shipping!</string>
+    <string name="free_shipping">Free Shipping!</string>
     <string name="returns_made_easy">Returns Made Easy.</string>
     <string name="shop_anytime_anywhere">Shop Anytime, Anywhere</string>
     <string name="shop_smart_save_time">Shop Smart, Save Time</string>
@@ -106,7 +105,7 @@
     <string name="email_already_exists">"email already exists"</string>
     <string name="update_account_info">Update Account info</string>
     <string name="update">Update</string>
-    <string name="phone_number">Phone number</string>
+    <string name="phone_number">Phone</string>
     <string name="please_enter_a_valid_phone_number">Please, enter a valid phone number</string>
     <string name="phone_support_value" />
     <string name="edit_password">Edit Password</string>
@@ -119,4 +118,25 @@
     <string name="this_may_take_up_to_1_minute">This may take up to 1 minute on slower connections. Thank you for your patience!</string>
     <string name="refresh">Refresh</string>
     <string name="orders_not_found">Orders Not Found</string>
+    <string name="submit_order">Submit Order</string>
+    <string name="cannot_be_empty">Cannot be empty</string>
+    <string name="address">Address</string>
+    <string name="order_made_successfully">Order made successfully</string>
+    <string name="city">City</string>
+    <string name="shipping_details">Shipping Details</string>
+    <string name="shipping_fee">Shipping Fee</string>
+    <string name="free">Free</string>
+    <string name="payment_method">payment method</string>
+    <string name="cash_on_delivery">Cash on Delivery</string>
+    <string name="items">items</string>
+    <string name="proceed_to_buy_items">Proceed to buy %1$s items</string>
+    <string name="all_orders">All Orders</string>
+    <string name="total">total</string>
+    <string name="delivered">delivered</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="paid">paid</string>
+    <string name="createdAt">created at</string>
+    <string name="show_items">show items</string>
+    <string name="order_items">Order Items</string>
 </resources>

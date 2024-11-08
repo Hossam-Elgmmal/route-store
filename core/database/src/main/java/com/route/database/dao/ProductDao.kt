@@ -36,5 +36,5 @@ interface ProductDao {
     suspend fun deleteProductById(id: String)
 
     @Query("select * from products where id in (:idList)")
-    fun getProductsInCart(idList: List<String>): Flow<List<ProductEntity>>
+    fun getProductsInCart(idList: Set<String>): Flow<List<ProductEntity>>
 }

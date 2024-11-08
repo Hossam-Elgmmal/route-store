@@ -85,7 +85,7 @@ fun NetworkOrder.asEntity() = OrderEntity(
     totalOrderPrice = totalOrderPrice,
     isDelivered = isDelivered,
     isPaid = isPaid,
-    cartItemsText = cartItems.joinToString(";") { "${it.product}:${it.count}" },
+    cartItemsText = cartItems.joinToString(";") { "${it.product.id}:${it.count}" },
     paymentMethodType = paymentMethodType,
     createdAt = createdAt,
 )

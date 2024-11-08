@@ -59,9 +59,6 @@ fun CartScreen(
         CartUiState.Loading -> {}
         is CartUiState.Success -> {
             val successUiState = (cartUiState as CartUiState.Success)
-
-            val subtotal =
-                calculateSubTotal(successUiState.cartProductsMap, successUiState.products)
             Column(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = modifier
@@ -69,7 +66,8 @@ fun CartScreen(
                     .padding(horizontal = 16.dp)
             ) {
                 SubtotalBody(
-                    subtotal = subtotal,
+                    subtotal = successUiState.subtotal,
+                    itemsCount = successUiState.itemsCount,
                     onCheckout = {
                         if (token.isEmpty()) {
                             appState.navigateToLogin()
@@ -84,7 +82,11 @@ fun CartScreen(
                     onlineCart?.let {
                         if (it.cartId.isNotEmpty() && it.ownerId.isNotEmpty()) {
                             viewModel.setUserId(it.ownerId)
-                            appState.navigateToCheckout(it.cartId)
+                            appState.navigateToCheckout(
+                                it.cartId,
+                                successUiState.subtotal,
+                                successUiState.itemsCount
+                            )
                             viewModel.resetCart()
                         } else {
                             showErrorDialog = true

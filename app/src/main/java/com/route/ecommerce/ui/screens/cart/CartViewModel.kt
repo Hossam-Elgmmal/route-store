@@ -50,11 +50,19 @@ class CartViewModel @Inject constructor(
     val cartUiState: StateFlow<CartUiState> = cartRepository.getCartProducts()
         .flatMapLatest { cartProductsList ->
             val cartProductsMap = cartProductsList.associate { it.id to it.count }
-            productRepository.getProductsInCart(cartProductsMap.keys.toList()).map { products ->
+            productRepository.getProductsInCart(cartProductsMap.keys).map { products ->
                 if (cartProductsList.isEmpty()) {
                     CartUiState.EmptyCart
                 } else {
-                    CartUiState.Success(cartProductsMap, products, cartProductsList)
+                    val itemsCount = cartProductsMap.values.sum()
+                    val subTotal = calculateSubTotal(cartProductsMap, products)
+                    CartUiState.Success(
+                        cartProductsMap,
+                        products,
+                        cartProductsList,
+                        subTotal,
+                        itemsCount
+                    )
                 }
             }
         }.stateIn(
@@ -96,5 +104,7 @@ sealed interface CartUiState {
         val cartProductsMap: Map<String, Int>,
         val products: List<Product>,
         val cartProductsList: List<CartProduct>,
+        val subtotal: Int,
+        val itemsCount: Int,
     ) : CartUiState
 }
