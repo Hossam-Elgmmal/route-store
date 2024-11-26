@@ -2,9 +2,6 @@ package com.route.datastore
 
 import android.util.Log
 import androidx.datastore.core.DataStore
-import com.route.model.DarkTheme
-import com.route.model.UserData
-import com.route.model.UserInfo
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import java.io.IOException

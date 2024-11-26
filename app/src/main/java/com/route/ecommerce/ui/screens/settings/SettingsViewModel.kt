@@ -2,9 +2,9 @@ package com.route.ecommerce.ui.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.route.datastore.DarkTheme
+import com.route.datastore.UserData
 import com.route.datastore.UserPreferencesRepository
-import com.route.model.DarkTheme
-import com.route.model.UserData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

@@ -20,10 +20,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.route.data.NetworkMonitor
 import com.route.data.reposetory.CartRepository
+import com.route.datastore.DarkTheme
 import com.route.ecommerce.ui.EcomApp
 import com.route.ecommerce.ui.rememberEcomAppState
 import com.route.ecommerce.ui.theme.EcomTheme
-import com.route.model.DarkTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onEach

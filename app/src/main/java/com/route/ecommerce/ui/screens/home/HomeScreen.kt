@@ -1,6 +1,10 @@
 package com.route.ecommerce.ui.screens.home
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -9,7 +13,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
@@ -40,21 +47,35 @@ fun HomeScreen(
     LazyColumn(
         modifier = modifier.fillMaxWidth(),
     ) {
-        item {
-            OfferCard(
-                onClick = {
-                    /*TODO()*/
-                },
-                imgId = images[currentIndex]
-            )
-        }
         when (homeUiState) {
-            HomeUiState.EmptyHome -> {}
+            HomeUiState.EmptyHome -> {
+                item {
+                    Box(
+                        modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Image(
+                            painter = painterResource(R.drawable.img_no_connection_bro),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .padding(8.dp)
+                        )
+                    }
+                }
+            }
 
             HomeUiState.Loading -> { /*TODO("make effect")*/
             }
 
             is HomeUiState.Success -> {
+
+                item {
+                    OfferCard(
+                        onClick = { /*TODO()*/ },
+                        imgId = images[currentIndex]
+                    )
+                }
+
                 item {
                     HomeItemsRow(
                         onItemClick = appState::navigateToProductDetails,

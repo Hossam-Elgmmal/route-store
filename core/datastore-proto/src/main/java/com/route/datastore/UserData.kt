@@ -1,4 +1,4 @@
-package com.route.model
+package com.route.datastore
 
 data class UserData(
     val darkTheme: DarkTheme,

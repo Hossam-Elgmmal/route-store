@@ -21,8 +21,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.route.datastore.DarkTheme
 import com.route.ecommerce.R
-import com.route.model.DarkTheme
 
 @Composable
 fun SettingsDialog(

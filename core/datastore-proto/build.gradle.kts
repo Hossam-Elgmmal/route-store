@@ -37,7 +37,6 @@ android {
 dependencies {
 
     implementation(libs.androidx.core.ktx)
-    implementation(project(":core:model"))
     testImplementation(libs.junit)
     //
     implementation(libs.androidx.datastore)

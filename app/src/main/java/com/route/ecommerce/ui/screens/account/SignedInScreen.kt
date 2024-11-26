@@ -38,11 +38,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.route.datastore.UserData
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.EcomAppState
 import com.route.ecommerce.ui.components.EcomErrorDialog
 import com.route.ecommerce.ui.components.LoadingDialog
-import com.route.model.UserData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay

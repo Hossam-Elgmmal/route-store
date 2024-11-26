@@ -63,7 +63,6 @@ dependencies {
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
     implementation(project(":core:datastore-proto"))
-    implementation(project(":core:model"))
     implementation(project(":core:data"))
     implementation(project(":core:network"))
     implementation(project(":core:work"))

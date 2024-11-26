@@ -6,13 +6,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.route.datastore.UserData
 import com.route.datastore.UserPreferencesRepository
 import com.route.ecommerce.R
 import com.route.ecommerce.ui.auth.EmailError
 import com.route.ecommerce.ui.auth.PasswordError
 import com.route.ecommerce.ui.auth.validateEmail
 import com.route.ecommerce.ui.auth.validatePassword
-import com.route.model.UserData
 import com.route.network.AuthRepository
 import com.route.network.model.ChangePasswordRequest
 import com.route.network.model.UpdatedInfo
