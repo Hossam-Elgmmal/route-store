@@ -2,5 +2,6 @@
 <resources>
     <string name="background_work_for_route">background work for Route</string>
     <string name="sync">Sync</string>
-    <string name="route">Route Store</string>
+    <string name="route_store">Route Store</string>
+    <string name="getting_the_latest_products">Getting the latest products.</string>
 </resources>

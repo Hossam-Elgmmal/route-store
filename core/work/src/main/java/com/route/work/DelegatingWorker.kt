@@ -87,7 +87,8 @@ private fun Context.syncWorkNotification(): Notification {
         SYNC_NOTIFICATION_CHANNEL_ID
     )
         .setSmallIcon(R.drawable.ic_notification_icon)
-        .setContentTitle(getString(R.string.route))
+        .setContentTitle(getString(R.string.route_store))
+        .setContentText(getString(R.string.getting_the_latest_products))
         .setPriority(NotificationCompat.PRIORITY_LOW)
         .build()
 
