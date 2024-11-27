@@ -19,7 +19,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "E Commerce Route"
+rootProject.name = "Route Store"
 include(":app")
 include(":core:datastore-proto")
 include(":core:data")

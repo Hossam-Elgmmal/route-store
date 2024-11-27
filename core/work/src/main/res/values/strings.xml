@@ -2,5 +2,5 @@
 <resources>
     <string name="background_work_for_route">background work for Route</string>
     <string name="sync">Sync</string>
-    <string name="route">Route</string>
+    <string name="route">Route Store</string>
 </resources>
