@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.EcomRoute.Splash" parent="Theme.SplashScreen">
+
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.EcomRoute</item>
+        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_by_hossam</item>
+    </style>
+</resources>
