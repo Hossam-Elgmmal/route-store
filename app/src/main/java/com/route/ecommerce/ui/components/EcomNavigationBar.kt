@@ -26,6 +26,7 @@ fun EcomNavigationBar(
 ) {
     NavigationBar(
         modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.surface,
         tonalElevation = 0.dp
     ) {
         destinations.forEach { destination ->

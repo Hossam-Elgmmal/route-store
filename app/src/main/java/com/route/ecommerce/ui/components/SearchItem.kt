@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -55,7 +56,8 @@ fun SearchItem(
     Surface(
         onClick = onItemClick,
         modifier = modifier
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .shadow(1.dp, MaterialTheme.shapes.small),
         shape = MaterialTheme.shapes.small,
     ) {
         Column(

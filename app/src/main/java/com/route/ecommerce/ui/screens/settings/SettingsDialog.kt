@@ -4,6 +4,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -39,6 +41,7 @@ fun SettingsDialog(
                 properties = DialogProperties(usePlatformDefaultWidth = false),
                 modifier = modifier.fillMaxWidth(0.85f),
                 onDismissRequest = onDismiss,
+                containerColor = MaterialTheme.colorScheme.surface,
                 title = {
                     Text(
                         text = stringResource(R.string.settings),
@@ -52,7 +55,9 @@ fun SettingsDialog(
                     }
                 },
                 text = {
-                    Column {
+                    Column(
+                        modifier = Modifier.verticalScroll(rememberScrollState())
+                    ) {
                         HorizontalDivider()
                         Row(
                             modifier = Modifier.padding(8.dp)

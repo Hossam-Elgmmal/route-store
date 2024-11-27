@@ -6,6 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.route.data.reposetory.OrderRepository
 import com.route.datastore.UserData
 import com.route.datastore.UserPreferencesRepository
 import com.route.ecommerce.R
@@ -31,6 +32,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AccountViewModel @Inject constructor(
     private val userPreferencesRepository: UserPreferencesRepository,
+    private val orderRepository: OrderRepository,
     private val authRepository: AuthRepository,
 ) : ViewModel() {
 
@@ -73,7 +75,8 @@ class AccountViewModel @Inject constructor(
 
     fun signOut() {
         viewModelScope.launch {
-            userPreferencesRepository.setToken("")
+            orderRepository.clearOrders()
+            userPreferencesRepository.signOut()
         }
     }
 

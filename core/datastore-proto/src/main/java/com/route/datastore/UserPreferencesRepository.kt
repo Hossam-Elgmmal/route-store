@@ -114,6 +114,20 @@ class UserPreferencesRepository @Inject constructor(
         }
     }
 
+    suspend fun signOut() {
+        try {
+            userPreferences.updateData { preferences ->
+                preferences.copy {
+                    clearUserToken()
+                    clearUserImgName()
+                    clearUserId()
+                }
+            }
+        } catch (e: IOException) {
+            Log.e(TAG, "Failed to update user preferences: ", e)
+        }
+    }
+
     suspend fun getToken() = userPreferences.data
         .map { preferences ->
             preferences.userToken

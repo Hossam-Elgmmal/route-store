@@ -21,7 +21,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -54,13 +53,13 @@ fun OfferCard(
             .height(240.dp)
             .padding(8.dp),
         shape = MaterialTheme.shapes.small,
-        color = MaterialTheme.colorScheme.surfaceContainerHighest
+        color = MaterialTheme.colorScheme.surfaceContainerHigh
     ) {
         Box {
             Image(
                 painter = painterResource(id = R.drawable.bg_pattern),
                 contentDescription = null,
-                alpha = 0.15f,
+                alpha = 0.3f,
                 modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop
             )
@@ -124,7 +123,7 @@ fun OfferCard(
                         }
                     }
                 }
-                ElevatedCard(
+                Surface(
                     shape = RoundedCornerShape(topStart = 500.dp, bottomStart = 500.dp),
                     modifier = Modifier.fillMaxSize()
                 ) {

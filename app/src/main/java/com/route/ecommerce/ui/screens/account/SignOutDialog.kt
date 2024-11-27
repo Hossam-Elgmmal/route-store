@@ -1,6 +1,8 @@
 package com.route.ecommerce.ui.screens.account
 
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,15 +21,19 @@ fun SignOutDialog(
 ) {
     AlertDialog(
         modifier = modifier,
+        containerColor = MaterialTheme.colorScheme.surface,
         onDismissRequest = onDismiss,
         confirmButton = {
-            TextButton(
-                onClick = onSignOut
+            Button(
+                onClick = onSignOut,
+                colors = ButtonDefaults
+                    .buttonColors(
+                        containerColor = MaterialTheme.colorScheme.error,
+                        contentColor = MaterialTheme.colorScheme.onError,
+                    )
             ) {
-
                 Text(
-                    text = stringResource(R.string.sign_out),
-                    color = MaterialTheme.colorScheme.error
+                    text = stringResource(R.string.sign_out)
                 )
             }
         },

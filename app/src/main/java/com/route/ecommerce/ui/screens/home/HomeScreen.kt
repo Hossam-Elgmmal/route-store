@@ -71,7 +71,7 @@ fun HomeScreen(
 
                 item {
                     OfferCard(
-                        onClick = { /*TODO()*/ },
+                        onClick = { appState.navigateToProducts("0", "") },
                         imgId = images[currentIndex]
                     )
                 }

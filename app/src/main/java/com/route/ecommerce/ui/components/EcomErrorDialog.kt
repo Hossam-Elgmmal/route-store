@@ -23,6 +23,7 @@ fun EcomErrorDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismissRequest,
+        containerColor = MaterialTheme.colorScheme.surface,
         icon = {
             Icon(
                 painter = painterResource(id = iconId),

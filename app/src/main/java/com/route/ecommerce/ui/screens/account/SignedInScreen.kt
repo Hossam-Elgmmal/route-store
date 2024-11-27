@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -32,6 +33,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -106,6 +108,7 @@ fun SignedInScreen(
             modifier = Modifier
                 .padding(top = 8.dp, bottom = 16.dp)
                 .size(160.dp)
+                .shadow(1.dp, CircleShape)
                 .clip(CircleShape)
                 .background(MaterialTheme.colorScheme.onSurfaceVariant, CircleShape)
                 .clickable {
@@ -153,6 +156,8 @@ fun SignedInScreen(
         ElevatedButton(
             onClick = { appState.navigateToOrders() },
             shape = MaterialTheme.shapes.extraSmall,
+            colors = ButtonDefaults
+                .elevatedButtonColors(containerColor = MaterialTheme.colorScheme.surface),
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(vertical = 8.dp)
@@ -175,10 +180,12 @@ fun SignedInScreen(
         Spacer(modifier = Modifier.height(16.dp))
         ElevatedButton(
             onClick = { showSignOutDialog = true },
+            colors = ButtonDefaults
+                .elevatedButtonColors(containerColor = MaterialTheme.colorScheme.error),
         ) {
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .width(120.dp)
                     .padding(8.dp)
                     .wrapContentWidth(align = Alignment.CenterHorizontally),
                 verticalAlignment = Alignment.CenterVertically
@@ -186,12 +193,12 @@ fun SignedInScreen(
                 Icon(
                     painter = painterResource(R.drawable.ic_sign_out),
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.error
+                    tint = MaterialTheme.colorScheme.onError
                 )
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = stringResource(R.string.sign_out),
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.onError
                 )
             }
 
