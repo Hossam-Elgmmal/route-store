@@ -29,17 +29,17 @@ class UserPreferencesRepository @Inject constructor(
         )
     }
 
-    suspend fun setDarkTheme(darkTheme: DarkTheme) {
-        val newDarkTheme = when (darkTheme) {
+    suspend fun setDarkTheme(selectedDarkTheme: DarkTheme) {
+        val newDarkTheme = when (selectedDarkTheme) {
             DarkTheme.LIGHT -> UserPreferences.DarkTheme.LIGHT
             DarkTheme.DARK -> UserPreferences.DarkTheme.DARK
             else -> UserPreferences.DarkTheme.FOLLOW_SYSTEM
         }
         try {
-            userPreferences.updateData {
-                it.toBuilder()
-                    .setDarkTheme(newDarkTheme)
-                    .build()
+            userPreferences.updateData { preferences ->
+                preferences.copy {
+                    darkTheme = newDarkTheme
+                }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Failed to update user preferences: ", e)
@@ -50,13 +50,13 @@ class UserPreferencesRepository @Inject constructor(
         userInfo: UserInfo
     ) {
         try {
-            userPreferences.updateData {
-                it.toBuilder()
-                    .setUserName(userInfo.name)
-                    .setUserEmail(userInfo.email)
-                    .setUserPassword(userInfo.password)
-                    .setUserToken(userInfo.token)
-                    .build()
+            userPreferences.updateData { preferences ->
+                preferences.copy {
+                    userName = userInfo.name
+                    userEmail = userInfo.email
+                    userPassword = userInfo.password
+                    userToken = userInfo.token
+                }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Failed to update user preferences: ", e)
@@ -88,13 +88,13 @@ class UserPreferencesRepository @Inject constructor(
                     )
                 )
 
-                preferences.toBuilder()
-                    .setCategoryVersion(updatedVersions.categoryVersion)
-                    .setSubCategoryVersion(updatedVersions.subCategoryVersion)
-                    .setBrandVersion(updatedVersions.brandVersion)
-                    .setProductVersion(updatedVersions.productVersion)
-                    .setOrderVersion(updatedVersions.orderVersion)
-                    .build()
+                preferences.copy {
+                    categoryVersion = updatedVersions.categoryVersion
+                    subCategoryVersion = updatedVersions.subCategoryVersion
+                    brandVersion = updatedVersions.brandVersion
+                    productVersion = updatedVersions.productVersion
+                    orderVersion = updatedVersions.orderVersion
+                }
             }
 
         } catch (e: IOException) {
@@ -105,10 +105,9 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun setToken(token: String) {
         try {
             userPreferences.updateData { preferences ->
-                preferences
-                    .toBuilder()
-                    .setUserToken(token)
-                    .build()
+                preferences.copy {
+                    userToken = token
+                }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Failed to update user preferences: ", e)
@@ -116,17 +115,16 @@ class UserPreferencesRepository @Inject constructor(
     }
 
     suspend fun getToken() = userPreferences.data
-        .map {
-            it.userToken
+        .map { preferences ->
+            preferences.userToken
         }.firstOrNull() ?: ""
 
-    suspend fun setUserId(userId: String) {
+    suspend fun setUserId(newUserId: String) {
         try {
             userPreferences.updateData { preferences ->
-                preferences
-                    .toBuilder()
-                    .setUserId(userId)
-                    .build()
+                preferences.copy {
+                    userId = newUserId
+                }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Failed to update user preferences: ", e)
@@ -134,17 +132,16 @@ class UserPreferencesRepository @Inject constructor(
     }
 
     suspend fun getUserId() = userPreferences.data
-        .map {
-            it.userId
+        .map { preferences ->
+            preferences.userId
         }.firstOrNull() ?: ""
 
     suspend fun setUserImgName(fileName: String) {
         try {
             userPreferences.updateData { preferences ->
-                preferences
-                    .toBuilder()
-                    .setUserImgName(fileName)
-                    .build()
+                preferences.copy {
+                    userImgName = fileName
+                }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Failed to update user preferences: ", e)
@@ -154,12 +151,11 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun updateUserInfo(name: String, email: String, phone: String) {
         try {
             userPreferences.updateData { preferences ->
-                preferences
-                    .toBuilder()
-                    .setUserName(name)
-                    .setUserEmail(email)
-                    .setUserPhone(phone)
-                    .build()
+                preferences.copy {
+                    userName = name
+                    userEmail = email
+                    userPhone = phone
+                }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Failed to update user preferences: ", e)
@@ -169,11 +165,10 @@ class UserPreferencesRepository @Inject constructor(
     suspend fun updateUserPassword(newToken: String, password: String) {
         try {
             userPreferences.updateData { preferences ->
-                preferences
-                    .toBuilder()
-                    .setUserToken(newToken)
-                    .setUserPassword(password)
-                    .build()
+                preferences.copy {
+                    userToken = newToken
+                    userPassword = password
+                }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Failed to update user preferences: ", e)

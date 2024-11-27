@@ -3,9 +3,9 @@ agp = "8.6.1"
 coilCompose = "2.6.0"
 coreSplashscreen = "1.0.1"
 datastore = "1.1.1"
-hiltAndroid = "2.51.1"
+hiltAndroid = "2.52"
 hilt = "1.2.0"
-kotlin = "1.9.0"
+kotlin = "1.9.23"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.1.5"
@@ -24,7 +24,8 @@ kotlinx-serialization-converter = "1.0.0"
 kotlinx-serialization-json = "1.6.3"
 roomRuntime = "2.6.1"
 work = "2.9.0"
-ksp = "1.9.0-1.0.13"
+ksp = "1.9.23-1.0.20"
+protobuf = "0.9.4"
 
 
 [libraries]
@@ -40,7 +41,9 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref =
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomRuntime" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomRuntime" }
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "hiltAndroid" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hiltAndroid" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltAndroid" }
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -72,4 +75,5 @@ hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hiltAndroi
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+protobuf = { id = "com.google.protobuf", version.ref = "protobuf" }
 

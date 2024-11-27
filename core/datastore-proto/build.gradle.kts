@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    id("com.google.protobuf") version "0.9.4"
+    alias(libs.plugins.protobuf)
     alias(libs.plugins.kapt)
     alias(libs.plugins.hilt.plugin)
 }
@@ -40,7 +40,7 @@ dependencies {
     testImplementation(libs.junit)
     //
     implementation(libs.androidx.datastore)
-    implementation("com.google.protobuf:protobuf-javalite:3.25.2")
+    implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.1")
     //
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
@@ -50,12 +50,17 @@ kapt {
 }
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:3.25.2"
+        artifact = "com.google.protobuf:protoc:4.26.1"
     }
     generateProtoTasks {
         all().forEach { task ->
-            task.plugins.create("java") {
-                option("lite")
+            task.builtins {
+                register("java") {
+                    option("lite")
+                }
+                register("kotlin") {
+                    option("lite")
+                }
             }
         }
     }

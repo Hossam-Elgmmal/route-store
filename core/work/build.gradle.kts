@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.plugin)
 }
 
@@ -41,12 +41,10 @@ dependencies {
     testImplementation(libs.junit)
     //
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
     implementation(libs.androidx.hilt.worker)
     //
     implementation(libs.androidx.work)
-    kapt(libs.androidx.hilt.compiler)
-}
-kapt {
-    correctErrorTypes = true
+    ksp(libs.hilt.android.compiler)
+    ksp(libs.androidx.hilt.compiler)
+    ksp(libs.hilt.compiler)
 }

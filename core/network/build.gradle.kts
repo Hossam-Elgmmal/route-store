@@ -4,7 +4,7 @@ plugins {
     alias(libs.plugins.androidLibrary)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.plugin)
 }
 
@@ -56,10 +56,7 @@ dependencies {
     implementation(libs.kotlinx.serialization.json)
     //
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     //
     implementation(libs.coil.compose)
-}
-kapt {
-    correctErrorTypes = true
 }
