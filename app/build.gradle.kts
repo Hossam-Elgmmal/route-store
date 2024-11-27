@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.route.ecommerce"
+    namespace = "com.route.store"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.route.ecommerce"
+        applicationId = "com.route.store"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
