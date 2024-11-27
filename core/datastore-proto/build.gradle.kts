@@ -1,14 +1,17 @@
+import org.gradle.configurationcache.extensions.capitalized
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.androidLibrary)
-    alias(libs.plugins.jetbrainsKotlinAndroid)
+    alias(libs.plugins.kotlin.android)
     alias(libs.plugins.protobuf)
-    alias(libs.plugins.kapt)
+    alias(libs.plugins.ksp)
     alias(libs.plugins.hilt.plugin)
 }
 
 android {
     namespace = "com.route.datastore"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 24
@@ -27,11 +30,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 dependencies {
@@ -40,13 +43,10 @@ dependencies {
     testImplementation(libs.junit)
     //
     implementation(libs.androidx.datastore)
-    implementation("com.google.protobuf:protobuf-kotlin-lite:4.26.1")
+    implementation(libs.protobuf.kotlin.lite)
     //
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
-}
-kapt {
-    correctErrorTypes = true
+    ksp(libs.hilt.compiler)
 }
 protobuf {
     protoc {
@@ -61,6 +61,16 @@ protobuf {
                 register("kotlin") {
                     option("lite")
                 }
+            }
+        }
+    }
+}
+androidComponents {
+    onVariants(selector().all()) { variant ->
+        afterEvaluate {
+            val capName = variant.name.capitalized()
+            tasks.getByName<KotlinCompile>("ksp${capName}Kotlin") {
+                setSource(tasks.getByName("generate${capName}Proto").outputs)
             }
         }
     }
