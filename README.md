@@ -76,7 +76,7 @@ the [Releases Section](https://github.com/Hossam-Elgmmal/route-store/releases).
 
 ### Step 2: Install the App
 
-1. On your Android device, allow installation from unknown sources
+1. On your Android device, allow installation from unknown sources:
 
 2. Open the downloaded APK file and install the app.
 
