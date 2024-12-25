@@ -1,14 +1,14 @@
 # 📦 Route Store
 
-Welcome to **Route Store**, an **e-commerce app** designed purely for learning and
+A **production-ready e-commerce app** designed purely for learning and
 demonstration purposes.
-This app simulates a real shopping experience but does not sell or process any actual products.
+This app offers a real shopping experience but does not sell or process any actual products.
 
 ---
 
 ## 🎥 video
 
-<video src="media/video.mp4" controls width="640"></video>
+https://github.com/user-attachments/assets/2ca1e961-6cea-4e3c-8faf-f5cd589cac06
 
 ---
 
@@ -38,51 +38,51 @@ This app simulates a real shopping experience but does not sell or process any a
 
 ### Splash Screen
 
-[Splash Screen](media/light/img_splash_light.jpg) [Splash Screen](media/dark/img_splash_dark.jpg)
+<img src="media/light/img_splash_light.jpg" width="270" height="600" /> <img src="media/dark/img_splash_dark.jpg" width="270" height="600" />
 
 ### Home Screen
 
-[Home Screen](media/light/img_home_light.jpg) [Home Screen](media/dark/img_home_dark.jpg)
+<img src="media/light/img_home_light.jpg" width="270" height="600" /> <img src="media/dark/img_home_dark.jpg" width="270" height="600" />
 
 ### Account Screen
 
-[Account Screen](media/light/img_account_light.jpg) [Account Screen (Dark)](media/dark/img_account_dark.jpg)
+<img src="media/light/img_account_light.jpg" width="270" height="600" /> <img src="media/dark/img_account_dark.jpg" width="270" height="600" />
 
 ### Cart Screen
 
-[Cart Screen](media/light/img_cart_light.jpg) [Cart Screen (Dark)](media/dark/img_cart_dark.jpg)
+<img src="media/light/img_cart_light.jpg" width="270" height="600" /> <img src="media/dark/img_cart_dark.jpg" width="270" height="600" />
 
 ### Empty Cart Screen
 
-[Empty Cart Screen](media/light/img_empty_cart_light.jpg) [Empty Cart Screen (Dark)](media/dark/img_empty_cart_dark.jpg)
+<img src="media/light/img_empty_cart_light.jpg" width="270" height="600" /> <img src="media/dark/img_empty_cart_dark.jpg" width="270" height="600" />
 
 ### Menu Screen
 
-[Menu Screen](media/light/img_menu_light.jpg) [Menu Screen (Dark)](media/dark/img_menu_dark.jpg)
+<img src="media/light/img_menu_light.jpg" width="270" height="600" /> <img src="media/dark/img_menu_dark.jpg" width="270" height="600" />
 
 ### Orders List Screen
 
-[Orders List Screen](media/light/img_orders_list_light.jpg) [Orders List Screen (Dark)](media/dark/img_orders_list_dark.jpg)
+<img src="media/light/img_orders_list_light.jpg" width="270" height="600" /> <img src="media/dark/img_orders_list_dark.jpg" width="270" height="600" />
 
 ### Details Screen
 
-[Details Screen](media/light/img_details_light.jpg) [Details Screen (Dark)](media/dark/img_details_dark.jpg)
+<img src="media/light/img_details_light.jpg" width="270" height="600" /> <img src="media/dark/img_details_dark.jpg" width="270" height="600" />
 
 ### Sign In Screen
 
-[Sign In Screen](media/light/img_signin_light.jpg) [Sign In Screen (Dark)](media/dark/img_signin_dark.jpg)
+<img src="media/light/img_signin_light.jpg" width="270" height="600" /> <img src="media/dark/img_signin_dark.jpg" width="270" height="600" />
 
 ### Sign Up Screen
 
-[Sign Up Screen](media/light/img_signup_light.jpg) [Sign Up Screen (Dark)](media/dark/img_signup_dark.jpg)
+<img src="media/light/img_signup_light.jpg" width="270" height="600" /> <img src="media/dark/img_signup_dark.jpg" width="270" height="600" />
 
 ### Profile Screen
 
-[Profile Screen](media/light/img_profile_light.jpg) [Profile Screen (Dark)](media/dark/img_profile_dark.jpg)
+<img src="media/light/img_profile_light.jpg" width="270" height="600" /> <img src="media/dark/img_profile_dark.jpg" width="270" height="600" />
 
 ### OTP Screen
 
-[OTP Screen](media/light/img_otp_light.jpg) [OTP Screen (Dark)](media/dark/img_otp_dark.jpg)
+<img src="media/light/img_otp_light.jpg" width="270" height="600" /> <img src="media/dark/img_otp_dark.jpg" width="270" height="600" />
 
 ---
 
@@ -92,9 +92,9 @@ The **Route Store** app was developed to:
 
 1. **Showcase Android Development Skills**
     - Jetpack Compose
-   - MVVM / MVI
-   - Clean Architecture
-   - Dependency Injection with Hilt
+    - MVVM / MVI
+    - Clean Architecture
+    - Dependency Injection with Hilt
     - RESTful Api
     - Offline-First Design
 
@@ -103,7 +103,7 @@ The **Route Store** app was developed to:
     - **Proto DataStore**: Persistent storage
     - **Room Database**: Local data management
     - **Retrofit**: Network requests
-    - **OkHttp**: Advanced HTTP client
+    - **OkHttp**: HTTP client
     - **WorkManager**: Background tasks
     - **Coroutines**: Asynchronous programming
 
